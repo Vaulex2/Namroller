@@ -1,0 +1,432 @@
+{
+  "nav": {
+    "home": "Bosh sahifa",
+    "products": "Mahsulotlar",
+    "capabilities": "Imkoniyatlar",
+    "contact": "Aloqa",
+    "cta": "Narx so'rash"
+  },
+  "logo": {
+    "tagline": "Sanoat echimlari"
+  },
+  "hero": {
+    "overline": "Konveyer tizimlari · O'zbekiston",
+    "headline": "Harakatni\nto'xtatmaydigan roliklar",
+    "body": "Biz O'zbekiston bo'ylab qurilish va ommaviy material loyihalari uchun konveyer roliklarini va to'liq tizimlarni loyihalashtiramiz, ishlab chiqaramiz va yetkazib beramiz.",
+    "cta": "Narx so'rash",
+    "viewProducts": "Mahsulotlarni ko'rish",
+    "photoLabel": "Konveyer o'rnatish — foto",
+    "trust": {
+      "yearsV": "18",     "yearsL": "yillik tajriba",
+      "projV": "240+",    "projL": "loyiha topshirildi",
+      "deliveryV": "O'zb", "deliveryL": "butun mamlakat bo'ylab"
+    },
+    "specs": {
+      "diameter": "Ø 89–219 mm",
+      "material": "St37 po'lat",
+      "bearing": "2Z podshipniklar",
+      "capacity": "12 000 t/sutkagacha"
+    },
+    "stats": {
+      "capacity": "O'tkazish quvvati",
+      "projects": "Amalga oshirilgan loyihalar",
+      "operation": "Ishda",
+      "yrsUnit": "yil"
+    }
+  },
+  "cap": {
+    "overline": "Biz nima qilamiz",
+    "headline": "Og'ir texnika — boshidan oxirigacha",
+    "items": {
+      "cog":    { "h": "O'z ishlab chiqarishimiz", "p": "Namangandagi bitta omborda quvur kesish, tokarlik, payvandlash va yig'ish." },
+      "shield": { "h": "Uzoq muddatli xizmat",     "p": "Uzoq muddatli xizmat uchun mo'ljallangan 2Z yopiq podshipniklar va St37 po'lat trubalar." },
+      "ruler":  { "h": "Texnik shartlar bo'yicha", "p": "Standart diametrlar ombordan; maxsus uzunliklar va nov burchaklari buyurtma bo'yicha." },
+      "truck":  { "h": "Yetkazib berish va o'rnatish", "p": "O'zbekiston bo'ylab yetkazib berish, ob'ektda o'rnatish va ishga tushirish bilan." }
+    }
+  },
+  "capPage": {
+    "overline": "Ishlab chiqarish",
+    "headline": "Roliklar va konveyerlarni ishlab chiqaramiz",
+    "body": "Roliklar va konveyerlarni ishlab chiqarish jarayoni — kesish, payvandlash va yig'ishdan tortib sinovgacha.",
+    "soon": "Videolar tez orada qo'shiladi"
+  },
+  "preview": {
+    "overline": "Mahsulot assortimenti",
+    "headline": "Har bir lenta uchun roliklar",
+    "body": "Roliklar, baraban va konveyer tizimlarining to'liq qatori — har qanday quyma va qurilish masalalari uchun ombordan va buyurtma asosida.",
+    "byOrder": "Loyihalash — kalit topshirish",
+    "all": "Barcha mahsulotlar"
+  },
+  "cta": {
+    "headline": "Muddatli roliklar kerakmi?",
+    "body": "Standart o'lchamlar ombordan jo'natiladi. Lenta o'lchamini ayting — 48 soat ichida narx beramiz.",
+    "btn": "Narx so'rash"
+  },
+  "catalog": {
+    "overline": "Mahsulot assortimenti",
+    "headline": "Konveyer roliklari va tizimlari",
+    "body": "Standart katalog pozitsiyalari va buyurtma bo'yicha ishlab chiqarish. Har qanday pozitsiya uchun spetsifikatsiya yuklab oling yoki narx so'rang.",
+    "filters": {
+      "All":     "Hammasi",
+      "Idlers":  "Roliklar",
+      "Pulleys": "Barabanlar",
+      "Systems": "Tizimlar"
+    },
+    "viewSpecs": "Xususiyatlar",
+    "sections": {
+      "overview":     "Umumiy ma'lumot",
+      "process":      "Qanday ishlab chiqariladi",
+      "features":     "Xususiyatlar",
+      "applications": "Qo'llanish",
+      "fullSpecs":    "To'liq xususiyatlar"
+    },
+    "bc": {
+      "home":     "Bosh sahifa",
+      "products": "Mahsulotlar"
+    },
+    "diameter":  "Diametr",
+    "maxLoad":   "Maks. yuk",
+    "reqQuote":  "Narx so'rash",
+    "specSheet": "Spetsifikatsiya (PDF)",
+    "related":   "O'xshash mahsulotlar"
+  },
+  "contact": {
+    "overline": "Biz bilan bog'laning",
+    "headline": "Narx so'rash",
+    "body": "Lenta va material haqida ayting. Odatda 48 soat ichida narx va yetkazib berish muddati bilan javob beramiz.",
+    "success": {
+      "title": "So'rov qabul qilindi",
+      "body": "Rahmat, {{name}} — savdo jamoamiz 48 soat ichida siz bilan bog'lanadi.",
+      "again": "Yana yuborish"
+    },
+    "form": {
+      "name":      "Ism",
+      "namePh":    "Ismingiz",
+      "phone":     "Telefon raqami",
+      "phonePh":   "+998 90 123 45 67",
+      "email":     "Elektron pochta (ixtiyoriy)",
+      "emailPh":   "siz@kompaniya.uz",
+      "details":   "Mahsulot tafsilotlari",
+      "detailsPh": "Mahsulot, material, o'lcham, miqdor, muddatlar…",
+      "submit":    "So'rov yuborish",
+      "sending":   "Yuborilmoqda…",
+      "error":     "Yuborib bo'lmadi. Qayta urinib ko'ring.",
+      "privacy":   "Ma'lumotlaringiz maxfiy saqlanadi va uchinchi shaxslarga berilmaydi."
+    },
+    "info": {
+      "office": "Ishlab chiqarish va ofis",
+      "phone":  "Telefon",
+      "email":  "Elektron pochta",
+      "map":    "Joylashuv xaritasi — to'ldiruvchi",
+      "respTitle": "Tezkor javob",
+      "respValue": "Odatda 48 soat ichida narx bilan javob beramiz",
+      "callCta": "Hoziroq qo'ng'iroq qiling"
+    }
+  },
+  "quote": {
+    "form": {
+      "title":        "Narx so'rash",
+      "subtitle":     "Narx hisobi: {{product}}",
+      "name":         "Ism",
+      "namePh":       "Ismingiz",
+      "phone":        "Telefon raqami",
+      "phonePh":      "+998 90 123 45 67",
+      "email":        "Elektron pochta",
+      "emailPh":      "siz@kompaniya.uz",
+      "quantity":     "Miqdori",
+      "quantityPh":   "masalan, 50 dona",
+      "note":         "Izoh",
+      "notePh":       "O'lcham, material, yetkazib berish muddati…",
+      "submit":       "So'rov yuborish",
+      "sending":      "Yuborilmoqda…",
+      "required":     "Ism va telefon raqamini kiriting.",
+      "error":        "Yuborib bo'lmadi. Qayta urinib ko'ring.",
+      "close":        "Yopish",
+      "successTitle": "So'rov yuborildi",
+      "successBody":  "Rahmat! Savdo bo'limimiz 48 soat ichida narx bilan bog'lanadi.",
+      "done":         "Tayyor",
+      "privacy":      "Ma'lumotlaringiz maxfiy saqlanadi va uchinchi shaxslarga berilmaydi."
+    }
+  },
+  "chat": {
+    "telegram": "Telegram'da yozish",
+    "call":     "Qo'ng'iroq qilish"
+  },
+  "footer": {
+    "desc":      "O'zbekistonda ishlab chiqarilgan qurilish va ommaviy material loyihalari uchun konveyer roliklari va to'liq tizimlar.",
+    "loc":       "Namangan, O'zbekiston",
+    "copy":      "© 2026 Nam Roller — Sanoat echimlari",
+    "locBottom": "Namangan · O'zbekiston",
+    "follow":      "Ijtimoiy tarmoqlarda",
+    "quickLinks":  "Tezkor havolalar",
+    "contactTitle":"Savollaringiz bormi? Biz bilan bog'laning.",
+    "contactBtn":  "Biz bilan bog'lanish",
+    "phone":       "+998 97 374 77 55",
+    "email":       "info@namroller.uz",
+    "address":     "Namangan shahri, O'zbekiston",
+    "cols": {
+      "products": {
+        "h": "Mahsulotlar",
+        "l1": "Novsimon roliklar",
+        "l2": "Qaytuvchi roliklar",
+        "l3": "Amortizatsiya roliklari",
+        "l4": "Barabanlar",
+        "l5": "To'liq tizimlar"
+      },
+      "company": {
+        "h": "Kompaniya",
+        "l1": "Nam Roller haqida",
+        "l2": "Imkoniyatlar",
+        "l3": "Sifat va standartlar",
+        "l4": "Karyera"
+      },
+      "support": {
+        "h": "Qo'llab-quvvatlash",
+        "l1": "Narx so'rash",
+        "l2": "Spetsifikatsiyalar",
+        "l3": "Yetkazib berish muddati",
+        "l4": "O'rnatish"
+      }
+    }
+  },
+  "cat": {
+    "Idlers":  "Roliklar",
+    "Pulleys": "Barabanlar",
+    "Systems": "Tizimlar"
+  },
+  "pd": {
+    "trough-idler": {
+      "name": "Novsimon rolikopor",
+      "blurb": "Qiya va gorizontal konveyerlarda ommaviy materiallar uchun uch rolikli stansiya.",
+      "overview": "Novsimon rolikopor — bu lentani novsimon shaklga keltirib, tashiladigan material hajmini oshiradigan uch rolikli stansiya. Yon roliklar 20–35° burchak ostida o'rnatiladi, bu ommaviy yukni lenta markazida ushlab turadi va qiya hamda gorizontal konveyerlarda to'kilishning oldini oladi. Bu har qanday karyer yoki qurilish konveyer liniyasining asosiy tayanch elementidir.",
+      "process": [
+        { "title": "Trubani kesish",     "text": "St37 tikuvsiz truba o'lchamga kesiladi va podshipnik tugunlari o'rni uchun torets qilinadi." },
+        { "title": "Tokarlik ishlovi",   "text": "Sapfalar va podshipnik korpuslari aniq o'tirish uchun tokarlanadi, bu roliklar soosligini ta'minlaydi." },
+        { "title": "Payvandlash va yig'ish","text": "Korpuslar trubaga payvandlanadi, yopiq 2Z podshipniklar va labirint zichlagichlar presslanadi." },
+        { "title": "Sifat nazorati",     "text": "Har bir rolik seksiyaga yig'ishdan oldin urish, yengil aylanish va germetiklikка tekshiriladi." }
+      ],
+      "features": [
+        { "title": "Uzoq muddatlilik",         "text": "St37 po'lat truba va yopiq 2Z podshipniklar chang va abraziv sharoitda yillab ishlashga mo'ljallangan." },
+        { "title": "Yuqori yuk",               "text": "Komplekt uchun 1 200 N gacha — yuklangan liniyalarda og'ir shag'al va rudaga bardosh beradi." },
+        { "title": "Vazifaga mos nov burchagi","text": "Turli lenta kengligi va material tabiati uchun 20°, 30° va 35° burchaklar mavjud." },
+        { "title": "Silliq aylanish",         "text": "Labirint zichlagichlar podshipniklarni himoya qilib, qarshilik va lenta eyilishini kamaytiradi." }
+      ],
+      "applications": ["Karyerlar va kon qazish", "Shag'al va qum ishlab chiqarish", "Sement zavodlari", "Qurilish maydonchalari"]
+    },
+    "return-roller": {
+      "name": "Qaytuvchi rolik",
+      "blurb": "Lentaning qaytuvchi yurishi uchun bir rolikli tayanch. Yopishqoq materiallar uchun rezina disk varianti.",
+      "overview": "Qaytuvchi rolik konveyer lentasining pastki, qaytuvchi tarmog'ini yurituvchi va dumli baraban orasida ushlab turadi. Bitta to'g'ri rolik lentani osilib qolishdan saqlaydi va uning yurishini barqarorlashtiradi. Yopishqoq materiallar uchun o'zini tozalaydigan va to'kilgan materialning yopishishini oldini oladigan rezina diskli variant taklif etiladi.",
+      "process": [
+        { "title": "Trubani kesish",    "text": "Po'lat truba hisoblangan yuk uchun 4–5 mm devor qalinligi bilan o'lchamga kesiladi." },
+        { "title": "Tokarlik ishlovi",  "text": "Aniq markazlash uchun podshipnik va Ø20/Ø25 val o'rinlari tokarlanadi." },
+        { "title": "Yig'ish",          "text": "6204 2Z podshipniklar presslanadi; zarur bo'lsa o'zini tozalaydigan rezina disklar o'rnatiladi." },
+        { "title": "Sifat nazorati",    "text": "Bo'yashdan oldin urish, muvozanat va erkin yurish tekshiriladi." }
+      ],
+      "features": [
+        { "title": "Yopishishdan himoya", "text": "Rezina disklar yopishgan materialni tashlab, lenta xizmat muddatini uzaytiradi." },
+        { "title": "Barqaror yurish",     "text": "To'g'ri rolik qaytuvchi tarmoq osilishini bartaraf etadi va tebranishni kamaytiradi." },
+        { "title": "900 N gacha yuk",     "text": "Og'ir konveyerlarning uzun qaytuvchi tarmoq oraliqlariga mo'ljallangan." },
+        { "title": "Oson o'rnatish",      "text": "Standart val o'rni o'lchamlari mavjud ramalarda almashtirishni osonlashtiradi." }
+      ],
+      "applications": ["Konveyerning qaytuvchi tarmog'i", "Yopishqoq materiallarni tashish", "Kon-boyitish kombinatlari", "Ombor konveyerlari"]
+    },
+    "impact-roller": {
+      "name": "Amortizatsiya roligi",
+      "blurb": "O'tkazish va yuklash nuqtalarida zarba yukini so'radigan rezina halqali roliklar.",
+      "overview": "Amortizatsiya roligi tushayotgan material lentaga uradigan yuklash va o'tkazish zonalarida o'rnatiladi. Po'lat o'zak 65 Sh qattiqlikdagi vulkanizatsiyalangan rezina halqalar bilan qoplangan bo'lib, ular zarbani so'radi, lentani teshilishdan himoya qiladi va uning xizmat muddatini uzaytiradi. Bu yirik va og'ir yukni qabul qilish nuqtalarida juda muhim elementdir.",
+      "process": [
+        { "title": "O'zakni kesish",       "text": "St37 po'lat truba kesiladi va rolikning tayanch o'zagi sifatida ishlov beriladi." },
+        { "title": "Halqalarni vulkanizatsiya","text": "65 Sh rezina halqalar vulkanizatsiyalanadi va zarbani so'rish uchun o'zakka kiydiriladi." },
+        { "title": "Yig'ish",             "text": "Kuchaytirilgan 6205/6306 2Z podshipniklar presslanadi, halqalar rolik bo'ylab mahkamlanadi." },
+        { "title": "Sifat nazorati",       "text": "Jo'natishdan oldin halqa qattiqligi, urish va zarbaga chidamlilik tekshiriladi." }
+      ],
+      "features": [
+        { "title": "Lentani himoya qilish",        "text": "Rezina halqalar zarbani so'radi va qimmat lentaning teshilishini oldini oladi." },
+        { "title": "2 000 N zarba yuki",           "text": "Yuklash nuqtalarida yirik bo'laklarning tushishiga mo'ljallangan." },
+        { "title": "Kuchaytirilgan podshipniklar", "text": "6205/6306 2Z podshipniklari yuqori dinamik yuklarga bardosh beradi." },
+        { "title": "Halqa bo'yicha diametr 133–194 mm","text": "Turli o'tkazish intensivligi uchun bir nechta tipo o'lchamlar." }
+      ],
+      "applications": ["Yuklash va o'tkazish nuqtalari", "Qabul bunkerlari", "Maydalash-saralash komplekslari", "Karyer konveyerlari"]
+    },
+    "guide-roller": {
+      "name": "Yo'naltiruvchi / markazlashtiruvchi rolik",
+      "blurb": "Lenta yo'nalishini to'g'rilaydigan va chetini eyilishidan saqlaydigan avtomatik markazlashtiruvchi roliklar.",
+      "overview": "Markazlashtiruvchi rolik lentaning siljishini (chetga ketishini) avtomatik to'g'rilab, uni konveyer o'qi bo'ylab ushlab turadi. Markaziy buriluvchi tugun siljishga javob beradi, vertikal yo'naltiruvchi roliklar esa lentani yumshoq tarzda joyiga qaytaradi. Bu chetlarning eyilishi, materialning to'kilishi va uzun yo'llarda avariya to'xtashlarining oldini oladi.",
+      "process": [
+        { "title": "Trubani kesish",    "text": "Truba Ø108/133 tayanch rolik uchun o'lchamga kesiladi." },
+        { "title": "Tokarlik ishlovi",  "text": "Podshipnik o'rinlari va markaziy buriluvchi tugun tokarlanadi." },
+        { "title": "Tugunni yig'ish",   "text": "Buriluvchi rama yig'iladi, ikkita Ø89 vertikal yo'naltiruvchi rolik o'rnatiladi." },
+        { "title": "Sifat nazorati",    "text": "Burilish erkinligi, siljishga javob va silliq aylanish tekshiriladi." }
+      ],
+      "features": [
+        { "title": "Lentani avtomarkazlash", "text": "Buriluvchi tugun lentani doimo konveyer o'qiga qaytaradi." },
+        { "title": "Chetlarni himoya qilish","text": "Vertikal roliklar lenta chetlarining eyilishi va qatlamlanishini oldini oladi." },
+        { "title": "Kamroq to'xtashlar",     "text": "Uzun yo'llarda lentaning chiqib ketishi va avariya to'xtashlari xavfini kamaytiradi." },
+        { "title": "1 000 N gacha yuk",      "text": "Kengligi 650–1200 mm lentalarga mo'ljallangan." }
+      ],
+      "applications": ["Uzun magistral konveyerlar", "Reversiv konveyerlar", "Yon yuklamali liniyalar", "Kon qazish korxonalari"]
+    },
+    "drive-pulley": {
+      "name": "Yurituvchi va dumli baraban",
+      "blurb": "Bosh, dum va taranglantiruvchi pozitsiyalar uchun qoplangan va ochiq barabanlar.",
+      "overview": "Barabanlar lentaga tortuvchi kuch beradi (yurituvchi) hamda uning taranglik va burilishini belgilaydi (dumli, taranglantiruvchi). Po'lat qobiq tokarlangan C45 valga payvandlanadi va SN/SNL korpus podshipniklariga o'rnatiladi. 10–14 mm silliq yoki romb shaklidagi rezina qoplama ilashuvni oshiradi va yuk ostida sirpanishning oldini oladi.",
+      "process": [
+        { "title": "Qobiq va disklarni kesish",      "text": "Po'lat list va truba kerakli diametrdagi qobiq va disklar uchun kesiladi." },
+        { "title": "Valni tokarlash",                "text": "C45 val tokarlanadi, o'tirish va mufta uchun kalit o'rinlari o'yiladi." },
+        { "title": "Payvandlash, qoplash va muvozanat","text": "Qobiq val bilan payvandlanadi, rezina qoplama qilinadi, baraban muvozanatlanadi." },
+        { "title": "Sifat nazorati",                 "text": "Jo'natishdan oldin statik yoki dinamik muvozanat va geometriya tekshiriladi." }
+      ],
+      "features": [
+        { "title": "Diametr 250–630 mm",           "text": "Bosh, dum va taranglantiruvchi pozitsiyalar uchun to'liq tipo o'lchamlar qatori." },
+        { "title": "Ishonchli qoplama",            "text": "10–14 mm silliq yoki romb rezina ilashuv va xizmat muddatini oshiradi." },
+        { "title": "SN/SNL korpus podshipniklari", "text": "Ajraladigan korpuslar ob'ektda o'rnatish va xizmat ko'rsatishni osonlashtiradi." },
+        { "title": "So'rov bo'yicha muvozanat",     "text": "Yuqori lenta tezliklari uchun statik yoki dinamik muvozanat." }
+      ],
+      "applications": ["Bosh (yurituvchi) tugun", "Dum va taranglantiruvchi tugunlar", "Konveyerlarni rekonstruksiya", "Yuqori tezlikli liniyalar"]
+    },
+    "complete-system": {
+      "name": "To'liq konveyer tizimi",
+      "blurb": "Muhandislik lenta konveyerlari — rama, roliklar, barabanlar, yurituvchi va konstruksiya, yetkazib berish va o'rnatish bilan.",
+      "overview": "To'liq konveyer tizimi — bu kalit topshirish shartlarida muhandislik yechimi: hisob-kitob, loyihalash, ishlab chiqarish va butun liniyani o'rnatish. Biz rama, rolikoporlar, barabanlar, yurituvchi va metall konstruksiyalarni sizning materialingiz, unumdorligingiz va maydoncha geometriyangizga moslab yagona komplekt sifatida yetkazib beramiz — bitta oraliqdan ko'p seksiyali yo'lgacha.",
+      "process": [
+        { "title": "Loyihalash",          "text": "Muhandislar materialingiz va maydonchangizga mos unumdorlik, qiyalik burchagi va yurituvchini hisoblaydi." },
+        { "title": "Ishlab chiqarish",    "text": "Rama, roliklar, barabanlar va konstruksiyalar Namangandagi ishlab chiqarishimizda tayyorlanadi." },
+        { "title": "Yetkazish va o'rnatish","text": "Komplekt ob'ektga yetkaziladi va O'zbekiston bo'ylab brigadamiz tomonidan o'rnatiladi." },
+        { "title": "Ishga tushirish",     "text": "Liniya ishga tushiriladi, lenta markazlashtiriladi va buyurtmachiga topshiriladi." }
+      ],
+      "features": [
+        { "title": "Kalit topshirish",                 "text": "Loyihalash, ishlab chiqarish, o'rnatish va ishga tushirish bir qo'ldan." },
+        { "title": "Kuniga 12 000 t gacha unumdorlik", "text": "Ishlab chiqarishingiz hajmiga moslab hisoblanadi." },
+        { "title": "Ishonchli konstruksiya",           "text": "Ochiq havoda uzoq xizmat uchun galvanizatsiyalangan yoki bo'yalgan po'lat." },
+        { "title": "O'zbekiston bo'ylab o'rnatish",    "text": "Har qanday maydonchada yetkazib berish, shef-montaj va servis." }
+      ],
+      "applications": ["Karyerlar va kon qazish", "Sement va beton zavodlari", "Qayta yuklash terminallari", "Sanoat maydonchalari"]
+    }
+  },
+  "sl": {
+    "roller_diameter":           "Rolik diametri",
+    "trough_angle":              "Nov burchagi",
+    "tube_material":             "Truba materiali",
+    "bearing":                   "Podshipnik",
+    "max_load_per_set":          "Maks. yuk komplekt uchun",
+    "belt_width_range":          "Lenta kengligi diapazoni",
+    "tube_wall":                 "Truba devori qalinligi",
+    "surface":                   "Yuzasi",
+    "max_load":                  "Maks. yuk",
+    "shaft":                     "Val",
+    "roller_diameter_over_rings":"Rolik diametri (halqalar bo'yicha)",
+    "ring_material":             "Halqa materiali",
+    "tube":                      "Truba",
+    "max_impact_load":           "Maks. zarba yuki",
+    "service":                   "Qo'llanish",
+    "pivot":                     "Burilish tuguni",
+    "vertical_guide_rolls":      "Vertikal yo'naltiruvchi roliklar",
+    "pulley_diameter":           "Baraban diametri",
+    "lagging":                   "Qoplama",
+    "bearing_housing":           "Podshipnik korpusi",
+    "balancing":                 "Muvozanatlash",
+    "face_width":                "Ishchi uzunlik",
+    "belt_width":                "Lenta kengligi",
+    "capacity":                  "Unumdorlik",
+    "length_per_flight":         "Seksiya uzunligi",
+    "drive":                     "Yurituvchi",
+    "structure":                 "Konstruksiya",
+    "scope":                     "Komplektatsiya"
+  },
+  "sv": {
+    "st37_seamless_steel":             "St37 tikuvsiz po'lat",
+    "plain_rubber_disc":               "Silliq / rezina disk",
+    "vulcanised_rubber_65_sh":         "Vulkanizatsiyalangan rezina, 65 Sh",
+    "st37_steel_core":                 "St37 po'lat o'zak",
+    "loading_transfer_zones":          "Yuklash / o'tkazish zonalari",
+    "central_swivel_bearing":          "Markaziy buriluvchi podshipnik",
+    "c45_turned_keyed":                "C45 tokarlik, kalit o'rni bilan",
+    "plain_diamond_rubber_10_14_mm":   "Silliq / rombsimon rezina 10–14 mm",
+    "sn_snl_plummer_block":            "SN / SNL korpus podshipniki",
+    "static_dynamic_on_request":       "Statik / dinamik so'rov bo'yicha",
+    "galvanised_painted_steel":        "Galvanizatsiyalangan / bo'yalgan po'lat",
+    "design_fabrication_installation": "Loyihalash · ishlab chiqarish · o'rnatish",
+    "up_to_12_000":                    "12 000 gacha",
+    "up_to_120":                       "120 gacha",
+    "geared_motor_5_5_110":           "Motor-reduktor, 5,5–110",
+    "to_suit_belt_100":               "lenta kengligi + 100"
+  },
+  "projects": {
+    "overline": "Yetkazib berish geografiyasi",
+    "headline": "Butun O'zbekiston bo'ylab loyihalar",
+    "body": "Qoraqalpog'istondan Farg'ona vodiysigacha — roliklarimiz va konveyerlarimiz mamlakat bo'ylab obyektlarda ishlaydi. Loyihani ko'rish uchun nuqtaga kursorni olib boring.",
+    "hint": "Xaritadagi nuqtaga bosing yoki kursorni olib boring",
+    "items": {
+      "tashkent":  { "city": "Toshkent",  "name": "Sement terminali",               "type": "Konveyer tizimi",        "capacity": "8 000 t/kun" },
+      "samarkand": { "city": "Samarqand",  "name": "Qurilish materiallari zavodi",   "type": "Tarnovsimon roliklar",   "capacity": "4 500 t/kun" },
+      "bukhara":   { "city": "Buxoro",     "name": "Inert materiallar karyeri",      "type": "Qaytaruvchi roliklar",   "capacity": "3 200 t/kun" },
+      "navoi":     { "city": "Navoiy",     "name": "Tog'-boyitish kombinati",        "type": "Zarbli roliklar",        "capacity": "12 000 t/kun" },
+      "nukus":     { "city": "Nukus",      "name": "Logistika markazi",              "type": "Yetkazish va o'rnatish", "capacity": "2 800 t/kun" },
+      "andijan":   { "city": "Andijon",    "name": "G'isht zavodi",                  "type": "Yetaklovchi barabanlar", "capacity": "3 600 t/kun" },
+      "termez":    { "city": "Termiz",     "name": "Daryo porti",                    "type": "Konveyer tizimi",        "capacity": "5 400 t/kun" },
+      "fergana":   { "city": "Farg'ona",   "name": "Neftni qayta ishlash zavodi",    "type": "Tarnovsimon roliklar",   "capacity": "6 200 t/kun" },
+      "namangan":  { "city": "Namangan",   "name": "To'qimachilik kombinati",        "type": "Konveyer tizimi",        "capacity": "3 800 t/kun" },
+      "jizzakh":   { "city": "Jizzax",     "name": "Sement zavodi",                  "type": "Zarbli roliklar",        "capacity": "7 500 t/kun" },
+      "gulistan":  { "city": "Guliston",   "name": "Don terminali",                  "type": "Yetkazish va o'rnatish", "capacity": "2 400 t/kun" },
+      "qarshi":    { "city": "Qarshi",     "name": "Gazni qayta ishlash majmuasi",   "type": "Konveyer tizimi",        "capacity": "9 000 t/kun" },
+      "urgench":   { "city": "Urganch",    "name": "Paxta tozalash zavodi",          "type": "Yetaklovchi barabanlar", "capacity": "3 100 t/kun" },
+      "zarafshan": { "city": "Zarafshon",  "name": "Oltin qazib olish kombinati",    "type": "Zarbli roliklar",        "capacity": "11 000 t/kun" }
+    }
+  },
+  "process": {
+    "overline": "Ishlab chiqarish",
+    "headline": "Roliklar va konveyerlarni qanday tayyorlaymiz",
+    "body": "Namanganda bir tom ostida to'liq tsikl — quvur kesishdan tayyor konveyer tizimigacha. Roliklar va konveyerlarni qanday ishlab chiqarishimizni tomosha qiling.",
+    "stages": [
+      { "title": "Kesish",           "text": "St37 po'lat quvuri ±1 mm uzunlik bag'ishi bilan CNC stanoklarida o'lchamga kesiladi.", "chips": ["St37", "±1 mm", "CNC"] },
+      { "title": "Payvandlash",      "text": "Vtulka va flanetslar aniq soosallik uchun konduktorda korpusga payvandlanadi.", "chips": ["Konduktor", "Soosalik"] },
+      { "title": "Tokarlik ishlovi", "text": "Podshipnik o'rinlari 2Z zich o'rnatish uchun tokarlik stanoklarida ishlanadi.", "chips": ["2Z posadka"] },
+      { "title": "Yig'ish",          "text": "Yopiq podshipniklar, vallar va zichlagichlar yig'iladi va butun xizmat muddatiga moylanadi.", "chips": ["2Z podshipnik", "Umrbod moylash"] },
+      { "title": "Sifat nazorati",   "text": "Har bir rolik qadoqlash va jo'natishdan oldin urish, aylanish va yuk bo'yicha tekshiriladi.", "chips": ["Urish testi", "Yuk sinovi"] }
+    ]
+  },
+  "viewer": {
+    "photo": "Foto",
+    "view3d": "3D",
+    "dragHint": "Aylantirish uchun torting"
+  },
+  "testimonials": {
+    "overline": "Sharhlar · Mijozlar",
+    "headline": "Mijozlarimiz nima deydi",
+    "body": "Konveyer roliklarimiz va tizimlarimiz O'zbekiston bo'ylab obyektlarda qanday ishlayotganini bilib oling.",
+    "addBtn": "Sharh qoldirish",
+    "seed": [
+      { "text": "Bu konveyer roliklari maydalash liniyamizda uchta mavsum davomida birorta podshipnik nosozligisiz ishladi. Ishonchli jihoz va halol yetkazib berish muddatlari.", "role": "Ishlab chiqarish menejeri" },
+      { "text": "NamRoller biz uchun karyerga mo'ljallangan 1200 mm rolik to'plamini loyihalashtirdi. Chizmalar tez tasdiqlandi, ishlab chiqarish sifati a'lo.", "role": "Zavod muhandisi" },
+      { "text": "Qo'llab-quvvatlash jamoasi o'rnatishni bosqichma-bosqich tushuntirib berdi. Ehtiyot qismlar bir necha kunda yetib keldi — sanoat obyektiga aynan shu kerak.", "role": "Texnik xizmat rahbari" },
+      { "text": "Ularning roliklariga o'tish to'xtab qolishlarni sezilarli kamaytirdi. Hal qiluvchi omil mavjud ramkalarimiz bilan oson integratsiya bo'ldi.", "role": "Bosh direktor" },
+      { "text": "Mustahkam qismlar va texnik xizmatning tezkor javoblari material tashish jarayonimizni o'zgartirdi. Juda samarali yetkazib beruvchi.", "role": "Loyiha menejeri" },
+      { "text": "Ishga tushirish kutilganidan oshib ketdi. Tolerantliklar aniq, tizim liniyaning umumiy unumdorligini oshirdi.", "role": "Texnolog" },
+      { "text": "Sifatli po'lat roliklar, adolatli narx va sochma yuklarni chinakam tushunadigan jamoa. Konveyerlarimiz tinchroq ishlaydi.", "role": "Obyekt direktori" },
+      { "text": "Ular vazifalarimizga aniq mos keladigan kalit topshiriladigan yechim yetkazib berishdi va ikki zavod o'tkazuvchanligini oshirdi.", "role": "Xaridlar menejeri" },
+      { "text": "Tijorat taklifidan ishga tushirishgacha hammasi silliq kechdi. Ikkinchi liniya uchun takroriy buyurtma ham berdik.", "role": "Logistika menejeri" },
+      { "text": "Sement zavodi uchun kuchaytirilgan roliklar buyurtma qildik. Yuqori changlanish va yukka bardosh beradi, texnik xizmat minimal.", "role": "Bosh mexanik" },
+      { "text": "Ikkinchi yildan beri hamkorlik qilamiz. Har bir partiyada barqaror sifat va tezkor texnik yordam.", "role": "Uchastka boshlig'i" },
+      { "text": "Roliklarni qiya konveyerga o'rnatdik — tinch va tebranishsiz ishlaydi. Ishonchli ishlab chiqaruvchi sifatida tavsiya qilamiz.", "role": "Bosh energetik" }
+    ],
+    "form": {
+      "title": "Sharh qoldirish",
+      "name": "Ism",
+      "namePh": "Ismingiz",
+      "role": "Lavozim / kompaniya",
+      "rolePh": "Masalan, bosh muhandis",
+      "rating": "Baho",
+      "text": "Sharhingiz",
+      "textPh": "Biz bilan ishlash tajribangizni yozing…",
+      "submit": "Sharhni yuborish",
+      "sending": "Yuborilmoqda…",
+      "required": "Ism va sharh matnini kiriting.",
+      "error": "Sharhni yuborib bo'lmadi. Qayta urinib ko'ring.",
+      "successTitle": "Rahmat!",
+      "successBody": "Sharhingiz e'lon qilindi.",
+      "done": "Tayyor",
+      "close": "Yopish"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+:root {
+  --space-0:  0;
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.5rem;
+  --space-6:  2rem;
+  --space-7:  2.5rem;
+  --space-8:  3rem;
+  --space-9:  4rem;
+  --space-10: 5rem;
+  --space-12: 6rem;
+  --space-16: 8rem;
+
+  /* Swiss Modernism: squarer radii */
+  --radius-none: 0;
+  --radius-xs:   2px;
+  --radius-sm:   3px;
+  --radius-md:   4px;
+  --radius-lg:   6px;
+  --radius-xl:   8px;
+  --radius-pill: 999px;
+
+  --border-w-hair: 1px;
+  --border-w:      1px;
+  --border-w-bold: 2px;
+
+  /* Simplified 2-level shadow system */
+  --shadow-xs:     0 1px 2px rgba(15,23,42,0.06);
+  --shadow-sm:     0 1px 3px rgba(15,23,42,0.08), 0 1px 2px rgba(15,23,42,0.05);
+  --shadow-md:     0 4px 12px rgba(15,23,42,0.10), 0 2px 4px rgba(15,23,42,0.06);
+  --shadow-lg:     0 8px 24px rgba(15,23,42,0.12), 0 4px 8px rgba(15,23,42,0.07);
+  --shadow-xl:     0 20px 48px rgba(15,23,42,0.16);
+  --shadow-inset:  inset 0 1px 0 rgba(255,255,255,0.5);
+  --shadow-accent: 0 4px 16px rgba(249,115,22,0.30);
+
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-mech:   cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast:   120ms;
+  --dur-base:   200ms;
+  --dur-slow:   320ms;
+
+  --container:      1200px;
+  --container-wide: 1320px;
+  --gutter:         var(--space-5);
+  --header-h:       72px;
+
+  --z-base:    0;
+  --z-sticky:  100;
+  --z-header:  200;
+  --z-overlay: 800;
+  --z-modal:   900;
+  --z-toast:   1000;
+}

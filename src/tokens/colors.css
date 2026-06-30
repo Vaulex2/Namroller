@@ -1,0 +1,67 @@
+:root {
+  /* Brand accent */
+  --nr-accent:       #F97316;
+  --nr-accent-hover: #EA6C00;
+
+  /* Slate scale (primary neutrals) */
+  --slate-950: #020617;
+  --slate-900: #0F172A;
+  --slate-800: #1E293B;
+  --slate-700: #334155;
+  --slate-600: #475569;
+  --slate-500: #64748B;
+  --slate-400: #94A3B8;
+  --slate-300: #CBD5E1;
+  --slate-200: #E2E8F0;
+  --slate-100: #F1F5F9;
+  --slate-50:  #F8FAFC;
+  --white:     #FFFFFF;
+
+  /* Orange accent scale */
+  --orange-700: #C2410C;
+  --orange-600: #EA580C;
+  --orange-500: #F97316;
+  --orange-400: #FB923C;
+  --orange-300: #FDBA74;
+  --orange-100: #FFEDD5;
+  --orange-50:  #FFF7ED;
+
+  /* Semantic surfaces */
+  --surface-page:      var(--slate-50);
+  --surface-card:      var(--white);
+  --surface-raised:    var(--white);
+  --surface-sunken:    var(--slate-100);
+  --surface-inverse:   var(--slate-900);
+  --surface-inverse-2: var(--slate-950);
+  --surface-accent:    var(--orange-500);
+
+  /* Semantic text */
+  --text-strong:        var(--slate-900);
+  --text-body:          var(--slate-700);
+  --text-muted:         var(--slate-500);
+  --text-subtle:        var(--slate-400);
+  --text-on-inverse:    var(--slate-50);
+  --text-on-inverse-muted: var(--slate-400);
+  --text-on-accent:     var(--white);
+  --text-link:          var(--orange-500);
+
+  /* Semantic borders */
+  --border-subtle:   var(--slate-200);
+  --border-default:  var(--slate-300);
+  --border-strong:   var(--slate-500);
+  --border-on-inverse: rgba(255,255,255,0.12);
+  --border-accent:   var(--orange-500);
+
+  /* Status */
+  --success:    #16A34A;
+  --success-bg: #DCFCE7;
+  --warning:    #D97706;
+  --warning-bg: #FEF3C7;
+  --danger:     #DC2626;
+  --danger-bg:  #FEE2E2;
+  --info:       #0369A1;
+  --info-bg:    #E0F2FE;
+
+  /* Focus ring */
+  --focus-ring: 0 0 0 3px rgba(249,115,22,0.40);
+}
