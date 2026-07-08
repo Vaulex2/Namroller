@@ -4,7 +4,12 @@
     "products": "Mahsulotlar",
     "capabilities": "Imkoniyatlar",
     "contact": "Aloqa",
-    "cta": "Narx so'rash"
+    "cta": "Narx so'rash",
+    "menu": "Menyu"
+  },
+  "theme": {
+    "light": "Yorug' rejim",
+    "dark": "Tungi rejim"
   },
   "logo": {
     "tagline": "Sanoat echimlari"
@@ -17,8 +22,8 @@
     "viewProducts": "Mahsulotlarni ko'rish",
     "photoLabel": "Konveyer o'rnatish — foto",
     "trust": {
-      "yearsV": "18",     "yearsL": "yillik tajriba",
-      "projV": "240+",    "projL": "loyiha topshirildi",
+      "yearsV": "30",     "yearsL": "yillik tajriba",
+      "projV": "1000+",   "projL": "loyiha topshirildi",
       "deliveryV": "O'zb", "deliveryL": "butun mamlakat bo'ylab"
     },
     "specs": {
@@ -73,6 +78,13 @@
       "Systems": "Tizimlar"
     },
     "viewSpecs": "Xususiyatlar",
+    "search": {
+      "placeholder": "Katalog bo'yicha qidirish…",
+      "count":       "Ko'rsatildi: {{n}}",
+      "noResults":   "«{{query}}» bo'yicha hech narsa topilmadi.",
+      "reset":       "Filtrlarni tozalash",
+      "clear":       "Qidiruvni tozalash"
+    },
     "sections": {
       "overview":     "Umumiy ma'lumot",
       "process":      "Qanday ishlab chiqariladi",
@@ -106,11 +118,14 @@
       "phonePh":   "+998 90 123 45 67",
       "email":     "Elektron pochta (ixtiyoriy)",
       "emailPh":   "siz@kompaniya.uz",
+      "address":   "Yetkazib berish manzili (ixtiyoriy)",
+      "addressPh": "Shahar, tuman, ko'cha, ob'ekt…",
       "details":   "Mahsulot tafsilotlari",
       "detailsPh": "Mahsulot, material, o'lcham, miqdor, muddatlar…",
       "submit":    "So'rov yuborish",
       "sending":   "Yuborilmoqda…",
       "error":     "Yuborib bo'lmadi. Qayta urinib ko'ring.",
+      "captcha":   "Iltimos, robot emasligingizni tasdiqlang.",
       "privacy":   "Ma'lumotlaringiz maxfiy saqlanadi va uchinchi shaxslarga berilmaydi."
     },
     "info": {
@@ -140,6 +155,7 @@
       "submit":       "So'rov yuborish",
       "sending":      "Yuborilmoqda…",
       "required":     "Ism va telefon raqamini kiriting.",
+      "captcha":      "Iltimos, robot emasligingizni tasdiqlang.",
       "error":        "Yuborib bo'lmadi. Qayta urinib ko'ring.",
       "close":        "Yopish",
       "successTitle": "So'rov yuborildi",
@@ -151,6 +167,53 @@
   "chat": {
     "telegram": "Telegram'da yozish",
     "call":     "Qo'ng'iroq qilish"
+  },
+  "compare": {
+    "add":           "Taqqoslash",
+    "added":         "Taqqoslashda",
+    "remove":        "Taqqoslashdan olib tashlash",
+    "full":          "Ko'pi bilan 4 ta pozitsiyani taqqoslash mumkin",
+    "tray":          "Taqqoslashga: {{n}}",
+    "open":          "Taqqoslash",
+    "clear":         "Tozalash",
+    "empty":         "Taqqoslash uchun pozitsiya qo'shing",
+    "title":         "Mahsulotlarni taqqoslash",
+    "requestAll":    "Hammasi uchun narx so'rash",
+    "quoteNote":     "Quyidagi pozitsiyalar uchun narx hisoblab berishingizni so'rayman:",
+    "quoteSubtitle": "Narx hisobi: {{n}} ta pozitsiya"
+  },
+  "lightbox": {
+    "label":    "Rasmni ko'rish",
+    "prev":     "Oldingi",
+    "next":     "Keyingi",
+    "zoom":     "Kattalashtirish",
+    "playClip": "Videoni ko'rish"
+  },
+  "faq": {
+    "overline": "Savol-javob",
+    "heading":  "Ko'p beriladigan savollar",
+    "items": [
+      {
+        "q": "Ishlab chiqarish muddati qancha?",
+        "a": "Standart roliklar va barabanlar odatda omborda bo'ladi va bir necha kun ichida jo'natiladi. Buyurtma bo'yicha mahsulotlar va to'liq tizimlar hajmi va murakkabligiga qarab 2–4 hafta ichida tayyorlanadi."
+      },
+      {
+        "q": "Minimal buyurtma hajmi bormi?",
+        "a": "Qat'iy minimal chegara yo'q. Biz ta'mirlash uchun yakka pozitsiyalar bilan ham, yangi konveyer liniyalari uchun yirik partiyalar bilan ham ishlaymiz. Vazifangizni ayting — eng maqbul variantni taklif qilamiz."
+      },
+      {
+        "q": "Yetkazib berish va o'rnatishni bajarasizmi?",
+        "a": "Ha. Biz mahsulotni O'zbekiston bo'ylab yetkazib beramiz, to'liq tizimlar uchun esa ob'ektda o'rnatish, shef-montaj va ishga tushirishni o'z brigadamiz kuchi bilan bajaramiz."
+      },
+      {
+        "q": "Nostandart o'lchamlarga buyurtma berish mumkinmi?",
+        "a": "Ha. Biz nostandart uzunlik, diametr va turli nov burchaklariga ega roliklar, shuningdek lentangiz va ramangiz parametrlariga mos barabanlar ishlab chiqaramiz."
+      },
+      {
+        "q": "Mahsulotga qanday kafolat beriladi?",
+        "a": "Barcha mahsulotga sifat kafolati beriladi. Biz changli va abraziv sharoitlarda uzoq muddat ishlashga mo'ljallangan 2Z yopiq podshipniklar va St37 po'lat trubalardan foydalanamiz."
+      }
+    ]
   },
   "footer": {
     "desc":      "O'zbekistonda ishlab chiqarilgan qurilish va ommaviy material loyihalari uchun konveyer roliklari va to'liq tizimlar.",
@@ -188,6 +251,177 @@
         "l4": "O'rnatish"
       }
     }
+  },
+  "legal": {
+    "overline":  "Yuridik ma'lumot",
+    "toc":       "Mundarija",
+    "docLabel":  "Hujjat",
+    "verLabel":  "Versiya",
+    "effLabel":  "Amal qiladi",
+    "backTop":   "Yuqoriga",
+    "privacyLink": "Maxfiylik siyosati",
+    "termsLink":   "Foydalanish shartlari",
+    "cookiesLink": "Cookie siyosati"
+  },
+  "cookieBanner": {
+    "label":  "Cookie fayllari",
+    "text":   "Biz faqat zarur cookie'lardan foydalanamiz — tilni eslab qolish va shakllarni spamdan himoya qilish uchun. Reklama va kuzatuv cookie'lari yo'q.",
+    "accept": "Qabul qilish",
+    "more":   "Batafsil"
+  },
+  "privacy": {
+    "title":     "Maxfiylik siyosati",
+    "docId":     "NR-LEGAL-PP-01",
+    "version":   "1.0",
+    "effective": "2026-yil 1-yanvar",
+    "intro":     "Ushbu Siyosat Nam Roller namroller.uz sayti orqali qanday ma'lumotlarni to'plashi, ulardan qanday foydalanishi va ularni qanday himoya qilishini tavsiflaydi. Saytdan foydalanib, siz quyidagi shartlarga rozilik bildirasiz.",
+    "updated":   "So'nggi yangilanish: 2026-yil 1-yanvar",
+    "contactNote": "Ma'lumotlaringiz bo'yicha savollar uchun yozing:",
+    "sections": [
+      {
+        "title": "Qanday ma'lumotlarni to'playmiz",
+        "body": [
+          "Siz saytdagi shakllar orqali narx so'rovi yoki xabar yuborganingizda biz siz ko'rsatgan ma'lumotlarni olamiz: ism, telefon raqami, elektron pochta manzili, kompaniya nomi va murojaat matni.",
+          "Bundan tashqari, server xavfsizlik va saytning barqaror ishlashi uchun texnik ma'lumotlarni — IP-manzil, brauzer turi va tashrif vaqtini — avtomatik qayd etadi. Biz reklama maqsadida kuzatuv vositalaridan foydalanmaymiz."
+        ]
+      },
+      {
+        "title": "Ma'lumotlardan qanday foydalanamiz",
+        "body": [
+          "Olingan ma'lumotlar faqat sizning murojaatingizga javob berish, tijorat taklifini tayyorlash, yetkazib berishni kelishish va sayt ishini yaxshilash uchun ishlatiladi.",
+          "Biz sizning roziligingizsiz reklama xabarlarini yubormaymiz va kontaktlaringizdan so'rovingizga aloqador bo'lmagan maqsadlarda foydalanmaymiz."
+        ]
+      },
+      {
+        "title": "Uchinchi shaxslarga uzatish",
+        "body": [
+          "Biz sizning ma'lumotlaringizni tijorat maqsadida uchinchi shaxslarga sotmaymiz va bermaymiz.",
+          "Ma'lumotlar faqat sayt ishlashi uchun zarur xizmatlarda qayta ishlanadi: himoyalangan saqlash (Supabase), shakllarni spamdan himoya qilish (Cloudflare Turnstile) va savdo bo'limini xabardor qilish (Telegram). Ularning har biri faqat o'z vazifasi uchun zarur bo'lgan eng kam ma'lumotni oladi."
+        ]
+      },
+      {
+        "title": "Saqlash va himoya",
+        "body": [
+          "Ma'lumotlar kirish cheklangan himoyalangan serverlarda saqlanadi va ulardan savdo bo'limining cheklangan xodimlari foydalanadi.",
+          "Biz murojaatlarni so'rovni qayta ishlash va qonun talablarini bajarish uchun zarur bo'lgan muddat davomida saqlaymiz, so'ng o'chiramiz."
+        ]
+      },
+      {
+        "title": "Cookie fayllari",
+        "body": [
+          "Sayt minimal cookie'lardan foydalanadi: tanlangan tilni eslab qolish va shakllarni avtomatik botlardan himoya qilish uchun. Uchinchi tomon reklama va kuzatuv cookie'lari qo'llanilmaydi."
+        ]
+      },
+      {
+        "title": "Sizning huquqlaringiz",
+        "body": [
+          "Siz o'z ma'lumotlaringizga kirish, ularni tuzatish yoki o'chirishni so'rashingiz mumkin. Buning uchun quyida ko'rsatilgan elektron pochta orqali biz bilan bog'laning, biz so'rovni oqilona muddatda ko'rib chiqamiz."
+        ]
+      },
+      {
+        "title": "Siyosatdagi o'zgarishlar",
+        "body": [
+          "Biz ushbu Siyosatni vaqti-vaqti bilan yangilashimiz mumkin. Joriy versiya har doim ushbu sahifada so'nggi o'zgarish sanasi bilan e'lon qilinadi."
+        ]
+      }
+    ]
+  },
+  "terms": {
+    "title":     "Foydalanish shartlari",
+    "docId":     "NR-LEGAL-TOS-01",
+    "version":   "1.0",
+    "effective": "2026-yil 1-yanvar",
+    "intro":     "Ushbu Shartlar namroller.uz saytidan foydalanishni tartibga soladi. Iltimos, saytdan foydalanish va murojaat yuborishdan oldin ular bilan tanishing.",
+    "updated":   "So'nggi yangilanish: 2026-yil 1-yanvar",
+    "contactNote": "Shartlar bo'yicha savollar uchun yozing:",
+    "sections": [
+      {
+        "title": "Shartlarni qabul qilish",
+        "body": [
+          "namroller.uz saytidan foydalanib, siz ushbu Shartlarga rozilik bildirasiz. Agar siz ularga rozi bo'lmasangiz, iltimos, saytdan foydalanmang."
+        ]
+      },
+      {
+        "title": "Mahsulot haqida ma'lumot",
+        "body": [
+          "Mahsulotning texnik xususiyatlari, tasvirlari va tavsiflari tanishish uchun keltirilgan. Aniq parametrlar, materiallar va butlash buyurtma rasmiylashtirilganda yozma ravishda tasdiqlanadi.",
+          "Biz katalog, xususiyatlar va mahsulot mavjudligini oldindan ogohlantirmasdan o'zgartirish huquqini saqlab qolamiz."
+        ]
+      },
+      {
+        "title": "So'rovlar va tijorat takliflari",
+        "body": [
+          "Narx so'rovi yoki murojaat shaklini yuborish — bu maslahat uchun ariza bo'lib, shartnoma tuzish emas. Tijorat taklifi unda ko'rsatilgan muddat davomida amal qiladi.",
+          "Tomonlarning majburiyatlari faqat alohida yetkazib berish shartnomasi imzolangandan so'ng vujudga keladi."
+        ]
+      },
+      {
+        "title": "Intellektual mulk",
+        "body": [
+          "Sayt mazmuni — matnlar, logotip, tasvirlar, grafika va dizayn — Nam Rollerga tegishli. Materiallardan yozma ruxsatsiz foydalanishga yo'l qo'yilmaydi."
+        ]
+      },
+      {
+        "title": "Maqbul foydalanish",
+        "body": [
+          "Siz saytdan g'ayriqonuniy maqsadlarda foydalanmaslik, uning ishini buzmaslik, ruxsatsiz kirishga urinmaslik va ruxsatsiz ma'lumot to'plash uchun avtomatlashtirilgan vositalardan foydalanmaslik majburiyatini olasiz."
+        ]
+      },
+      {
+        "title": "Javobgarlikni cheklash",
+        "body": [
+          "Sayt «bor holicha» taqdim etiladi. Biz ma'lumot aniqligini saqlashga intilamiz, ammo xatolar yo'qligini kafolatlamaymiz va saytdan foydalanish bilan bog'liq bilvosita zararlar uchun javobgar emasmiz.",
+          "Saytda tashqi resurslarga havolalar bo'lishi mumkin, ularning mazmuni uchun biz javobgar emasmiz."
+        ]
+      },
+      {
+        "title": "Amaldagi qonun",
+        "body": [
+          "Ushbu Shartlar O'zbekiston Respublikasi qonunchiligi bilan tartibga solinadi. Nizolar amaldagi qonunchilikka muvofiq hal etiladi."
+        ]
+      }
+    ]
+  },
+  "cookies": {
+    "title":     "Cookie fayllaridan foydalanish siyosati",
+    "intro":     "Ushbu sahifa namroller.uz sayti qanday cookie fayllaridan va nima uchun foydalanishini tushuntiradi. Biz faqat saytning ishlashi uchun zarur bo'lganlarni qo'llaymiz.",
+    "updated":   "So'nggi yangilanish: 2026-yil 1-yanvar",
+    "contactNote": "Cookie bo'yicha savollar uchun yozing:",
+    "sections": [
+      {
+        "title": "Cookie fayllari nima",
+        "body": [
+          "Cookie fayllari — bu sayt brauzeringizda saqlaydigan kichik matnli fayllar. Ular saytga sozlamalaringizni eslab qolishga va keyingi tashriflarda to'g'ri ishlashga yordam beradi."
+        ]
+      },
+      {
+        "title": "Qaysi cookie'lardan foydalanamiz",
+        "body": [
+          "Til sozlamalari — saytning kerakli versiyada ochilishi uchun siz tanlagan tilni (rus yoki o'zbek) eslab qoladi.",
+          "Spamdan himoya — Cloudflare Turnstile shakllarni yuborishda odamlarni avtomatik botlardan ajratish uchun vaqtinchalik texnik cookie'dan foydalanadi.",
+          "Biz uchinchi tomon reklama, marketing yoki tahlil cookie'laridan foydalanmaymiz."
+        ]
+      },
+      {
+        "title": "Rozilik va boshqaruv",
+        "body": [
+          "Biz foydalanadigan cookie'lar saytning ishlashi uchun qat'iy zarur, shuning uchun ular asosiy funksiyalarni ta'minlash uchun qo'llaniladi.",
+          "Siz brauzeringiz sozlamalarida cookie'larni o'chirishingiz yoki bloklashingiz mumkin. Shuni hisobga olingki, bunda ba'zi funksiyalar — tilni eslab qolish va shakllarni himoya qilish — to'g'ri ishlamasligi mumkin."
+        ]
+      },
+      {
+        "title": "Uchinchi tomon xizmatlari",
+        "body": [
+          "Shakllarni himoya qilish Cloudflare Turnstile xizmati orqali amalga oshiriladi, u o'zining vaqtinchalik cookie'sini o'rnatishi mumkin. Uning ishlatilishi Cloudflare maxfiylik siyosati bilan tartibga solinadi."
+        ]
+      },
+      {
+        "title": "O'zgarishlar",
+        "body": [
+          "Biz ushbu Cookie siyosatini yangilashimiz mumkin. Joriy versiya har doim ushbu sahifada so'nggi o'zgarish sanasi bilan e'lon qilinadi."
+        ]
+      }
+    ]
   },
   "cat": {
     "Idlers":  "Roliklar",
@@ -422,11 +656,235 @@
       "submit": "Sharhni yuborish",
       "sending": "Yuborilmoqda…",
       "required": "Ism va sharh matnini kiriting.",
+      "captcha": "Iltimos, robot emasligingizni tasdiqlang.",
       "error": "Sharhni yuborib bo'lmadi. Qayta urinib ko'ring.",
       "successTitle": "Rahmat!",
-      "successBody": "Sharhingiz e'lon qilindi.",
+      "successBody": "Sharhingiz qabul qilindi va ko'rib chiqilgach e'lon qilinadi.",
       "done": "Tayyor",
       "close": "Yopish"
+    }
+  },
+  "admin": {
+    "title": "Admin panel",
+    "loading": "Yuklanmoqda…",
+    "notConfigured": "Supabase sozlanmagan. Admin panel mavjud emas.",
+    "notAuthorized": "Bu hisob admin emas. Kirish uchun administratorga murojaat qiling.",
+    "signOut": "Chiqish",
+    "refresh": "Yangilash",
+    "tabs": {
+      "overview": "Umumiy",
+      "quotes": "So'rovlar",
+      "products": "Katalog",
+      "analytics": "Tahlil",
+      "reviews": "Sharhlar",
+      "videos": "Videolar"
+    },
+    "theme": {
+      "toLight": "Yorug' rejim",
+      "toDark": "Qorong'i rejim"
+    },
+    "stats": {
+      "total": "Jami so'rovlar"
+    },
+    "status": {
+      "new": "Ko'rib chiqilishi kerak",
+      "accepted": "Qabul qilingan",
+      "completed": "Yakunlangan"
+    },
+    "login": {
+      "title": "Admin kirish",
+      "subtitle": "Davom etish uchun tizimga kiring.",
+      "email": "Elektron pochta",
+      "password": "Parol",
+      "signIn": "Kirish",
+      "signingIn": "Kirilmoqda…",
+      "required": "Elektron pochta va parolni kiriting.",
+      "error": "Kirib bo'lmadi. Ma'lumotlarni tekshiring."
+    },
+    "quotes": {
+      "filterAll": "Hammasi",
+      "searchPh": "Ism, telefon yoki mahsulot bo'yicha qidirish…",
+      "showing": "Ko'rsatilgan: {{n}}",
+      "empty": "So'rovlar yo'q.",
+      "loadError": "So'rovlarni yuklab bo'lmadi.",
+      "actionError": "Amalni bajarib bo'lmadi.",
+      "delete": "O'chirish",
+      "confirmDelete": "Bu so'rovni butunlay o'chirasizmi?",
+      "phone": "Telefon",
+      "email": "Pochta",
+      "product": "Mahsulot",
+      "quantity": "Miqdori",
+      "address": "Manzil",
+      "note": "Izoh",
+      "source": "Manba",
+      "assignee": "Mas'ul",
+      "stale": "Kechikkan",
+      "details": "Batafsil",
+      "exportCsv": "CSV eksport",
+      "exporting": "Eksport…",
+      "selected": "Tanlangan: {{n}}",
+      "selectRow": "So'rovni tanlash",
+      "bulkApply": "Qo'llash",
+      "bulkClear": "Tanlovni bekor qilish",
+      "bulkDone": "Bajarildi: {{done}}, o'tkazib yuborildi: {{skipped}}",
+      "acceptAction": "Qabul qilish",
+      "setPriceAction": "Narx belgilash",
+      "finishAction": "Yakunlash",
+      "stepper": {
+        "accept": "Qabul",
+        "price": "Narx",
+        "finish": "Yakun"
+      }
+    },
+    "detail": {
+      "close": "Yopish",
+      "loadError": "So'rovni yuklab bo'lmadi.",
+      "actionError": "Amalni bajarib bo'lmadi.",
+      "pipeline": "Amallar",
+      "moveTo": "O'tkazish:",
+      "finishNeedsPrice": "Yakunlash uchun avval narxni belgilang.",
+      "price": "Narx",
+      "pricedBy": "belgiladi: {{email}}, {{date}}",
+      "amountPh": "Summa",
+      "setPrice": "Narx belgilash",
+      "priceLocked": "Narxni so'rov qabul qilingandan (qo'ng'iroqdan) keyin belgilash mumkin.",
+      "priceInvalid": "To'g'ri summani kiriting.",
+      "assignee": "Mas'ul",
+      "unassigned": "Tayinlanmagan",
+      "related": "Shu telefondan boshqa so'rovlar ({{n}})",
+      "addNote": "Ichki izoh",
+      "notePh": "Jamoa uchun izoh (mijozga ko'rinmaydi)…",
+      "noteAdd": "Qo'shish",
+      "timeline": "Tarix",
+      "timelineEmpty": "Hozircha amallar yo'q.",
+      "eventPrice": "Narx belgilandi: {{price}}",
+      "eventAssign": "Mas'ul tayinlandi: {{email}}",
+      "eventUnassign": "Mas'ul olib tashlandi"
+    },
+    "analytics": {
+      "loadError": "Tahlilni yuklab bo'lmadi.",
+      "empty": "Hozircha ma'lumot yo'q.",
+      "totalN": "{{days}} kunlik so'rovlar",
+      "acceptedRate": "Qabul qilingan",
+      "completedRate": "Yakunlangan",
+      "volume": "So'rovlar dinamikasi",
+      "granularity": {
+        "day": "Kun",
+        "week": "Hafta",
+        "month": "Oy",
+        "year": "Yil"
+      },
+      "topProducts": "Mashhur mahsulotlar",
+      "sources": "Manbalar",
+      "langs": "Tillar"
+    },
+    "reviews": {
+      "intro": "Barcha sharhlar. Tasdiqlang (saytda ko'rinadi), yashiring yoki o'chiring.",
+      "empty": "Sharhlar yo'q.",
+      "loadError": "Sharhlarni yuklab bo'lmadi.",
+      "actionError": "Amalni bajarib bo'lmadi.",
+      "approve": "Tasdiqlash",
+      "unapprove": "Yashirish",
+      "delete": "O'chirish",
+      "confirmDelete": "Bu sharhni butunlay o'chirishni tasdiqlaysizmi?",
+      "statusApproved": "E'lon qilingan",
+      "statusPending": "Kutilmoqda",
+      "searchPh": "Ism yoki matn bo'yicha qidirish…",
+      "filter_all": "Hammasi",
+      "filter_pending": "Kutilayotgan",
+      "filter_approved": "Tasdiqlangan",
+      "reviewer": "Muallif",
+      "date": "Sana",
+      "sort": {
+        "date_desc": "Avval yangilari",
+        "date_asc": "Avval eskilari",
+        "rating_desc": "Reyting: yuqoridan",
+        "rating_asc": "Reyting: pastdan"
+      },
+      "bulkApprove": "Tanlanganlarni tasdiqlash",
+      "bulkReject": "Tanlanganlarni yashirish",
+      "bulkApproved": "Tasdiqlandi: {{n}}",
+      "bulkRejected": "Yashirildi: {{n}}",
+      "confirmBulkDelete": "Tanlangan sharhlarni ({{n}}) butunlay o'chirasizmi?",
+      "bulkDeleted": "O'chirildi: {{n}}"
+    },
+    "videos": {
+      "uploadTitle": "Yangi video qo'shish",
+      "videoFile": "Video fayl",
+      "posterFile": "Poster (ixtiyoriy)",
+      "titleField": "Sarlavha (ixtiyoriy)",
+      "titlePh": "Masalan, Payvandlash sexi",
+      "upload": "Yuklash",
+      "uploading": "Yuklanmoqda…",
+      "needVideo": "Video faylni tanlang.",
+      "uploadError": "Videoni yuklab bo'lmadi.",
+      "loadError": "Videolarni yuklab bo'lmadi.",
+      "actionError": "Amalni bajarib bo'lmadi.",
+      "empty": "Hali video yo'q.",
+      "published": "E'lon qilingan",
+      "hidden": "Yashirilgan",
+      "publish": "E'lon qilish",
+      "hide": "Yashirish",
+      "delete": "O'chirish",
+      "confirmDelete": "Bu videoni o'chirishni tasdiqlaysizmi?"
+    },
+    "products": {
+      "loadError": "Katalogni yuklab bo'lmadi.",
+      "actionError": "Amalni bajarib bo'lmadi.",
+      "intro": "Katalog mahsulotlarini boshqaring: qo'shing, xususiyatlarini tahrirlang, tartibini va e'lonini o'zgartiring.",
+      "add": "Mahsulot qo'shish",
+      "edit": "Mahsulotni tahrirlash",
+      "empty": "Hozircha mahsulot yo'q.",
+      "published": "E'lon qilingan",
+      "hidden": "Yashirilgan",
+      "confirmDelete": "Bu mahsulotni butunlay o'chirasizmi?",
+      "deleted": "Mahsulot o'chirildi",
+      "id": "Identifikator (slug)",
+      "idInvalid": "Faqat kichik lotin harflari, raqamlar va defis.",
+      "idTaken": "Bu identifikator band — boshqasini tanlang.",
+      "idLocked": "Yaratilgandan keyin o'zgartirib bo'lmaydi.",
+      "idHint": "Tarjima kaliti sifatida ishlatiladi (pd.<id>.*) va keyinroq o'zgartirilmaydi.",
+      "name": "Nomi (standart)",
+      "blurb": "Qisqa tavsif (standart)",
+      "category": "Toifa",
+      "icon": "Ikonka",
+      "diameter": "Diametri",
+      "load": "Yuklama",
+      "image": "Rasm",
+      "uploading": "Yuklanmoqda…",
+      "imageError": "Rasmni yuklab bo'lmadi.",
+      "specs": "Xususiyatlar",
+      "specLabel": "Parametr",
+      "specValue": "Qiymat",
+      "specUnit": "O'lchov birligi",
+      "addSpec": "Qator qo'shish",
+      "processIcons": "Ishlab chiqarish bosqichlari ikonkalari",
+      "featureIcons": "Xususiyat ikonkalari",
+      "iconListHint": "Vergul bilan ajrating. Tarjima fayllaridagi pd.<id>.process / features massivlari uzunligiga mos bo'lishi kerak.",
+      "save": "Saqlash",
+      "saving": "Saqlanmoqda…",
+      "saved": "O'zgarishlar saqlandi",
+      "created": "Mahsulot yaratildi",
+      "saveError": "Mahsulotni saqlab bo'lmadi."
+    },
+    "overview": {
+      "loadError": "Umumiy ma'lumotlarni yuklab bo'lmadi.",
+      "pending": "Yangi so'rovlar",
+      "stale": "Kechikkanlar",
+      "pendingReviews": "Moderatsiyadagi sharhlar",
+      "weekVolume": "Haftalik so'rovlar",
+      "vsLastWeek": "o'tgan haftaga nisbatan",
+      "activity": "So'nggi hodisalar",
+      "activityEmpty": "Hozircha hodisalar yo'q.",
+      "newReview": "{{name}}dan yangi sharh",
+      "newVideo": "Video yuklandi: {{title}}",
+      "untitled": "nomsiz",
+      "team": "Jamoa ishi",
+      "admin": "Administrator",
+      "assigned": "Tayinlangan",
+      "completed": "Yakunlangan",
+      "teamEmpty": "Hozircha tayinlangan so'rovlar yo'q.",
+      "teamCaveat": "Faqat so'nggi 200 ta so'rov ko'rsatilgan; javob berish vaqti hisobga olinmaydi."
     }
   }
 }

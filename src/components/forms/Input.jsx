@@ -20,7 +20,7 @@ export function Input({
   const [focused, setFocused] = React.useState(false);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 5, fontFamily: 'var(--font-body)', ...style }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 5, minWidth: 0, fontFamily: 'var(--font-body)', ...style }}>
       {label && (
         <label htmlFor={inputId} style={{
           fontFamily: 'var(--font-body)', fontWeight: 'var(--fw-semibold)',

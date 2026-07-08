@@ -13,3 +13,7 @@ export const EMAIL_HREF = `mailto:${EMAIL}`;
 // TODO(namroller): set this to your actual Telegram handle.
 export const TELEGRAM_USERNAME = 'namroller';
 export const TELEGRAM_HREF = `https://t.me/${TELEGRAM_USERNAME}`;
+
+// Instagram company profile.
+export const INSTAGRAM_USERNAME = 'namrollerr';
+export const INSTAGRAM_HREF = `https://www.instagram.com/${INSTAGRAM_USERNAME}/`;

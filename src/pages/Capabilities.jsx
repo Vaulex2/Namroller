@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { HeroBackdrop } from './HeroBackdrop';
 import { Reveal } from '../components/motion/Reveal';
 import { Stagger, StaggerItem } from '../components/motion/Stagger';
+import { fetchCapabilityVideos } from '../lib/videos';
 
 /* Manufacturing clips. All are vertical (9:16) phone footage, so they render
    in portrait cards. Posters live in /public/posters and preload="none" keeps
@@ -44,6 +45,19 @@ function CapVideoCard({ video }) {
 export function Capabilities() {
   const { t } = useTranslation();
 
+  // Admin-managed videos from Supabase; fall back to the hardcoded seed when the
+  // table is empty or Supabase isn't configured (keeps the page working offline).
+  const [dbVideos, setDbVideos] = React.useState(null);
+  React.useEffect(() => {
+    let active = true;
+    fetchCapabilityVideos()
+      .then((v) => { if (active) setDbVideos(v); })
+      .catch(() => { if (active) setDbVideos([]); });
+    return () => { active = false; };
+  }, []);
+
+  const videos = dbVideos && dbVideos.length ? dbVideos : CAP_VIDEOS;
+
   return (
     <div style={{ background: 'var(--surface-page)', minHeight: '60vh' }}>
       {/* Page header */}
@@ -77,13 +91,16 @@ export function Capabilities() {
 
       {/* Content area — vertical manufacturing clips. */}
       <div style={{ maxWidth: 'var(--container)', margin: '0 auto', padding: '36px var(--space-6) 88px' }}>
-        <Stagger style={{
+        {/* Key by data source so the Stagger fully remounts (and re-runs its
+            reveal) when the async DB list replaces the seed fallback — otherwise
+            the swapped-in items mount already-settled and stay hidden. */}
+        <Stagger key={dbVideos ? 'db' : 'seed'} style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
           gap: 20,
         }}>
-          {CAP_VIDEOS.map((v, i) => (
-            <StaggerItem key={i}>
+          {videos.map((v, i) => (
+            <StaggerItem key={v.id || v.src || i}>
               <CapVideoCard video={v} />
             </StaggerItem>
           ))}

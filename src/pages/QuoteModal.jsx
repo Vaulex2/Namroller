@@ -6,6 +6,8 @@ import { Input } from '../components/forms/Input';
 import { Card } from '../components/surfaces/Card';
 import { Icon } from './Icon';
 import { submitQuote } from '../lib/quotes';
+import { Turnstile } from '../components/forms/Turnstile';
+import { isTurnstileEnabled } from '../lib/turnstile';
 
 const fieldLabel = {
   display: 'block', marginBottom: 6,
@@ -15,19 +17,31 @@ const fieldLabel = {
 };
 
 /* Dialog body — mounted only while open, so each open starts with fresh state
-   (no state-reset effect needed). */
-function QuoteDialog({ onClose, product }) {
+   (no state-reset effect needed).
+
+   Accepts a single `product` (product page) or a `products` array (compare
+   tray → bundled quote). When multiple are passed, their names are listed in
+   the note and folded into the productName so the whole shortlist reaches
+   sales in one message. */
+function QuoteDialog({ onClose, product, products }) {
   const { t, i18n } = useTranslation();
-  const [form, setForm] = React.useState({ name: '', phone: '', email: '', quantity: '', note: '' });
+
+  const list = products && products.length ? products : product ? [product] : [];
+  const names = list.map((p) => t(`pd.${p.id}.name`, p.name));
+  const isBundle = list.length > 1;
+  const productName = names.join(', ');
+
+  const [form, setForm] = React.useState({
+    name: '', phone: '', email: '', quantity: '',
+    // Prefill the note with the shortlist so the buyer can edit around it.
+    note: isBundle ? `${t('compare.quoteNote')}\n${names.map((n) => `• ${n}`).join('\n')}` : '',
+  });
+  const [token, setToken] = React.useState('');
   const [busy, setBusy] = React.useState(false);
   const [done, setDone] = React.useState(false);
   const [error, setError] = React.useState('');
 
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
-
-  const productName = product
-    ? t(`pd.${product.id}.name`, product.name)
-    : '';
 
   // External-system sync only: Escape-to-close + body scroll lock.
   React.useEffect(() => {
@@ -44,18 +58,25 @@ function QuoteDialog({ onClose, product }) {
       setError(t('quote.form.required'));
       return;
     }
+    if (isTurnstileEnabled && !token) {
+      setError(t('quote.form.captcha'));
+      return;
+    }
     setBusy(true); setError('');
     try {
       await submitQuote({
-        productId: product?.id,
-        productName: product?.name,
+        productId: list.length === 1 ? list[0].id : undefined,
+        productName: list.map((p) => p.name).join(', ') || undefined,
         name: form.name.trim(),
         phone: form.phone.trim(),
         email: form.email.trim(),
         quantity: form.quantity.trim(),
         note: form.note.trim(),
         lang: i18n.language,
-        source: `Product page · ${product?.name || product?.id || '—'}`,
+        source: isBundle
+          ? `Compare tray · ${list.length} products`
+          : `Product page · ${list[0]?.name || list[0]?.id || '—'}`,
+        token,
       });
       setDone(true);
     } catch {
@@ -71,11 +92,19 @@ function QuoteDialog({ onClose, product }) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
+      transition={{ duration: 0.2, ease: 'linear' }}
       style={{
         position: 'fixed', inset: 0, zIndex: 100,
-        background: 'rgba(2,6,23,0.6)', backdropFilter: 'blur(2px)',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        padding: 'var(--space-6)',
+        // Solid scrim (no backdrop-filter): blurring the whole product page
+        // behind the overlay every frame is what made the open janky.
+        background: 'rgba(2,6,23,0.72)',
+        // overflowY:auto + block layout (not flex-centered) so the overlay
+        // itself scrolls when content is taller than the viewport — critical
+        // on mobile where the virtual keyboard can shrink visible height
+        // enough to clip the top of the form with no way to scroll back to it.
+        overflowY: 'auto',
+        padding: 'var(--space-6) var(--space-4)',
+        willChange: 'opacity',
       }}
     >
       <motion.div
@@ -84,19 +113,21 @@ function QuoteDialog({ onClose, product }) {
         exit={{ opacity: 0, y: 24, scale: 0.98 }}
         transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
         onClick={(e) => e.stopPropagation()}
-        style={{ width: '100%', maxWidth: 480 }}
+        style={{ width: '100%', maxWidth: 480, margin: '0 auto', willChange: 'transform, opacity' }}
         role="dialog"
         aria-modal="true"
       >
-        <Card accentBar padding={32} style={{ overflow: 'visible' }}>
+        <Card accentBar padding={32} className="nr-modal-card" style={{ overflow: 'visible' }}>
           {/* Close button */}
           <button
             type="button"
             onClick={onClose}
             aria-label={t('quote.form.close')}
             style={{
-              position: 'absolute', top: 14, right: 14, background: 'none',
-              border: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 4,
+              position: 'absolute', top: 8, right: 8, background: 'none',
+              border: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 8,
+              width: 40, height: 40, display: 'inline-flex',
+              alignItems: 'center', justifyContent: 'center',
             }}
           >
             <Icon name="close" size={20} />
@@ -146,11 +177,13 @@ function QuoteDialog({ onClose, product }) {
                   fontFamily: 'var(--font-body)', fontSize: 'var(--fs-body-sm)',
                   color: 'var(--text-muted)',
                 }}>
-                  {t('quote.form.subtitle', { product: productName })}
+                  {isBundle
+                    ? t('compare.quoteSubtitle', { n: list.length })
+                    : t('quote.form.subtitle', { product: productName })}
                 </p>
               )}
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+              <div className="nr-modal-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
                 <Input
                   label={t('quote.form.name')}
                   value={form.name}
@@ -170,7 +203,7 @@ function QuoteDialog({ onClose, product }) {
                 />
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginTop: 16 }}>
+              <div className="nr-modal-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginTop: 16 }}>
                 <Input
                   label={t('quote.form.email')}
                   type="email"
@@ -209,6 +242,12 @@ function QuoteDialog({ onClose, product }) {
                 />
               </div>
 
+              {isTurnstileEnabled && (
+                <div style={{ marginTop: 16 }}>
+                  <Turnstile onToken={setToken} />
+                </div>
+              )}
+
               {error && (
                 <p style={{ marginTop: 12, color: 'var(--danger)', fontSize: 'var(--fs-body-sm)' }}>
                   {error}
@@ -216,7 +255,10 @@ function QuoteDialog({ onClose, product }) {
               )}
 
               <div style={{ marginTop: 24 }}>
-                <Button type="submit" variant="primary" size="lg" fullWidth disabled={busy}>
+                <Button
+                  type="submit" variant="primary" size="lg" fullWidth
+                  disabled={busy || (isTurnstileEnabled && !token)}
+                >
                   {busy ? t('quote.form.sending') : t('quote.form.submit')}
                 </Button>
               </div>
@@ -236,10 +278,10 @@ function QuoteDialog({ onClose, product }) {
   );
 }
 
-export function QuoteModal({ open, onClose, product }) {
+export function QuoteModal({ open, onClose, product, products }) {
   return (
     <AnimatePresence>
-      {open && <QuoteDialog onClose={onClose} product={product} />}
+      {open && <QuoteDialog onClose={onClose} product={product} products={products} />}
     </AnimatePresence>
   );
 }

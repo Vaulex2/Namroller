@@ -12,7 +12,7 @@ import { NR_PROJECTS } from '../../pages/projects';
    reveal a project detail card. Pins stagger in and pulse; static & tappable
    under reduced motion. */
 
-function Pin({ p, active, onActivate, onClear }) {
+function Pin({ p, active, onActivate, onClear, onToggle }) {
   const { t } = useTranslation();
   const reduce = useReducedMotion();
   const city = t(`projects.items.${p.id}.city`, p.id);
@@ -22,7 +22,7 @@ function Pin({ p, active, onActivate, onClear }) {
       style={{ position: 'absolute', left: 0, top: 0, transform: 'translate(-50%, -50%)' }}
       onMouseEnter={onActivate}
       onMouseLeave={onClear}
-      onClick={onActivate}
+      onClick={onToggle}
     >
       {/* Pulse halo */}
       {!reduce && (
@@ -63,7 +63,11 @@ function Pin({ p, active, onActivate, onClear }) {
         {city}
       </span>
 
-      {/* Detail card */}
+      {/* Detail card — edge pins anchor left/right instead of centering, so
+          the card can't spill past the map/viewport edge (nukus, urgench on
+          the left; namangan, fergana, andijan on the right, per NR_PROJECTS'
+          x coordinates). A capped vw width adds a further safety margin on
+          narrow phones regardless of exact pin position. */}
       <AnimatePresence>
         {active && (
           <motion.div
@@ -72,8 +76,13 @@ function Pin({ p, active, onActivate, onClear }) {
             exit={reduce ? undefined : { opacity: 0, y: 6, scale: 0.96 }}
             transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
             style={{
-              position: 'absolute', left: '50%', bottom: 'calc(100% + 12px)', transform: 'translateX(-50%)',
-              width: 220, zIndex: 5, pointerEvents: 'none',
+              position: 'absolute', bottom: 'calc(100% + 12px)',
+              ...(p.x <= 30
+                ? { left: 0 }
+                : p.x >= 78
+                  ? { right: 0 }
+                  : { left: '50%', transform: 'translateX(-50%)' }),
+              width: 'min(220px, 62vw)', zIndex: 5, pointerEvents: 'none',
               background: 'var(--surface-card)',
               border: '1px solid var(--border-default)',
               borderRadius: 'var(--radius-md)',
@@ -123,7 +132,7 @@ export function ProjectsMap() {
   const [activeId, setActiveId] = useState(null);
 
   return (
-    <section style={{ background: 'var(--surface-page)', borderTop: '1px solid var(--border-subtle)' }}>
+    <section style={{ background: 'var(--surface-page)', borderTop: '1px solid var(--border-subtle)', overflow: 'hidden' }}>
       <div style={{ maxWidth: 'var(--container)', margin: '0 auto', padding: '80px var(--space-6)' }}>
         <Reveal style={{ textAlign: 'center', maxWidth: 720, margin: '0 auto 40px' }}>
           <div style={{
@@ -171,6 +180,9 @@ export function ProjectsMap() {
                 active={activeId === p.id}
                 onActivate={() => setActiveId(p.id)}
                 onClear={() => setActiveId((cur) => (cur === p.id ? null : cur))}
+                // Touch has no hover-to-clear gesture, so tapping the
+                // already-open pin again is the only way to dismiss it there.
+                onToggle={() => setActiveId((cur) => (cur === p.id ? null : p.id))}
               />
             </StaggerItem>
           ))}

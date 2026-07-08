@@ -17,7 +17,6 @@ function toColumns(list) {
 export function Testimonials() {
   const { t, i18n } = useTranslation();
   const [remote, setRemote] = React.useState(null); // null = not loaded; [] = loaded/empty
-  const [added, setAdded] = React.useState([]);      // reviews submitted this session
   const [open, setOpen] = React.useState(false);
 
   // Localized seed: merge language-neutral meta (name/image/rating) with the
@@ -41,12 +40,11 @@ export function Testimonials() {
     return () => { alive = false; };
   }, []);
 
-  // Use stored reviews when present, otherwise the localized seed.
+  // Use stored (approved) reviews when present, otherwise the localized seed.
+  // New submissions are held for moderation, so they are NOT injected here — the
+  // modal shows a "pending approval" confirmation instead.
   const base = remote && remote.length ? remote : localizedSeed;
-  const display = [...added, ...base];
-  const [c1, c2, c3] = toColumns(display);
-
-  const handleAdded = (review) => setAdded((prev) => [review, ...prev]);
+  const [c1, c2, c3] = toColumns(base);
 
   return (
     <section style={{ background: 'var(--surface-page)' }}>
@@ -116,7 +114,7 @@ export function Testimonials() {
         `}</style>
       </div>
 
-      <AddReviewModal open={open} onClose={() => setOpen(false)} onAdded={handleAdded} />
+      <AddReviewModal open={open} onClose={() => setOpen(false)} />
     </section>
   );
 }

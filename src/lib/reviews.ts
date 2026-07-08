@@ -3,16 +3,11 @@ import type { Testimonial } from "../components/ui/testimonials-columns-1";
 
 /* Reviews API.
  *
- * Expected Supabase table:
- *   create table reviews (
- *     id          uuid primary key default gen_random_uuid(),
- *     name        text not null,
- *     role        text,
- *     text        text not null,
- *     rating      int  not null default 5,
- *     image       text,
- *     created_at  timestamptz not null default now()
- *   );
+ * Reads use the anon client and only return APPROVED rows (enforced by the
+ * SELECT policy in supabase/schema/reviews.sql). Writes go through the
+ * `submit-review` edge function, which verifies a Cloudflare Turnstile token and
+ * inserts unapproved (approved=false) with the service role — so a new review
+ * does not appear until a human approves it in the dashboard.
  *
  * The placeholder branches (when Supabase isn't configured yet) keep the UI
  * working with seed data; once env vars + table exist, the real queries run
@@ -24,6 +19,9 @@ export type ReviewInput = {
   text: string;
   rating: number;
   image?: string;
+  // Cloudflare Turnstile token from the form's <Turnstile> widget. Omitted in
+  // demo mode (no site key).
+  token?: string;
 };
 
 const TABLE = "reviews";
@@ -52,13 +50,25 @@ export async function addReview(input: ReviewInput): Promise<Testimonial> {
     return { ...input };
   }
 
-  // TODO(real insert): runs once Supabase is configured.
-  const { data, error } = await supabase
-    .from(TABLE)
-    .insert(input)
-    .select("name, role, text, rating, image")
-    .single();
+  const { data, error } = await supabase.functions.invoke("submit-review", {
+    body: {
+      name: input.name,
+      role: input.role,
+      text: input.text,
+      rating: input.rating,
+      token: input.token,
+    },
+  });
 
   if (error) throw error;
-  return data as Testimonial;
+  if (!data?.ok) throw new Error(data?.error || "submit-review failed");
+
+  // The review is held for moderation, so it is NOT shown immediately. Echo the
+  // submitted values back only so the success UI can reference them if needed.
+  return {
+    name: input.name,
+    role: input.role,
+    text: input.text,
+    rating: input.rating,
+  };
 }

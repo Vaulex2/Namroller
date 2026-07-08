@@ -65,3 +65,37 @@
   /* Focus ring */
   --focus-ring: 0 0 0 3px rgba(249,115,22,0.40);
 }
+
+/* Dark theme — remap only the *semantic* tokens so the whole app recolors
+   without per-component edits. The raw slate/orange scales stay fixed; the
+   accent is intentionally left unchanged. "Inverse" zones (header, hero,
+   footer) already use slate-900/950 and stay dark by design. */
+:root[data-theme="dark"] {
+  --surface-page:      var(--slate-950);
+  --surface-card:      var(--slate-900);
+  --surface-raised:    var(--slate-800);
+  --surface-sunken:    var(--slate-800);
+  --surface-inverse:   #060B18;
+  --surface-inverse-2: #04070F;
+
+  --text-strong:        var(--slate-50);
+  --text-body:          var(--slate-300);
+  --text-muted:         var(--slate-400);
+  --text-subtle:        var(--slate-500);
+
+  --border-subtle:   rgba(255,255,255,0.08);
+  --border-default:  rgba(255,255,255,0.14);
+  --border-strong:   rgba(255,255,255,0.28);
+
+  /* Tinted status backgrounds so success/danger stay legible on dark cards */
+  --success-bg: rgba(22,163,74,0.18);
+  --warning-bg: rgba(217,119,6,0.18);
+  --danger-bg:  rgba(220,38,38,0.18);
+  --info-bg:    rgba(3,105,161,0.18);
+
+  /* Warm-tinted accent surfaces used on light chips (Contact info, etc.) */
+  --orange-50:  rgba(249,115,22,0.12);
+  --orange-100: rgba(249,115,22,0.22);
+}
+
+:root[data-theme="dark"] ::selection { background: var(--orange-500); color: var(--slate-50); }

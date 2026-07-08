@@ -3,11 +3,19 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Icon } from '../../pages/Icon';
 import { PHONE_HREF, TELEGRAM_HREF } from '../../lib/contact';
+import { useCompare } from '../../hooks/useCompare';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 
 /* Floating click-to-chat dock — fixed bottom-right on every page.
  * Telegram + Call are the channels Uzbek B2B buyers actually use, so we keep
  * them one tap away regardless of where the visitor is. Sits below modals
- * (z-index 90 < the 100 used by QuoteModal/AddReviewModal). */
+ * (z-index 90 < the 100 used by QuoteModal/AddReviewModal).
+ *
+ * On mobile, CompareTray (bottom, near-full-width when 1+ products are
+ * shortlisted) would otherwise overlap this corner — so the dock hides
+ * (via plain display:none, not an animated prop) while the tray is up. Using
+ * `display` rather than unmounting keeps the one-time entrance animation from
+ * re-triggering its 0.6s delay every time the tray opens/closes. */
 
 const ACTIONS = [
   { id: 'telegram', icon: 'telegram', href: TELEGRAM_HREF, external: true,  bg: '#229ED9' },
@@ -58,6 +66,10 @@ function DockButton({ action, label }) {
 
 export function ContactDock() {
   const { t } = useTranslation();
+  const { count } = useCompare();
+  const isMobile = useMediaQuery('(max-width: 640px)');
+  const hidden = isMobile && count > 0;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
@@ -65,7 +77,7 @@ export function ContactDock() {
       transition={{ delay: 0.6, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       style={{
         position: 'fixed', right: 'var(--space-6)', bottom: 'var(--space-6)',
-        zIndex: 90, display: 'flex', flexDirection: 'column', gap: 12,
+        zIndex: 90, display: hidden ? 'none' : 'flex', flexDirection: 'column', gap: 12,
         alignItems: 'flex-end',
       }}
     >

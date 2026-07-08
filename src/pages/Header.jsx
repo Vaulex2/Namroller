@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Button } from '../components/core/Button';
 import { Icon } from './Icon';
 import { UzbekistanMap } from './UzbekistanMap';
 import NavHeader from '../components/ui/nav-header';
+import { TELEGRAM_HREF, INSTAGRAM_HREF } from '../lib/contact';
 
 export function Logo({ onClick, light = false }) {
   const { t } = useTranslation();
@@ -67,7 +69,8 @@ function LanguageSwitcher() {
           key={l}
           onClick={() => i18n.changeLanguage(l)}
           style={{
-            padding: '5px 10px',
+            display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+            minHeight: 40, minWidth: 40, padding: '5px 14px',
             background: lang === l ? 'var(--nr-accent)' : 'transparent',
             color: lang === l ? 'var(--white)' : 'var(--slate-400)',
             border: 'none',
@@ -88,9 +91,38 @@ function LanguageSwitcher() {
   );
 }
 
-export function Header({ route, go }) {
+/* Sun/moon theme toggle. Sits in the header right-controls and inside the
+   mobile drawer. Icon shows the theme it will switch *to* (moon when light). */
+function ThemeToggle({ theme, toggle }) {
+  const { t } = useTranslation();
+  const isDark = theme === 'dark';
+  const label = isDark ? t('theme.light') : t('theme.dark');
+  return (
+    <button
+      onClick={toggle}
+      aria-label={label}
+      title={label}
+      style={{
+        display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+        width: 40, height: 40, flexShrink: 0,
+        background: 'transparent',
+        border: '1px solid var(--border-on-inverse)',
+        borderRadius: 'var(--radius-sm)',
+        color: 'var(--slate-200)', cursor: 'pointer',
+        transition: 'background var(--dur-fast), border-color var(--dur-fast), color var(--dur-fast)',
+      }}
+      onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--nr-accent)'; e.currentTarget.style.color = 'var(--nr-accent)'; }}
+      onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-on-inverse)'; e.currentTarget.style.color = 'var(--slate-200)'; }}
+    >
+      <Icon name={isDark ? 'sun' : 'moon'} size={17} stroke={1.9} color="currentColor" />
+    </button>
+  );
+}
+
+export function Header({ route, go, theme, toggleTheme }) {
   const { t } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const reduce = useReducedMotion();
 
   const nav = [
     { id: 'home',     label: t('nav.home') },
@@ -101,6 +133,16 @@ export function Header({ route, go }) {
 
   const activeId = route === 'product' ? 'products' : route;
 
+  // Drawer: lock body scroll + Escape-to-close while open.
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+    const onKey = (e) => { if (e.key === 'Escape') setMenuOpen(false); };
+    window.addEventListener('keydown', onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = prev; };
+  }, [menuOpen]);
+
   return (
     <header style={{
       position: 'sticky', top: 0, zIndex: 'var(--z-header)',
@@ -109,7 +151,7 @@ export function Header({ route, go }) {
       WebkitBackdropFilter: 'blur(12px)',
       borderBottom: '1px solid var(--border-on-inverse)',
     }}>
-      <div style={{
+      <div className="nr-header-bar" style={{
         maxWidth: 'var(--container)', margin: '0 auto',
         height: 'var(--header-h)', padding: '0 var(--space-6)',
         display: 'flex', alignItems: 'center', gap: 'var(--space-6)',
@@ -126,18 +168,25 @@ export function Header({ route, go }) {
 
         {/* Right controls */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0 }}>
-          <LanguageSwitcher />
-          <Button variant="primary" size="sm" onClick={() => go('contact')}>
-            {t('nav.cta')}
-          </Button>
+          <span className="nr-header-controls" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <ThemeToggle theme={theme} toggle={toggleTheme} />
+            <LanguageSwitcher />
+          </span>
+          <span className="nr-header-cta">
+            <Button variant="primary" size="sm" onClick={() => go('contact')}>
+              {t('nav.cta')}
+            </Button>
+          </span>
 
           {/* Mobile hamburger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="mobile-menu-btn"
             style={{
-              display: 'none', background: 'none', border: 'none',
-              cursor: 'pointer', padding: 4, color: 'var(--white)',
+              display: 'none', alignItems: 'center', justifyContent: 'center',
+              width: 44, height: 44,
+              background: 'none', border: 'none',
+              cursor: 'pointer', padding: 0, color: 'var(--white)',
             }}
             aria-label="Menu"
           >
@@ -146,37 +195,103 @@ export function Header({ route, go }) {
         </div>
       </div>
 
-      {/* Mobile menu */}
-      {menuOpen && (
-        <div className="mobile-menu" style={{
-          borderTop: '1px solid var(--border-on-inverse)',
-          background: 'var(--slate-900)',
-          padding: 'var(--space-4) var(--space-6)',
-        }}>
-          {nav.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => { go(item.id); setMenuOpen(false); }}
+      {/* Mobile drawer */}
+      <AnimatePresence>
+        {menuOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              onClick={() => setMenuOpen(false)}
               style={{
-                display: 'block', width: '100%', textAlign: 'left',
-                padding: '12px 0', background: 'none', border: 'none',
-                borderBottom: '1px solid var(--border-on-inverse)', cursor: 'pointer',
-                fontFamily: 'var(--font-body)', fontWeight: 'var(--fw-medium)',
-                fontSize: 'var(--fs-body)', textTransform: 'uppercase',
-                letterSpacing: '0.04em',
-                color: item.id === activeId ? 'var(--nr-accent)' : 'var(--slate-200)',
+                position: 'fixed', inset: 0, zIndex: 'var(--z-header)',
+                background: 'rgba(2,6,23,0.72)', willChange: 'opacity',
+              }}
+            />
+            {/* Panel */}
+            <motion.div
+              role="dialog"
+              aria-modal="true"
+              aria-label={t('nav.menu')}
+              initial={reduce ? { opacity: 0 } : { x: '100%' }}
+              animate={reduce ? { opacity: 1 } : { x: 0 }}
+              exit={reduce ? { opacity: 0 } : { x: '100%' }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                position: 'fixed', top: 0, right: 0, bottom: 0, zIndex: 'calc(var(--z-header) + 1)',
+                width: 'min(84vw, 320px)',
+                background: 'var(--slate-900)',
+                borderLeft: '1px solid var(--border-on-inverse)',
+                boxShadow: 'var(--shadow-lg)',
+                display: 'flex', flexDirection: 'column',
+                padding: 'var(--space-5) var(--space-5) var(--space-6)',
+                overflowY: 'auto',
               }}
             >
-              {item.label}
-            </button>
-          ))}
-        </div>
-      )}
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 8 }}>
+                <button
+                  onClick={() => setMenuOpen(false)}
+                  aria-label={t('quote.form.close')}
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                    width: 40, height: 40, background: 'none', border: 'none',
+                    cursor: 'pointer', color: 'var(--white)',
+                  }}
+                >
+                  <Icon name="close" size={22} color="var(--white)" />
+                </button>
+              </div>
+
+              <nav style={{ display: 'flex', flexDirection: 'column' }}>
+                {nav.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => { go(item.id); setMenuOpen(false); }}
+                    style={{
+                      display: 'block', width: '100%', textAlign: 'left',
+                      padding: '14px 0', background: 'none', border: 'none',
+                      borderBottom: '1px solid var(--border-on-inverse)', cursor: 'pointer',
+                      fontFamily: 'var(--font-body)', fontWeight: 'var(--fw-medium)',
+                      fontSize: 'var(--fs-body)', textTransform: 'uppercase',
+                      letterSpacing: '0.04em',
+                      color: item.id === activeId ? 'var(--nr-accent)' : 'var(--slate-200)',
+                    }}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </nav>
+
+              {/* Controls: language + theme */}
+              <div style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                gap: 12, marginTop: 'var(--space-5)',
+              }}>
+                <LanguageSwitcher />
+                <ThemeToggle theme={theme} toggle={toggleTheme} />
+              </div>
+
+              {/* CTA — reachable on phones where the header CTA is hidden */}
+              <div style={{ marginTop: 'var(--space-5)' }}>
+                <Button variant="primary" size="lg" fullWidth onClick={() => { go('contact'); setMenuOpen(false); }}>
+                  {t('nav.cta')}
+                </Button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       <style>{`
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
           .mobile-menu-btn { display: flex !important; }
+          .nr-header-controls { display: none !important; }
+          .nr-header-cta { display: none !important; }
+          .nr-header-bar { padding: 0 var(--space-4) !important; gap: var(--space-3) !important; }
         }
       `}</style>
     </header>
@@ -215,8 +330,8 @@ const COL_HEADING = {
 };
 
 const SOCIALS = [
-  { icon: 'telegram',  label: 'Telegram',  href: '#' },
-  { icon: 'instagram', label: 'Instagram', href: '#' },
+  { icon: 'telegram',  label: 'Telegram',  href: TELEGRAM_HREF },
+  { icon: 'instagram', label: 'Instagram', href: INSTAGRAM_HREF },
   { icon: 'facebook',  label: 'Facebook',  href: '#' },
   { icon: 'youtube',   label: 'YouTube',   href: '#' },
 ];
@@ -285,7 +400,9 @@ export function Footer({ go }) {
                 key={s.icon}
                 href={s.href}
                 aria-label={s.label}
-                onClick={(e) => e.preventDefault()}
+                {...(s.href === '#'
+                  ? { onClick: (e) => e.preventDefault() }
+                  : { target: '_blank', rel: 'noopener noreferrer' })}
                 style={{
                   display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                   width: 38, height: 38,
@@ -373,11 +490,23 @@ export function Footer({ go }) {
           fontFamily: 'var(--font-mono)', flexWrap: 'wrap',
         }}>
           <span>{t('footer.copy')}</span>
-          <span>{t('footer.locBottom')}</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 18, flexWrap: 'wrap' }}>
+            <button type="button" onClick={() => go('privacy')} className="nr-foot-legal" style={LEGAL_LINK}>
+              {t('legal.privacyLink')}
+            </button>
+            <button type="button" onClick={() => go('terms')} className="nr-foot-legal" style={LEGAL_LINK}>
+              {t('legal.termsLink')}
+            </button>
+            <button type="button" onClick={() => go('cookies')} className="nr-foot-legal" style={LEGAL_LINK}>
+              {t('legal.cookiesLink')}
+            </button>
+            <span>{t('footer.locBottom')}</span>
+          </div>
         </div>
       </div>
 
       <style>{`
+        .nr-foot-legal:hover { color: var(--slate-200) !important; }
         @media (max-width: 900px) {
           .nr-footer-grid { grid-template-columns: 1fr 1fr !important; gap: 36px !important; }
         }
@@ -393,4 +522,11 @@ const CONTACT_ROW = {
   display: 'flex', alignItems: 'center', gap: 10,
   color: 'var(--slate-300)', textDecoration: 'none',
   fontSize: 'var(--fs-body-sm)', fontFamily: 'var(--font-body)',
+};
+
+const LEGAL_LINK = {
+  background: 'none', border: 'none', padding: 0, cursor: 'pointer',
+  fontFamily: 'var(--font-mono)', fontSize: 'var(--fs-caption)',
+  color: 'var(--slate-500)', letterSpacing: '0.02em',
+  transition: 'color var(--dur-fast)',
 };

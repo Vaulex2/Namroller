@@ -1,0 +1,27 @@
+/* Responsive utilities — override inline grid/flex styles on smaller screens.
+   Inline styles can't carry media queries, so these classes use !important to
+   beat element style. Apply alongside existing inline styles (the class only
+   takes effect below its breakpoint). Order: wider blocks first, narrower last,
+   so the phone rule wins at phone widths (equal specificity → last applies). */
+
+/* Tablet: 3- and 4-col grids drop to 2 columns */
+@media (max-width: 1024px) {
+  .nr-grid-3 { grid-template-columns: repeat(2, 1fr) !important; }
+  .nr-grid-4 { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+/* Mid: many-step process row → 2 cols before stacking */
+@media (max-width: 768px) {
+  .nr-grid-steps { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+/* Phone: everything collapses to a single column */
+@media (max-width: 640px) {
+  .nr-grid-2,
+  .nr-grid-3,
+  .nr-grid-4,
+  .nr-grid-steps,
+  .nr-modal-grid { grid-template-columns: 1fr !important; }
+  .nr-stack-sm   { flex-direction: column !important; gap: 16px !important; }
+  .nr-modal-card { padding: 20px !important; }   /* beats Card's inline padding={32} */
+}

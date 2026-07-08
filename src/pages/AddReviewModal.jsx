@@ -6,12 +6,14 @@ import { Input } from '../components/forms/Input';
 import { Card } from '../components/surfaces/Card';
 import { Icon } from './Icon';
 import { addReview } from '../lib/reviews';
+import { Turnstile } from '../components/forms/Turnstile';
+import { isTurnstileEnabled } from '../lib/turnstile';
 
 /* Interactive 1–5 star picker. */
 function StarPicker({ value, onChange }) {
   const [hover, setHover] = React.useState(0);
   return (
-    <div style={{ display: 'flex', gap: 6 }} role="radiogroup">
+    <div style={{ display: 'flex', gap: 8 }} role="radiogroup">
       {[1, 2, 3, 4, 5].map((n) => {
         const active = n <= (hover || value);
         return (
@@ -25,7 +27,9 @@ function StarPicker({ value, onChange }) {
             onMouseLeave={() => setHover(0)}
             onClick={() => onChange(n)}
             style={{
-              background: 'none', border: 'none', padding: 2, cursor: 'pointer', lineHeight: 0,
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+              width: 40, height: 40,
+              background: 'none', border: 'none', padding: 0, cursor: 'pointer', lineHeight: 0,
             }}
           >
             <svg
@@ -55,6 +59,7 @@ const fieldLabel = {
 function ReviewDialog({ onClose, onAdded }) {
   const { t } = useTranslation();
   const [form, setForm] = React.useState({ name: '', role: '', text: '', rating: 5 });
+  const [token, setToken] = React.useState('');
   const [busy, setBusy] = React.useState(false);
   const [done, setDone] = React.useState(false);
   const [error, setError] = React.useState('');
@@ -76,6 +81,10 @@ function ReviewDialog({ onClose, onAdded }) {
       setError(t('testimonials.form.required'));
       return;
     }
+    if (isTurnstileEnabled && !token) {
+      setError(t('testimonials.form.captcha'));
+      return;
+    }
     setBusy(true); setError('');
     try {
       const review = await addReview({
@@ -83,6 +92,7 @@ function ReviewDialog({ onClose, onAdded }) {
         role: form.role.trim(),
         text: form.text.trim(),
         rating: form.rating,
+        token,
       });
       onAdded?.(review);
       setDone(true);
@@ -101,9 +111,13 @@ function ReviewDialog({ onClose, onAdded }) {
       onClick={onClose}
       style={{
         position: 'fixed', inset: 0, zIndex: 100,
-        background: 'rgba(2,6,23,0.6)', backdropFilter: 'blur(2px)',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        padding: 'var(--space-6)',
+        background: 'rgba(2,6,23,0.72)',
+        // overflowY:auto + block layout (not flex-centered) so the overlay
+        // scrolls when content is taller than the viewport — critical on
+        // mobile where the keyboard can shrink visible height enough to
+        // clip the top of the form with no way to scroll back to it.
+        overflowY: 'auto',
+        padding: 'var(--space-6) var(--space-4)', willChange: 'opacity',
       }}
     >
       <motion.div
@@ -112,19 +126,21 @@ function ReviewDialog({ onClose, onAdded }) {
         exit={{ opacity: 0, y: 24, scale: 0.98 }}
         transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
         onClick={(e) => e.stopPropagation()}
-        style={{ width: '100%', maxWidth: 480 }}
+        style={{ width: '100%', maxWidth: 480, margin: '0 auto', willChange: 'transform, opacity' }}
         role="dialog"
         aria-modal="true"
       >
-        <Card accentBar padding={32} style={{ overflow: 'visible' }}>
+        <Card accentBar padding={32} className="nr-modal-card" style={{ overflow: 'visible' }}>
           {/* Close button */}
           <button
             type="button"
             onClick={onClose}
             aria-label={t('testimonials.form.close')}
             style={{
-              position: 'absolute', top: 14, right: 14, background: 'none',
-              border: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 4,
+              position: 'absolute', top: 8, right: 8, background: 'none',
+              border: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 8,
+              width: 40, height: 40, display: 'inline-flex',
+              alignItems: 'center', justifyContent: 'center',
             }}
           >
             <Icon name="close" size={20} />
@@ -169,7 +185,7 @@ function ReviewDialog({ onClose, onAdded }) {
                 {t('testimonials.form.title')}
               </h2>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+              <div className="nr-modal-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
                 <Input
                   label={t('testimonials.form.name')}
                   value={form.name}
@@ -210,6 +226,12 @@ function ReviewDialog({ onClose, onAdded }) {
                 />
               </div>
 
+              {isTurnstileEnabled && (
+                <div style={{ marginTop: 16 }}>
+                  <Turnstile onToken={setToken} />
+                </div>
+              )}
+
               {error && (
                 <p style={{ marginTop: 12, color: 'var(--danger)', fontSize: 'var(--fs-body-sm)' }}>
                   {error}
@@ -217,7 +239,10 @@ function ReviewDialog({ onClose, onAdded }) {
               )}
 
               <div style={{ marginTop: 24 }}>
-                <Button type="submit" variant="primary" size="lg" fullWidth disabled={busy}>
+                <Button
+                  type="submit" variant="primary" size="lg" fullWidth
+                  disabled={busy || (isTurnstileEnabled && !token)}
+                >
                   {busy ? t('testimonials.form.sending') : t('testimonials.form.submit')}
                 </Button>
               </div>

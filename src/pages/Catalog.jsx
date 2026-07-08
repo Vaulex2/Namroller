@@ -5,13 +5,16 @@ import { Button } from '../components/core/Button';
 import { Tag } from '../components/core/Tag';
 import { Card } from '../components/surfaces/Card';
 import { SpecTable } from '../components/surfaces/SpecTable';
+import { Input } from '../components/forms/Input';
 import { Icon } from './Icon';
 import { Photo } from './Photo';
 import { HeroBackdrop } from './HeroBackdrop';
-import { NR_PRODUCTS } from './data';
+import { useProducts } from '../hooks/useProducts';
 import { Reveal } from '../components/motion/Reveal';
 import { Stagger, StaggerItem } from '../components/motion/Stagger';
 import { QuoteModal } from './QuoteModal';
+import { Lightbox } from '../components/ui/Lightbox';
+import { useCompare } from '../hooks/useCompare';
 import { TELEGRAM_HREF } from '../lib/contact';
 
 // Three.js viewer is heavy — load it only when a product page mounts a 3D view.
@@ -20,21 +23,39 @@ const Product3DViewer = lazy(() => import('../components/interactive/Product3DVi
 const toKey = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
 
 /* Product media with a Photo ⇄ 3D toggle (3D offered for physical rollers only). */
-function ProductMedia({ p, name }) {
+function ProductMedia({ p, name, onOpenLightbox }) {
   const { t } = useTranslation();
   const supports3D = p.cat !== 'Systems';
   const [view, setView] = useState('photo');
   const is3D = supports3D && view === '3d';
 
   const fallback = (
-    <Photo
-      label={`${name} — ${t('viewer.photo')}`}
-      src={p.image}
-      alt={name}
-      icon={p.icon}
-      height={340}
-      style={{ borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}
-    />
+    <div
+      onClick={onOpenLightbox ? () => onOpenLightbox(0) : undefined}
+      style={{ position: 'relative', cursor: onOpenLightbox ? 'zoom-in' : 'default' }}
+    >
+      <Photo
+        label={`${name} — ${t('viewer.photo')}`}
+        src={p.image}
+        alt={name}
+        icon={p.icon}
+        height={340}
+        style={{ borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}
+      />
+      {onOpenLightbox && (
+        <span style={{
+          position: 'absolute', bottom: 12, right: 12,
+          display: 'inline-flex', alignItems: 'center', gap: 6,
+          padding: '5px 10px', borderRadius: 'var(--radius-pill)',
+          background: 'rgba(2,6,23,0.55)', color: 'var(--white)',
+          fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.04em',
+          pointerEvents: 'none',
+        }}>
+          <Icon name="search" size={13} color="var(--white)" stroke={1.8} />
+          {t('lightbox.zoom')}
+        </span>
+      )}
+    </div>
   );
 
   return (
@@ -102,6 +123,41 @@ function useSpecTranslation() {
     }));
 }
 
+function CompareToggle({ p }) {
+  const { t } = useTranslation();
+  const { has, toggle, isFull } = useCompare();
+  const on = has(p.id);
+  const disabled = !on && isFull;
+
+  return (
+    <button
+      type="button"
+      // Must not trigger the card's navigation onClick.
+      onClick={(e) => { e.stopPropagation(); toggle(p.id); }}
+      disabled={disabled}
+      aria-pressed={on}
+      title={disabled ? t('compare.full') : on ? t('compare.remove') : t('compare.add')}
+      style={{
+        position: 'absolute', top: 10, right: 10, zIndex: 2,
+        display: 'inline-flex', alignItems: 'center', gap: 6,
+        minHeight: 36, padding: '8px 12px', borderRadius: 'var(--radius-pill)',
+        background: on ? 'var(--nr-accent)' : 'var(--surface-card)',
+        color: on ? 'var(--white)' : 'var(--text-muted)',
+        border: `1px solid ${on ? 'var(--nr-accent)' : 'var(--border-default)'}`,
+        boxShadow: 'var(--shadow-sm)',
+        cursor: disabled ? 'not-allowed' : 'pointer',
+        opacity: disabled ? 0.55 : 1,
+        fontFamily: 'var(--font-body)', fontWeight: 'var(--fw-semibold)',
+        fontSize: 10, letterSpacing: '0.06em', textTransform: 'uppercase',
+        transition: 'background var(--dur-fast), color var(--dur-fast), border-color var(--dur-fast)',
+      }}
+    >
+      <Icon name={on ? 'check' : 'plus'} size={13} color="currentColor" stroke={2.2} />
+      {on ? t('compare.added') : t('compare.add')}
+    </button>
+  );
+}
+
 function ProductCard({ p, go }) {
   const { t } = useTranslation();
   const [hover, setHover] = React.useState(false);
@@ -118,6 +174,7 @@ function ProductCard({ p, go }) {
       whileTap={{ scale: 0.99 }}
       transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
       style={{
+        position: 'relative',
         background: 'var(--surface-card)',
         border: hover ? '1px solid var(--nr-accent)' : '1px solid var(--border-subtle)',
         borderRadius: 'var(--radius-md)',
@@ -131,6 +188,7 @@ function ProductCard({ p, go }) {
         background: hover ? 'var(--nr-accent)' : 'transparent',
         transition: 'background var(--dur-base)',
       }} />
+      <CompareToggle p={p} />
       <Photo
         label={`${name} — фото`}
         src={p.image}
@@ -184,8 +242,23 @@ export function Products({ go }) {
     { id: 'Pulleys', label: t('catalog.filters.Pulleys') },
     { id: 'Systems', label: t('catalog.filters.Systems') },
   ];
+  const { products } = useProducts();
   const [catId, setCatId] = React.useState('All');
-  const list = catId === 'All' ? NR_PRODUCTS : NR_PRODUCTS.filter((p) => p.cat === catId);
+  const [query, setQuery] = React.useState('');
+
+  const q = query.trim().toLowerCase();
+  const list = products.filter((p) => {
+    if (catId !== 'All' && p.cat !== catId) return false;
+    if (!q) return true;
+    // Match against the *translated* name, blurb and category so search works
+    // in whichever language the buyer is browsing.
+    const haystack = [
+      t(`pd.${p.id}.name`, p.name),
+      t(`pd.${p.id}.blurb`, p.blurb),
+      t(`cat.${p.cat}`, p.cat),
+    ].join(' ').toLowerCase();
+    return haystack.includes(q);
+  });
 
   return (
     <div style={{ background: 'var(--surface-page)' }}>
@@ -220,25 +293,74 @@ export function Products({ go }) {
 
       {/* Filters + grid */}
       <div style={{ maxWidth: 'var(--container)', margin: '0 auto', padding: '36px var(--space-6) 88px' }}>
-        <div style={{ display: 'flex', gap: 8, marginBottom: 28, flexWrap: 'wrap' }}>
-          {filterDefs.map((f) => (
-            <Tag
-              key={f.id}
-              active={catId === f.id}
-              onClick={() => setCatId(f.id)}
-            >
-              {f.label}
-            </Tag>
-          ))}
+        {/* Instant search */}
+        <div style={{ maxWidth: 420, marginBottom: 20 }}>
+          <Input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={t('catalog.search.placeholder')}
+            aria-label={t('catalog.search.placeholder')}
+            iconLeft={<Icon name="search" size={16} />}
+            suffix={query ? (
+              <button
+                type="button"
+                onClick={() => setQuery('')}
+                aria-label={t('catalog.search.clear')}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', display: 'inline-flex', padding: 0 }}
+              >
+                <Icon name="close" size={15} />
+              </button>
+            ) : undefined}
+          />
         </div>
-        {/* Re-stagger the grid whenever the active filter changes */}
-        <Stagger key={catId} style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
-          {list.map((p) => (
-            <StaggerItem key={p.id}>
-              <ProductCard p={p} go={go} />
-            </StaggerItem>
-          ))}
-        </Stagger>
+
+        <div style={{
+          display: 'flex', gap: 12, marginBottom: 28, flexWrap: 'wrap',
+          alignItems: 'center', justifyContent: 'space-between',
+        }}>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            {filterDefs.map((f) => (
+              <Tag
+                key={f.id}
+                active={catId === f.id}
+                onClick={() => setCatId(f.id)}
+              >
+                {f.label}
+              </Tag>
+            ))}
+          </div>
+          <span style={{
+            fontFamily: 'var(--font-mono)', fontSize: 'var(--fs-caption)',
+            color: 'var(--text-muted)', letterSpacing: '0.04em', whiteSpace: 'nowrap',
+          }}>
+            {t('catalog.search.count', { n: list.length })}
+          </span>
+        </div>
+
+        {list.length === 0 ? (
+          <div style={{
+            textAlign: 'center', padding: '64px var(--space-6)',
+            border: '1px dashed var(--border-default)', borderRadius: 'var(--radius-md)',
+            background: 'var(--surface-sunken)',
+          }}>
+            <Icon name="search" size={32} color="var(--text-subtle)" stroke={1.5} style={{ margin: '0 auto 14px' }} />
+            <p style={{ fontSize: 'var(--fs-body-lg)', color: 'var(--text-body)', margin: '0 0 16px' }}>
+              {t('catalog.search.noResults', { query: query.trim() })}
+            </p>
+            <Button variant="outline" size="sm" onClick={() => { setQuery(''); setCatId('All'); }}>
+              {t('catalog.search.reset')}
+            </Button>
+          </div>
+        ) : (
+          /* Re-stagger the grid whenever the active filter or query changes */
+          <Stagger key={catId + '|' + q} className="nr-grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
+            {list.map((p) => (
+              <StaggerItem key={p.id}>
+                <ProductCard p={p} go={go} />
+              </StaggerItem>
+            ))}
+          </Stagger>
+        )}
       </div>
     </div>
   );
@@ -270,7 +392,7 @@ function SectionBand({ heading, sunken = false, children }) {
 // "How it's made" — numbered steps. Zips icon names (from data) with {title,text} (from i18n).
 function ProcessSteps({ icons, steps }) {
   return (
-    <Stagger style={{ display: 'grid', gridTemplateColumns: `repeat(${steps.length}, 1fr)`, gap: 20 }}>
+    <Stagger className="nr-grid-steps" style={{ display: 'grid', gridTemplateColumns: `repeat(${steps.length}, 1fr)`, gap: 20 }}>
       {steps.map((s, i) => (
         <StaggerItem key={i}>
           <div style={{ height: '100%' }}>
@@ -305,7 +427,7 @@ function ProcessSteps({ icons, steps }) {
 // "Characteristics" — grid of feature cards. Zips icon names (from data) with {title,text} (from i18n).
 function FeatureGrid({ icons, features }) {
   return (
-    <Stagger style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 20 }}>
+    <Stagger className="nr-grid-2" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 20 }}>
       {features.map((f, i) => (
         <StaggerItem key={i}>
           <Card variant="default" padding={24} style={{ height: '100%' }}>
@@ -364,9 +486,11 @@ function ApplicationTags({ items }) {
 export function ProductDetail({ id, go }) {
   const { t } = useTranslation();
   const translateSpecs = useSpecTranslation();
-  const p = NR_PRODUCTS.find((x) => x.id === id) || NR_PRODUCTS[0];
-  const related = NR_PRODUCTS.filter((x) => x.id !== p.id).slice(0, 3);
+  const { products } = useProducts();
+  const p = products.find((x) => x.id === id) || products[0];
+  const related = products.filter((x) => x.id !== p.id).slice(0, 3);
   const [quoteOpen, setQuoteOpen] = React.useState(false);
+  const [lightbox, setLightbox] = React.useState(null); // media index, or null
   const name  = t(`pd.${p.id}.name`,  p.name);
   const blurb = t(`pd.${p.id}.blurb`, p.blurb);
   const cat   = t(`cat.${p.cat}`,     p.cat);
@@ -378,6 +502,12 @@ export function ProductDetail({ id, go }) {
   const applications = t(`pd.${p.id}.applications`, { returnObjects: true, defaultValue: [] });
   const procIcons = p.content?.process  || [];
   const featIcons = p.content?.features || [];
+
+  // Lightbox gallery: the still image first, then any video clips.
+  const media = [
+    { type: 'image', src: p.image, alt: name },
+    ...(p.videos || []).map((v) => ({ type: 'video', src: v.src, poster: v.poster })),
+  ];
 
   return (
     <div style={{ background: 'var(--surface-page)' }}>
@@ -396,39 +526,60 @@ export function ProductDetail({ id, go }) {
       </div>
 
       {/* Main content */}
-      <div style={{
+      <div className="nr-grid-2" style={{
         maxWidth: 'var(--container)', margin: '0 auto',
         padding: '28px var(--space-6) 48px',
         display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48,
       }}>
         {/* Image column */}
         <Reveal>
-          <ProductMedia p={p} name={name} />
+          <ProductMedia p={p} name={name} onOpenLightbox={(i) => setLightbox(i)} />
           <div style={{ display: 'flex', gap: 10, marginTop: 10 }}>
             {p.videos?.length ? (
+              // Thumbnails open the lightbox (index offset by 1 for the still image).
               p.videos.map((v, i) => (
-                <video
+                <button
                   key={i}
-                  src={v.src}
-                  poster={v.poster}
-                  controls
-                  muted
-                  loop
-                  playsInline
-                  preload="none"
+                  type="button"
+                  onClick={() => setLightbox(i + 1)}
+                  aria-label={t('lightbox.playClip')}
                   style={{
-                    flex: 1, minWidth: 0, height: 120, objectFit: 'cover',
-                    borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)',
-                    background: 'var(--slate-900)',
+                    position: 'relative', flex: 1, minWidth: 0, height: 120, padding: 0,
+                    border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)',
+                    overflow: 'hidden', cursor: 'pointer', background: 'var(--slate-900)',
                   }}
-                />
+                >
+                  <img
+                    src={v.poster}
+                    alt=""
+                    loading="lazy"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                  <span style={{
+                    position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    background: 'rgba(2,6,23,0.25)',
+                  }}>
+                    <span style={{
+                      display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                      width: 34, height: 34, borderRadius: '50%',
+                      background: 'rgba(255,255,255,0.9)',
+                    }}>
+                      <Icon name="play" size={15} color="var(--slate-900)" />
+                    </span>
+                  </span>
+                </button>
               ))
             ) : (
               [0, 1, 2].map((i) => (
-                <Photo
-                  key={i} label="" src={p.image} alt={name} icon={p.icon} height={76}
-                  style={{ flex: 1, borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}
-                />
+                <button
+                  key={i} type="button" onClick={() => setLightbox(0)} aria-label={t('lightbox.zoom')}
+                  style={{ flex: 1, padding: 0, border: 'none', background: 'none', cursor: 'zoom-in', minWidth: 0 }}
+                >
+                  <Photo
+                    label="" src={p.image} alt={name} icon={p.icon} height={76}
+                    style={{ borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}
+                  />
+                </button>
               ))
             )}
           </div>
@@ -460,7 +611,7 @@ export function ProductDetail({ id, go }) {
           </p>
 
           {/* Key specs quick view */}
-          <div style={{
+          <div className="nr-stack-sm" style={{
             display: 'flex', gap: 32, margin: '24px 0',
             padding: '20px 0',
             borderTop: '1px solid var(--border-subtle)',
@@ -571,7 +722,7 @@ export function ProductDetail({ id, go }) {
           }}>
             {t('catalog.related')}
           </h2>
-          <Stagger style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
+          <Stagger className="nr-grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
             {related.map((r) => (
               <StaggerItem key={r.id}>
                 <ProductCard p={r} go={go} />
@@ -582,6 +733,12 @@ export function ProductDetail({ id, go }) {
       </div>
 
       <QuoteModal open={quoteOpen} onClose={() => setQuoteOpen(false)} product={p} />
+      <Lightbox
+        open={lightbox !== null}
+        items={media}
+        startIndex={lightbox ?? 0}
+        onClose={() => setLightbox(null)}
+      />
     </div>
   );
 }

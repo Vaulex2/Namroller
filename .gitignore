@@ -17,6 +17,10 @@ dist-ssr
 .env.*
 !.env.example
 
+# Vendored agent/skill bundles — kept locally, not part of the project repo.
+.agents/
+.claude/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

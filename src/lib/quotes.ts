@@ -2,24 +2,13 @@ import { supabase, isSupabaseConfigured } from "./supabase";
 
 /* Quote-request ("Ask the price") API.
  *
- * Expected Supabase table (see supabase/schema/quote_requests.sql):
- *   create table quote_requests (
- *     id           uuid primary key default gen_random_uuid(),
- *     product_id   text,
- *     product_name text,
- *     name         text not null,
- *     phone        text not null,
- *     email        text,
- *     quantity     text,
- *     note         text,
- *     lang         text,
- *     status       text not null default 'new',
- *     created_at   timestamptz not null default now()
- *   );
+ * Writes go through the `submit-quote` edge function (see
+ * supabase/functions/submit-quote), which verifies a Cloudflare Turnstile token,
+ * validates input, inserts with the service role, and notifies Telegram. The anon
+ * key has no insert path, so we never write to the table directly.
  *
- * Insert-only: the table has no anon select policy, so we never read rows back.
- * When Supabase isn't configured yet, submitQuote is a no-op success so the
- * quote modal stays demoable offline. */
+ * When Supabase isn't configured yet, submitQuote is a no-op success so the quote
+ * modal stays demoable offline. */
 
 export type QuoteInput = {
   productId?: string;
@@ -28,12 +17,14 @@ export type QuoteInput = {
   phone: string;
   email?: string;
   quantity?: string;
+  address?: string;
   note?: string;
   lang?: string;
   source?: string;
+  // Cloudflare Turnstile token from the form's <Turnstile> widget. Omitted in
+  // demo mode (no site key) — the edge function rejects real submissions without it.
+  token?: string;
 };
-
-const TABLE = "quote_requests";
 
 export async function submitQuote(input: QuoteInput): Promise<void> {
   if (!isSupabaseConfigured || !supabase) {
@@ -41,18 +32,10 @@ export async function submitQuote(input: QuoteInput): Promise<void> {
     return;
   }
 
-  // DB column names are snake_case; map from the camelCase input.
-  const { error } = await supabase.from(TABLE).insert({
-    product_id: input.productId ?? null,
-    product_name: input.productName ?? null,
-    name: input.name,
-    phone: input.phone,
-    email: input.email || null,
-    quantity: input.quantity || null,
-    note: input.note || null,
-    lang: input.lang ?? null,
-    source: input.source ?? null,
+  const { data, error } = await supabase.functions.invoke("submit-quote", {
+    body: input,
   });
 
   if (error) throw error;
+  if (!data?.ok) throw new Error(data?.error || "submit-quote failed");
 }

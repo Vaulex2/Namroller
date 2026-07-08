@@ -6,9 +6,13 @@ import { Input } from '../components/forms/Input';
 import { Card } from '../components/surfaces/Card';
 import { Icon } from './Icon';
 import { Photo } from './Photo';
+import { HeroBackdrop } from './HeroBackdrop';
 import { Reveal } from '../components/motion/Reveal';
 import { Stagger, StaggerItem } from '../components/motion/Stagger';
+import { Accordion } from '../components/surfaces/Accordion';
 import { submitQuote } from '../lib/quotes';
+import { Turnstile } from '../components/forms/Turnstile';
+import { isTurnstileEnabled } from '../lib/turnstile';
 import { TELEGRAM_HREF } from '../lib/contact';
 
 const PHONE = '+998 97 374 77 55';
@@ -20,8 +24,9 @@ export function Contact() {
   const [sent, setSent] = React.useState(false);
   const [busy, setBusy] = React.useState(false);
   const [error, setError] = React.useState('');
+  const [token, setToken] = React.useState('');
   const [form, setForm] = React.useState({
-    name: '', phone: '', email: '', msg: '',
+    name: '', phone: '', email: '', address: '', msg: '',
   });
 
   const set = (k) => (e) =>
@@ -32,6 +37,10 @@ export function Contact() {
   // inquiry" (no specific product) so they're distinguishable in the message.
   const submit = async (e) => {
     e.preventDefault();
+    if (isTurnstileEnabled && !token) {
+      setError(t('contact.form.captcha'));
+      return;
+    }
     setBusy(true); setError('');
     try {
       await submitQuote({
@@ -39,9 +48,11 @@ export function Contact() {
         name: form.name.trim(),
         phone: form.phone.trim(),
         email: form.email.trim(),
+        address: form.address.trim(),
         note: form.msg.trim(),
         lang: i18n.language,
         source: 'Contact page',
+        token,
       });
       setSent(true);
     } catch {
@@ -72,8 +83,13 @@ export function Contact() {
       `}</style>
 
       {/* Page header */}
-      <div style={{ background: 'var(--surface-inverse)' }}>
-        <Reveal style={{ maxWidth: 'var(--container)', margin: '0 auto', padding: '52px var(--space-6) 48px' }}>
+      <div style={{
+        position: 'relative', overflow: 'hidden',
+        background: 'linear-gradient(160deg, var(--slate-950), var(--slate-900))',
+        borderBottom: '1px solid var(--border-on-inverse)',
+      }}>
+        <HeroBackdrop />
+        <Reveal style={{ position: 'relative', zIndex: 1, maxWidth: 'var(--container)', margin: '0 auto', padding: '52px var(--space-6) 48px' }}>
           <div style={{
             fontFamily: 'var(--font-body)', fontWeight: 'var(--fw-semibold)',
             fontSize: 'var(--fs-overline)', letterSpacing: '0.14em', textTransform: 'uppercase',
@@ -157,6 +173,14 @@ export function Contact() {
               </div>
 
               <div style={{ marginTop: 16 }}>
+                <Input
+                  label={t('contact.form.address')} value={form.address} onChange={set('address')}
+                  placeholder={t('contact.form.addressPh')}
+                  iconLeft={<Icon name="pin" size={16} />}
+                />
+              </div>
+
+              <div style={{ marginTop: 16 }}>
                 <label style={{
                   display: 'block', marginBottom: 6,
                   fontFamily: 'var(--font-body)', fontWeight: 'var(--fw-semibold)',
@@ -182,6 +206,12 @@ export function Contact() {
                 />
               </div>
 
+              {isTurnstileEnabled && (
+                <div style={{ marginTop: 16 }}>
+                  <Turnstile onToken={setToken} />
+                </div>
+              )}
+
               {error && (
                 <p style={{ marginTop: 14, color: 'var(--danger)', fontSize: 'var(--fs-body-sm)' }}>
                   {error}
@@ -189,7 +219,8 @@ export function Contact() {
               )}
 
               <div style={{ marginTop: 24 }}>
-                <Button type="submit" variant="primary" size="lg" fullWidth disabled={busy}
+                <Button type="submit" variant="primary" size="lg" fullWidth
+                  disabled={busy || (isTurnstileEnabled && !token)}
                   iconRight={<Icon name="arrow" size={18} />}>
                   {busy ? t('contact.form.sending') : t('contact.form.submit')}
                 </Button>
@@ -311,6 +342,42 @@ export function Contact() {
             />
           </StaggerItem>
         </Stagger>
+      </div>
+
+      {/* FAQ */}
+      <FaqSection />
+    </div>
+  );
+}
+
+/* Frequently-asked questions — accordion fed from i18n (faq.items). */
+function FaqSection() {
+  const { t } = useTranslation();
+  const items = t('faq.items', { returnObjects: true, defaultValue: [] });
+  if (!Array.isArray(items) || items.length === 0) return null;
+
+  return (
+    <div style={{ background: 'var(--surface-sunken)', borderTop: '1px solid var(--border-subtle)' }}>
+      <div style={{ maxWidth: 820, margin: '0 auto', padding: '64px var(--space-6) 88px' }}>
+        <Reveal>
+          <div style={{
+            fontFamily: 'var(--font-body)', fontWeight: 'var(--fw-semibold)',
+            fontSize: 'var(--fs-overline)', letterSpacing: '0.14em', textTransform: 'uppercase',
+            color: 'var(--nr-accent)', marginBottom: 12,
+          }}>
+            {t('faq.overline')}
+          </div>
+          <h2 style={{
+            fontFamily: 'var(--font-display)', fontWeight: 'var(--fw-bold)',
+            textTransform: 'uppercase', fontSize: 32, lineHeight: 'var(--lh-tight)',
+            color: 'var(--text-strong)', margin: '0 0 28px',
+          }}>
+            {t('faq.heading')}
+          </h2>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <Accordion items={items} defaultOpen={0} />
+        </Reveal>
       </div>
     </div>
   );

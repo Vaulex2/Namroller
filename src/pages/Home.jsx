@@ -9,7 +9,7 @@ import RotatingEarth from '@/components/ui/wireframe-dotted-globe';
 import { ProjectsMap } from '../components/interactive/ProjectsMap';
 import { ProcessVideos } from '../components/interactive/ProcessVideos';
 import { Testimonials } from './Testimonials';
-import { NR_PRODUCTS } from './data';
+import { useProducts } from '../hooks/useProducts';
 import { Reveal } from '../components/motion/Reveal';
 import { Stagger, StaggerItem } from '../components/motion/Stagger';
 import { AnimatedCounter } from '../components/motion/AnimatedCounter';
@@ -191,8 +191,8 @@ function StatsStrip() {
   const reduce = useReducedMotion();
   const stats = [
     { value: '12 000', unit: 't/day', label: t('hero.stats.capacity') },
-    { value: '240+',   unit: null,    label: t('hero.stats.projects') },
-    { value: '18',     unit: t('hero.stats.yrsUnit'), label: t('hero.stats.operation') },
+    { value: '1000+',  unit: null,    label: t('hero.stats.projects') },
+    { value: '30',     unit: t('hero.stats.yrsUnit'), label: t('hero.stats.operation') },
     { value: '3',      unit: null,    label: 'Линейки продуктов' },
   ];
 
@@ -200,7 +200,7 @@ function StatsStrip() {
   if (reduce) {
     return (
       <section style={{ background: 'var(--surface-inverse)' }}>
-        <Stagger style={{
+        <Stagger className="nr-grid-4" style={{
           maxWidth: 'var(--container)', margin: '0 auto',
           padding: '48px var(--space-6)',
           display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 32,
@@ -417,6 +417,7 @@ function ProductCard({ p, go }) {
 
 function OurProducts({ go }) {
   const { t } = useTranslation();
+  const { products } = useProducts();
 
   return (
     <section style={{ background: 'var(--surface-page)' }}>
@@ -448,7 +449,7 @@ function OurProducts({ go }) {
 
         {/* Balanced 3-column product grid (all products), responsive */}
         <Stagger className="nr-product-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
-          {NR_PRODUCTS.map((p) => (
+          {products.map((p) => (
             <StaggerItem key={p.id}>
               <ProductCard p={p} go={go} />
             </StaggerItem>
@@ -510,7 +511,7 @@ function Capabilities() {
           </h2>
         </Reveal>
 
-        <Stagger style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20 }}>
+        <Stagger className="nr-grid-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20 }}>
           {items.map((it) => (
             <StaggerItem key={it.icon}>
             <Card variant="default" padding={24}>
