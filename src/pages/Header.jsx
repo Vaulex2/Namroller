@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Button } from '../components/core/Button';
@@ -51,42 +51,97 @@ export function Logo({ onClick, light = false }) {
   );
 }
 
+const LANGUAGES = [
+  { code: 'ru', label: 'RU' },
+  { code: 'uz', label: 'UZ' },
+  { code: 'en', label: 'EN' },
+  { code: 'zh', label: 'ZH' },
+  { code: 'fa', label: 'FA' },
+];
+
 function LanguageSwitcher() {
   const { i18n } = useTranslation();
   const lang = i18n.language;
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef(null);
+  const current = LANGUAGES.find((l) => l.code === lang) || LANGUAGES[0];
+
+  useEffect(() => {
+    if (!open) return undefined;
+    const onDocClick = (e) => { if (rootRef.current && !rootRef.current.contains(e.target)) setOpen(false); };
+    const onKey = (e) => { if (e.key === 'Escape') setOpen(false); };
+    document.addEventListener('mousedown', onDocClick);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onDocClick);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
 
   return (
-    <div style={{
-      display: 'flex',
-      alignItems: 'center',
-      gap: 0,
-      border: '1px solid var(--border-on-inverse)',
-      borderRadius: 'var(--radius-sm)',
-      overflow: 'hidden',
-    }}>
-      {['ru', 'uz'].map((l, idx) => (
-        <button
-          key={l}
-          onClick={() => i18n.changeLanguage(l)}
+    <div ref={rootRef} style={{ position: 'relative' }}>
+      <button
+        onClick={() => setOpen((v) => !v)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        style={{
+          display: 'inline-flex', alignItems: 'center', gap: 6,
+          minHeight: 40, padding: '5px 12px',
+          background: 'transparent',
+          color: 'var(--slate-400)',
+          border: '1px solid var(--border-on-inverse)',
+          borderRadius: 'var(--radius-sm)',
+          cursor: 'pointer',
+          fontFamily: 'var(--font-body)',
+          fontWeight: 'var(--fw-semibold)',
+          fontSize: 11,
+          letterSpacing: '0.08em',
+          textTransform: 'uppercase',
+          transition: 'background var(--dur-fast), color var(--dur-fast)',
+        }}
+      >
+        {current.label}
+        <Icon name="chevron" size={12} stroke={2} color="currentColor" style={{ transform: open ? 'rotate(-90deg)' : 'rotate(90deg)' }} />
+      </button>
+
+      {open && (
+        <div
+          role="listbox"
           style={{
-            display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-            minHeight: 40, minWidth: 40, padding: '5px 14px',
-            background: lang === l ? 'var(--nr-accent)' : 'transparent',
-            color: lang === l ? 'var(--white)' : 'var(--slate-400)',
-            border: 'none',
-            borderLeft: idx > 0 ? '1px solid var(--border-on-inverse)' : 'none',
-            cursor: 'pointer',
-            fontFamily: 'var(--font-body)',
-            fontWeight: 'var(--fw-semibold)',
-            fontSize: 11,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-            transition: 'background var(--dur-fast), color var(--dur-fast)',
+            position: 'absolute', top: 'calc(100% + 6px)', right: 0, zIndex: 20,
+            minWidth: 120,
+            background: 'var(--slate-900)',
+            border: '1px solid var(--border-on-inverse)',
+            borderRadius: 'var(--radius-sm)',
+            boxShadow: 'var(--shadow-lg)',
+            overflow: 'hidden',
           }}
         >
-          {l.toUpperCase()}
-        </button>
-      ))}
+          {LANGUAGES.map((l) => (
+            <button
+              key={l.code}
+              role="option"
+              aria-selected={lang === l.code}
+              onClick={() => { i18n.changeLanguage(l.code); setOpen(false); }}
+              style={{
+                display: 'flex', alignItems: 'center', width: '100%',
+                padding: '9px 14px',
+                background: lang === l.code ? 'var(--nr-accent)' : 'transparent',
+                color: lang === l.code ? 'var(--white)' : 'var(--slate-300)',
+                border: 'none',
+                cursor: 'pointer', textAlign: 'left',
+                fontFamily: 'var(--font-body)',
+                fontWeight: 'var(--fw-semibold)',
+                fontSize: 12,
+                letterSpacing: '0.04em',
+                transition: 'background var(--dur-fast), color var(--dur-fast)',
+              }}
+            >
+              {l.label}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

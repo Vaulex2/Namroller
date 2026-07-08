@@ -24,6 +24,9 @@ const AdminApp = lazy(() => import('./pages/admin/AdminApp'));
 const TITLES = {
   ru: 'Nam Roller — Конвейерные ролики и системы',
   uz: 'Nam Roller — Konveyer roliklari va tizimlari',
+  en: 'Nam Roller — Conveyor Rollers & Systems',
+  zh: 'Nam Roller — 输送辊筒与系统',
+  fa: 'Nam Roller — غلتک‌ها و سیستم‌های نوار نقاله',
 };
 
 export default function App() {

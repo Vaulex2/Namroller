@@ -1,0 +1,667 @@
+{
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "capabilities": "Capabilities",
+    "contact": "Contact",
+    "cta": "Request a Quote",
+    "menu": "Menu"
+  },
+  "theme": {
+    "light": "Light theme",
+    "dark": "Dark theme"
+  },
+  "logo": {
+    "tagline": "Industrial Solutions"
+  },
+  "hero": {
+    "overline": "Conveyor Systems · Uzbekistan",
+    "headline": "Rollers that\nnever stop.",
+    "body": "We design, manufacture, and supply conveyor idlers and complete conveyor systems for construction and bulk-material projects across Uzbekistan.",
+    "cta": "Request a Quote",
+    "viewProducts": "View Products",
+    "photoLabel": "Conveyor installation — photo",
+    "trust": {
+      "yearsV": "30",     "yearsL": "years of experience",
+      "projV": "1000+",   "projL": "projects delivered",
+      "deliveryV": "UZ", "deliveryL": "nationwide delivery"
+    },
+    "specs": {
+      "diameter": "Ø 89–219 mm",
+      "material": "St37 Steel",
+      "bearing": "2Z Bearings",
+      "capacity": "up to 12,000 t/day"
+    },
+    "stats": {
+      "capacity": "Throughput Capacity",
+      "projects": "Completed Projects",
+      "operation": "In Operation",
+      "yrsUnit": "yrs"
+    }
+  },
+  "cap": {
+    "overline": "What We Do",
+    "headline": "Heavy Equipment, Turnkey",
+    "items": {
+      "cog":    { "h": "In-House Manufacturing", "p": "Tube cutting, turning, welding, and assembly under one roof in Namangan." },
+      "shield": { "h": "Built to Last",            "p": "Sealed 2Z bearings and St37 steel tubes engineered for a long service life." },
+      "ruler":  { "h": "Made to Order",               "p": "Standard diameters in stock; custom lengths and trough angles built to order." },
+      "truck":  { "h": "Delivery and Installation",        "p": "Delivery across Uzbekistan with on-site installation and commissioning." }
+    }
+  },
+  "capPage": {
+    "overline": "Production",
+    "headline": "We Manufacture Rollers and Conveyors",
+    "body": "Our production process for rollers and conveyors — from cutting, welding, and assembly through to testing.",
+    "soon": "Videos will be added soon"
+  },
+  "preview": {
+    "overline": "Product Range",
+    "headline": "Rollers for Every Conveyor",
+    "body": "A full range of idlers, pulleys, and conveyor systems — in stock and made to order for any bulk-material or construction application.",
+    "byOrder": "Turnkey Engineering",
+    "all": "All Products"
+  },
+  "cta": {
+    "headline": "Need Rollers Urgently?",
+    "body": "Standard sizes are in stock. Tell us your belt width — we'll quote a price within 48 hours.",
+    "btn": "Request a Quote"
+  },
+  "catalog": {
+    "overline": "Product Range",
+    "headline": "Conveyor Idlers and Systems",
+    "body": "Standard catalog items plus custom fabrication. Download the spec sheet or request a quote for any item.",
+    "filters": {
+      "All":     "All",
+      "Idlers":  "Idlers",
+      "Pulleys": "Pulleys",
+      "Systems": "Systems"
+    },
+    "viewSpecs": "Specifications",
+    "search": {
+      "placeholder": "Search the catalog…",
+      "count":       "Showing: {{n}}",
+      "noResults":   "No results found for \"{{query}}\".",
+      "reset":       "Reset Filters",
+      "clear":       "Clear Search"
+    },
+    "sections": {
+      "overview":     "Overview",
+      "process":      "How It's Made",
+      "features":     "Features",
+      "applications": "Applications",
+      "fullSpecs":    "Full Specifications"
+    },
+    "bc": {
+      "home":     "Home",
+      "products": "Products"
+    },
+    "diameter":  "Diameter",
+    "maxLoad":   "Max Load",
+    "reqQuote":  "Request a Quote",
+    "specSheet": "Spec Sheet (PDF)",
+    "related":   "Related Products"
+  },
+  "contact": {
+    "overline": "Get in Touch",
+    "headline": "Request a Quote",
+    "body": "Tell us about your belt and material. We usually respond with pricing and lead time within 48 hours.",
+    "success": {
+      "title": "Request Received",
+      "body": "Thank you, {{name}} — our sales team will contact you within 48 hours.",
+      "again": "Send Another"
+    },
+    "form": {
+      "name":           "Name",
+      "namePh":         "Your name",
+      "phone":          "Phone Number",
+      "phonePh":        "+998 90 123 45 67",
+      "email":          "Email (optional)",
+      "emailPh":        "you@company.com",
+      "address":        "Delivery Address (optional)",
+      "addressPh":      "City, district, street, site…",
+      "details":        "Product Details",
+      "detailsPh":      "Product, material, size, quantity, timeline…",
+      "submit":         "Submit Request",
+      "sending":        "Sending…",
+      "error":          "Could not send. Please try again.",
+      "captcha":        "Please confirm you are not a robot.",
+      "privacy":        "Your data is kept confidential and is never shared with third parties."
+    },
+    "info": {
+      "office": "Office and Production",
+      "phone":  "Phone",
+      "email":  "Email",
+      "map":    "Location map — placeholder",
+      "respTitle": "Fast Response",
+      "respValue": "We typically respond with pricing within 48 hours",
+      "callCta": "Call Now"
+    }
+  },
+  "quote": {
+    "form": {
+      "title":        "Request a Quote",
+      "subtitle":     "Quote for: {{product}}",
+      "name":         "Name",
+      "namePh":       "Your name",
+      "phone":        "Phone Number",
+      "phonePh":      "+998 90 123 45 67",
+      "email":        "Email",
+      "emailPh":      "you@company.com",
+      "quantity":     "Quantity",
+      "quantityPh":   "e.g. 50 pcs",
+      "note":         "Comments",
+      "notePh":       "Size, material, delivery timeline…",
+      "submit":       "Send Request",
+      "sending":      "Sending…",
+      "required":     "Please provide your name and phone number.",
+      "captcha":      "Please confirm you are not a robot.",
+      "error":        "Could not send. Please try again.",
+      "close":        "Close",
+      "successTitle": "Request Sent",
+      "successBody":  "Thank you! Our sales team will contact you with a price within 48 hours.",
+      "done":         "Done",
+      "privacy":      "Your data is kept confidential and is never shared with third parties."
+    }
+  },
+  "chat": {
+    "telegram": "Message on Telegram",
+    "call":     "Call"
+  },
+  "compare": {
+    "add":           "Compare",
+    "added":         "In Comparison",
+    "remove":        "Remove from Comparison",
+    "full":          "You can compare up to 4 items",
+    "tray":          "To compare: {{n}}",
+    "open":          "Compare",
+    "clear":         "Clear",
+    "empty":         "Add items to compare",
+    "title":         "Product Comparison",
+    "requestAll":    "Request Quote for All",
+    "quoteNote":     "Please quote a price for the following items:",
+    "quoteSubtitle": "Quote for: {{n}} items"
+  },
+  "lightbox": {
+    "label":    "Image Viewer",
+    "prev":     "Previous",
+    "next":     "Next",
+    "zoom":     "Zoom In",
+    "playClip": "Watch Video"
+  },
+  "faq": {
+    "overline": "Q&A",
+    "heading":  "Frequently Asked Questions",
+    "items": [
+      {
+        "q": "What are your lead times?",
+        "a": "Standard idlers and pulleys are usually in stock and ship within a few days. Custom items and complete systems are manufactured within 2–4 weeks, depending on volume and complexity."
+      },
+      {
+        "q": "Is there a minimum order quantity?",
+        "a": "There is no strict minimum. We handle everything from single replacement items to large batches for new conveyor lines. Tell us your requirements and we'll recommend the best option."
+      },
+      {
+        "q": "Do you provide delivery and installation?",
+        "a": "Yes. We deliver our products across Uzbekistan, and for complete systems our own crew handles installation, supervision, and commissioning on site."
+      },
+      {
+        "q": "Can I order non-standard sizes?",
+        "a": "Yes. We manufacture idlers in custom lengths, diameters, and trough angles, as well as pulleys built to the specific parameters of your belt and frame."
+      },
+      {
+        "q": "What warranty applies to your products?",
+        "a": "All our products carry a quality warranty. We use sealed 2Z bearings and St37 steel tubes engineered for a long service life in dusty and abrasive conditions."
+      }
+    ]
+  },
+  "footer": {
+    "desc":      "Conveyor idlers and complete conveyor systems, manufactured in Uzbekistan for construction and bulk-material projects.",
+    "loc":       "Namangan, Uzbekistan",
+    "copy":      "© 2026 Nam Roller — Industrial Solutions",
+    "locBottom": "Namangan · Uzbekistan",
+    "follow":      "Follow Us",
+    "quickLinks":  "Quick Links",
+    "contactTitle":"Have questions? Get in touch with us.",
+    "contactBtn":  "Contact Us",
+    "phone":       "+998 97 374 77 55",
+    "email":       "info@namroller.uz",
+    "address":     "Namangan, Uzbekistan",
+    "cols": {
+      "products": {
+        "h": "Products",
+        "l1": "Trough Idlers",
+        "l2": "Return Idlers",
+        "l3": "Impact Idlers",
+        "l4": "Pulleys",
+        "l5": "Complete Systems"
+      },
+      "company": {
+        "h": "Company",
+        "l1": "About Nam Roller",
+        "l2": "Capabilities",
+        "l3": "Quality and Standards",
+        "l4": "Careers"
+      },
+      "support": {
+        "h": "Support",
+        "l1": "Request a Quote",
+        "l2": "Specifications",
+        "l3": "Lead Times",
+        "l4": "Installation"
+      }
+    }
+  },
+  "legal": {
+    "overline":  "Legal Information",
+    "toc":       "Table of Contents",
+    "docLabel":  "Document",
+    "verLabel":  "Version",
+    "effLabel":  "Effective From",
+    "backTop":   "Back to Top",
+    "privacyLink": "Privacy Policy",
+    "termsLink":   "Terms of Use",
+    "cookiesLink": "Cookie Policy"
+  },
+  "cookieBanner": {
+    "label":  "Cookies",
+    "text":   "We use only essential cookies — to remember your language and protect forms from spam. There are no advertising or tracking cookies.",
+    "accept": "Accept",
+    "more":   "Learn More"
+  },
+  "privacy": {
+    "title":     "Privacy Policy",
+    "docId":     "NR-LEGAL-PP-01",
+    "version":   "1.0",
+    "effective": "January 1, 2026",
+    "intro":     "This Policy describes what data Nam Roller collects through the namroller.uz website, how we use it, and how we protect it. By using the site, you agree to the terms below.",
+    "updated":   "Last updated: January 1, 2026",
+    "contactNote": "For questions about your data, write to",
+    "sections": [
+      {
+        "title": "What Data We Collect",
+        "body": [
+          "When you submit a quote request or message through the forms on our site, we receive the information you provide: name, phone number, email address, company name, and the content of your message.",
+          "In addition, our server automatically records technical data — IP address, browser type, and visit time — for security and to ensure the site operates reliably. We do not use tracking tools for advertising purposes."
+        ]
+      },
+      {
+        "title": "How We Use Your Data",
+        "body": [
+          "The data we receive is used only to respond to your inquiry, prepare a commercial proposal, arrange delivery, and improve the operation of the site.",
+          "We do not send marketing communications without your consent and do not use your contact details for purposes unrelated to your request."
+        ]
+      },
+      {
+        "title": "Sharing with Third Parties",
+        "body": [
+          "We do not sell or share your data with third parties for commercial purposes.",
+          "Data is processed only through services necessary for the site to function: secure storage (Supabase), spam protection for forms (Cloudflare Turnstile), and sales team notifications (Telegram). Each of these receives only the minimum data required for its function."
+        ]
+      },
+      {
+        "title": "Storage and Protection",
+        "body": [
+          "Data is stored on secure servers with restricted access and is used only by a limited number of sales staff.",
+          "We retain inquiries for as long as necessary to process the request and meet legal requirements, after which they are deleted."
+        ]
+      },
+      {
+        "title": "Cookies",
+        "body": [
+          "The site uses a minimal set of cookies: to remember your selected language and to protect forms from automated bots. No advertising or third-party tracking cookies are used."
+        ]
+      },
+      {
+        "title": "Your Rights",
+        "body": [
+          "You may request access to your data, its correction, or its deletion. To do so, contact us at the email address below and we will process your request within a reasonable timeframe."
+        ]
+      },
+      {
+        "title": "Changes to This Policy",
+        "body": [
+          "We may update this Policy from time to time. The current version is always published on this page along with the date of the last change."
+        ]
+      }
+    ]
+  },
+  "terms": {
+    "title":     "Terms of Use",
+    "docId":     "NR-LEGAL-TOS-01",
+    "version":   "1.0",
+    "effective": "January 1, 2026",
+    "intro":     "These Terms govern the use of the namroller.uz website. Please review them before using the site or submitting an inquiry.",
+    "updated":   "Last updated: January 1, 2026",
+    "contactNote": "For questions about these Terms, write to",
+    "sections": [
+      {
+        "title": "Acceptance of Terms",
+        "body": [
+          "By using the namroller.uz website, you confirm your agreement with these Terms. If you do not agree with them, please do not use the site."
+        ]
+      },
+      {
+        "title": "Product Information",
+        "body": [
+          "Technical specifications, images, and product descriptions are provided for reference. Exact parameters, materials, and configuration are confirmed in writing when an order is placed.",
+          "We reserve the right to change the catalog, specifications, and product availability without prior notice."
+        ]
+      },
+      {
+        "title": "Inquiries and Commercial Proposals",
+        "body": [
+          "Submitting a quote request or inquiry form constitutes a request for consultation, not the conclusion of a contract. A commercial proposal is valid for the period stated in it.",
+          "Obligations between the parties arise only upon signing a separate supply agreement."
+        ]
+      },
+      {
+        "title": "Intellectual Property",
+        "body": [
+          "The content of the site — text, logo, images, graphics, and design — belongs to Nam Roller. Use of these materials without written permission is not permitted."
+        ]
+      },
+      {
+        "title": "Acceptable Use",
+        "body": [
+          "You agree not to use the site for unlawful purposes, not to disrupt its operation, not to attempt unauthorized access, and not to use automated tools to collect data without permission."
+        ]
+      },
+      {
+        "title": "Limitation of Liability",
+        "body": [
+          "The site is provided \"as is.\" We strive to maintain the accuracy of information but do not guarantee it is error-free and are not liable for indirect losses arising from use of the site.",
+          "The site may contain links to external resources, for the content of which we are not responsible."
+        ]
+      },
+      {
+        "title": "Governing Law",
+        "body": [
+          "These Terms are governed by the laws of the Republic of Uzbekistan. Disputes are resolved in accordance with applicable law."
+        ]
+      }
+    ]
+  },
+  "cookies": {
+    "title":     "Cookie Policy",
+    "intro":     "This page explains which cookies the namroller.uz website uses and why. We use only what is necessary for the site to function.",
+    "updated":   "Last updated: January 1, 2026",
+    "contactNote": "For questions about cookies, write to",
+    "sections": [
+      {
+        "title": "What Are Cookies",
+        "body": [
+          "Cookies are small text files that a website stores in your browser. They help the site remember your settings and function correctly on subsequent visits."
+        ]
+      },
+      {
+        "title": "Which Cookies We Use",
+        "body": [
+          "Language settings — remember your selected language (Russian or Uzbek) so the site opens in the correct version.",
+          "Spam protection — Cloudflare Turnstile uses a temporary technical cookie to distinguish humans from automated bots when submitting forms.",
+          "We do not use advertising, marketing, or third-party analytics cookies."
+        ]
+      },
+      {
+        "title": "Consent and Management",
+        "body": [
+          "The cookies we use are strictly necessary for the site to function and are applied to support basic functionality.",
+          "You can delete or block cookies in your browser settings. Note that doing so may cause some features — such as remembering your language and form protection — to work incorrectly."
+        ]
+      },
+      {
+        "title": "Third-Party Services",
+        "body": [
+          "Form protection is provided by Cloudflare Turnstile, which may set its own temporary cookie. Its use is governed by Cloudflare's privacy policy."
+        ]
+      },
+      {
+        "title": "Changes",
+        "body": [
+          "We may update this Cookie Policy. The current version is always published on this page along with the date of the last change."
+        ]
+      }
+    ]
+  },
+  "cat": {
+    "Idlers":  "Idlers",
+    "Pulleys": "Pulleys",
+    "Systems": "Systems"
+  },
+  "pd": {
+    "trough-idler": {
+      "name": "Trough Idler",
+      "blurb": "A three-roll set for transporting bulk materials on inclined and horizontal conveyors.",
+      "overview": "The trough idler is a three-roll set that shapes the belt into a trough to increase the volume of material transported. The side rolls are set at a 20–35° angle, which keeps bulk material centered on the belt and prevents spillage on inclined and horizontal conveyors. It is the fundamental load-bearing component of any quarry or construction conveyor line.",
+      "process": [
+        { "title": "Tube Cutting",       "text": "Seamless St37 tube is cut to length and faced for bearing housing fitment." },
+        { "title": "Turning",  "text": "Shaft ends and bearing housings are turned to a precise fit, ensuring roll alignment." },
+        { "title": "Welding and Assembly",     "text": "Housings are welded into the tube, and sealed 2Z bearings and labyrinth seals are pressed in." },
+        { "title": "Quality Control",   "text": "Each roller is checked for runout, ease of rotation, and sealing before assembly into the set." }
+      ],
+      "features": [
+        { "title": "Long Service Life",          "text": "St37 steel tube and sealed 2Z bearings are built for years of operation in dust and abrasive conditions." },
+        { "title": "High Load Capacity",       "text": "Up to 1,200 N per set — handles heavy crushed stone and ore on high-throughput lines." },
+        { "title": "Trough Angle to Suit the Application", "text": "20°, 30°, and 35° angles available for different belt widths and material characteristics." },
+        { "title": "Smooth Rotation",       "text": "Labyrinth seals protect the bearings, reducing resistance and belt wear." }
+      ],
+      "applications": ["Quarries and mining", "Crushed stone and sand production", "Cement plants", "Construction sites"]
+    },
+    "return-roller": {
+      "name": "Return Idler",
+      "blurb": "A single roll support for the return strand of the belt. Available with rubber discs for sticky materials.",
+      "overview": "The return idler supports the lower, return strand of the conveyor belt between the drive and tail pulleys. A single straight roll keeps the belt from sagging and stabilizes its travel. For sticky materials, a version with rubber discs is available that self-cleans and prevents carryback buildup.",
+      "process": [
+        { "title": "Tube Cutting",      "text": "Steel tube is cut to length with a 4–5 mm wall thickness rated for the design load." },
+        { "title": "Turning", "text": "Bearing seats and Ø20/Ø25 shaft ends are turned for precise centering." },
+        { "title": "Assembly",            "text": "6204 2Z bearings are pressed in; self-cleaning rubber discs are fitted where required." },
+        { "title": "Quality Control",  "text": "Runout, balance, and free rotation are checked before painting." }
+      ],
+      "features": [
+        { "title": "Carryback Protection", "text": "Rubber discs shed sticky material buildup, extending belt service life." },
+        { "title": "Stable Belt Travel",      "text": "The straight roll eliminates sag on the return strand and reduces vibration." },
+        { "title": "Load Capacity up to 900 N",   "text": "Rated for long return-strand spans on heavy-duty conveyors." },
+        { "title": "Easy Installation",      "text": "Standard shaft mounting dimensions simplify replacement in existing frames." }
+      ],
+      "applications": ["Conveyor return strand", "Transport of sticky materials", "Mining and processing plants", "Warehouse conveyors"]
+    },
+    "impact-roller": {
+      "name": "Impact Idler",
+      "blurb": "Rollers with rubber rings that absorb impact loads at transfer and loading points.",
+      "overview": "The impact idler is installed at loading and transfer points where falling material strikes the belt. A steel core is covered with vulcanized rubber rings of 65 Sh hardness that absorb the impact, protect the belt from puncture, and extend its service life. This is a critical component at points receiving large, heavy loads.",
+      "process": [
+        { "title": "Core Cutting",  "text": "St37 steel tube is cut and machined to form the roller's load-bearing core." },
+        { "title": "Ring Vulcanization",  "text": "Rubber rings of 65 Sh hardness are vulcanized and fitted onto the core to absorb impact." },
+        { "title": "Assembly",             "text": "Reinforced 6205/6306 2Z bearings are pressed in, and rings are secured along the full length of the roller." },
+        { "title": "Quality Control",   "text": "Ring hardness, runout, and impact resistance are checked before shipment." }
+      ],
+      "features": [
+        { "title": "Belt Protection",                "text": "Rubber rings absorb impact and prevent puncturing of costly belting." },
+        { "title": "2,000 N Impact Load Rating",    "text": "Rated for the impact of large lumps at loading points." },
+        { "title": "Reinforced Bearings",        "text": "6205/6306 2Z bearings withstand elevated dynamic loads." },
+        { "title": "Ring Diameter 133–194 mm","text": "Multiple sizes available for varying transfer intensity." }
+      ],
+      "applications": ["Loading and transfer points", "Receiving hoppers", "Crushing and screening plants", "Quarry conveyors"]
+    },
+    "guide-roller": {
+      "name": "Self-Aligning / Training Idler",
+      "blurb": "Self-aligning rollers that correct belt drift and prevent edge wear.",
+      "overview": "The training idler automatically corrects belt drift, keeping it centered on the conveyor axis. A central swivel assembly reacts to drift, while vertical guide rolls gently return the belt into position. This prevents edge wear, material spillage, and unplanned shutdowns on long conveyor runs.",
+      "process": [
+        { "title": "Tube Cutting",      "text": "Tube is cut to length for the Ø108/133 load-bearing roll." },
+        { "title": "Turning", "text": "Bearing seats and the central swivel assembly are turned to fit." },
+        { "title": "Assembly",       "text": "The swivel frame is assembled and two Ø89 vertical guide rolls are fitted." },
+        { "title": "Quality Control",  "text": "Swivel freedom, drift response, and smooth rotation are checked." }
+      ],
+      "features": [
+        { "title": "Automatic Belt Alignment", "text": "The swivel assembly continuously returns the belt to the conveyor axis." },
+        { "title": "Edge Protection",           "text": "Vertical rolls prevent abrasion and delamination of the belt edges." },
+        { "title": "Less Downtime",         "text": "Reduces the risk of belt run-off and unplanned stoppages on long runs." },
+        { "title": "Load Capacity up to 1,000 N",     "text": "Rated for belt widths of 650–1,200 mm." }
+      ],
+      "applications": ["Long overland conveyors", "Reversible conveyors", "Side-loading lines", "Mining operations"]
+    },
+    "drive-pulley": {
+      "name": "Drive and Tail Pulley",
+      "blurb": "Lagged and unlagged pulleys for head, tail, and take-up positions.",
+      "overview": "Pulleys transfer traction to the belt (drive pulley) and set its tension and direction (tail, take-up). The steel shell is welded to a turned C45 shaft and mounted in SN/SNL plummer block bearings. Smooth or diamond-pattern rubber lagging of 10–14 mm increases grip and prevents slippage under load.",
+      "process": [
+        { "title": "Shell and Disc Cutting",        "text": "Steel plate and tube are cut to form the shell and end discs at the required diameter." },
+        { "title": "Shaft Turning",          "text": "The C45 shaft is turned, with keyways cut for mounting and coupling." },
+        { "title": "Welding, Lagging, and Balancing", "text": "The shell is welded to the shaft, rubber lagging is applied, and the pulley is balanced." },
+        { "title": "Quality Control",                "text": "Static or dynamic balancing and geometry checks are performed before shipment." }
+      ],
+      "features": [
+        { "title": "Diameter 250–630 mm",          "text": "A complete size range for head, tail, and take-up positions." },
+        { "title": "Reliable Lagging",          "text": "Smooth or diamond-pattern rubber, 10–14 mm, improves grip and service life." },
+        { "title": "SN/SNL Plummer Block Bearings", "text": "Split housings simplify on-site installation and maintenance." },
+        { "title": "Balancing on Request",     "text": "Static or dynamic balancing for high belt speeds." }
+      ],
+      "applications": ["Head (drive) assembly", "Tail and take-up assemblies", "Conveyor upgrades", "High-speed lines"]
+    },
+    "complete-system": {
+      "name": "Complete Conveyor System",
+      "blurb": "Turnkey belt conveyors — frame, idlers, pulleys, drive, and structure, delivered and installed.",
+      "overview": "The complete conveyor system is a turnkey engineering solution: design, engineering, manufacturing, and installation of the entire line. We supply the frame, idler sets, pulleys, drive, and steel structures as a single package sized to your material, throughput, and site geometry — from a single span to a multi-section route.",
+      "process": [
+        { "title": "Engineering",      "text": "Our engineers calculate throughput, incline angle, and drive sizing for your material and site." },
+        { "title": "Manufacturing",        "text": "The frame, idlers, pulleys, and structures are manufactured at our facility in Namangan." },
+        { "title": "Delivery and Installation",   "text": "The package is delivered to site and installed by our crew anywhere in Uzbekistan." },
+        { "title": "Commissioning",       "text": "The line is started up, the belt is aligned, and the system is handed over to the customer for operation." }
+      ],
+      "features": [
+        { "title": "Turnkey Delivery",                          "text": "Engineering, manufacturing, installation, and commissioning from a single source." },
+        { "title": "Throughput up to 12,000 t/day","text": "Sized to match your production volumes." },
+        { "title": "Durable Construction",              "text": "Galvanized or painted steel for long outdoor service life." },
+        { "title": "Installation Across Uzbekistan",       "text": "Delivery, on-site supervision, and service anywhere in the country." }
+      ],
+      "applications": ["Quarries and mining", "Cement and concrete plants", "Transfer terminals", "Industrial sites"]
+    }
+  },
+  "sl": {
+    "roller_diameter":          "Roller Diameter",
+    "trough_angle":             "Trough Angle",
+    "tube_material":            "Tube Material",
+    "bearing":                  "Bearing",
+    "max_load_per_set":         "Max Load per Set",
+    "belt_width_range":         "Belt Width Range",
+    "tube_wall":                "Wall Thickness",
+    "surface":                  "Surface",
+    "max_load":                 "Max Load",
+    "shaft":                    "Shaft",
+    "roller_diameter_over_rings":"Roller Diameter (Over Rings)",
+    "ring_material":            "Ring Material",
+    "tube":                     "Tube",
+    "max_impact_load":          "Max Impact Load",
+    "service":                  "Application",
+    "pivot":                    "Swivel Assembly",
+    "vertical_guide_rolls":     "Vertical Guide Rolls",
+    "pulley_diameter":          "Pulley Diameter",
+    "lagging":                  "Lagging",
+    "bearing_housing":          "Bearing Housing",
+    "balancing":                "Balancing",
+    "face_width":               "Face Width",
+    "belt_width":               "Belt Width",
+    "capacity":                 "Capacity",
+    "length_per_flight":        "Length per Flight",
+    "drive":                    "Drive",
+    "structure":                "Structure",
+    "scope":                    "Scope of Supply"
+  },
+  "sv": {
+    "st37_seamless_steel":              "St37 Seamless Steel",
+    "plain_rubber_disc":                "Plain / Rubber Disc",
+    "vulcanised_rubber_65_sh":          "Vulcanized Rubber, 65 Sh",
+    "st37_steel_core":                  "St37 Steel Core",
+    "loading_transfer_zones":           "Loading / Transfer Zones",
+    "central_swivel_bearing":           "Central Swivel Bearing",
+    "c45_turned_keyed":                 "C45 Turned, Keyed",
+    "plain_diamond_rubber_10_14_mm":    "Plain / Diamond Rubber 10–14 mm",
+    "sn_snl_plummer_block":             "SN / SNL Plummer Block",
+    "static_dynamic_on_request":        "Static / Dynamic on Request",
+    "galvanised_painted_steel":         "Galvanized / Painted Steel",
+    "design_fabrication_installation":  "Design · Fabrication · Installation",
+    "up_to_12_000":                     "up to 12,000",
+    "up_to_120":                        "up to 120",
+    "geared_motor_5_5_110":            "Geared Motor, 5.5–110",
+    "to_suit_belt_100":                "To Suit Belt Width + 100"
+  },
+  "projects": {
+    "overline": "Delivery Footprint",
+    "headline": "Projects Across Uzbekistan",
+    "body": "From Karakalpakstan to the Fergana Valley — our rollers and conveyors are at work on sites nationwide. Hover over a point to see the project.",
+    "hint": "Hover or tap a point on the map",
+    "items": {
+      "tashkent":  { "city": "Tashkent",  "name": "Cement Terminal",            "type": "Conveyor System",  "capacity": "8,000 t/day" },
+      "samarkand": { "city": "Samarkand", "name": "Building Materials Plant",         "type": "Trough Idlers",    "capacity": "4,500 t/day" },
+      "bukhara":   { "city": "Bukhara",    "name": "Aggregate Quarry",     "type": "Return Idlers",    "capacity": "3,200 t/day" },
+      "navoi":     { "city": "Navoi",     "name": "Mining and Processing Plant",  "type": "Impact Idlers",       "capacity": "12,000 t/day" },
+      "nukus":     { "city": "Nukus",     "name": "Logistics Hub",              "type": "Delivery and Installation",    "capacity": "2,800 t/day" },
+      "andijan":   { "city": "Andijan",   "name": "Brick Plant",                "type": "Drive Pulleys",   "capacity": "3,600 t/day" },
+      "termez":    { "city": "Termez",    "name": "River Port",                    "type": "Conveyor System",  "capacity": "5,400 t/day" },
+      "fergana":   { "city": "Fergana",   "name": "Oil Refinery",    "type": "Trough Idlers",    "capacity": "6,200 t/day" },
+      "namangan":  { "city": "Namangan",  "name": "Textile Plant",           "type": "Conveyor System",  "capacity": "3,800 t/day" },
+      "jizzakh":   { "city": "Jizzakh",    "name": "Cement Plant",                "type": "Impact Idlers",       "capacity": "7,500 t/day" },
+      "gulistan":  { "city": "Gulistan",  "name": "Grain Terminal",              "type": "Delivery and Installation",    "capacity": "2,400 t/day" },
+      "qarshi":    { "city": "Qarshi",     "name": "Gas Processing Complex",  "type": "Conveyor System",  "capacity": "9,000 t/day" },
+      "urgench":   { "city": "Urgench",   "name": "Cotton Ginning Plant",      "type": "Drive Pulleys",   "capacity": "3,100 t/day" },
+      "zarafshan": { "city": "Zarafshan",  "name": "Gold Mining Plant",      "type": "Impact Idlers",       "capacity": "11,000 t/day" }
+    }
+  },
+  "process": {
+    "overline": "Production",
+    "headline": "How We Make Rollers and Conveyors",
+    "body": "A complete cycle under one roof in Namangan — from tube cutting to a finished conveyor system. See how we manufacture rollers and conveyors.",
+    "stages": [
+      { "title": "Cutting",                "text": "St37 steel tube is cut to length on CNC machines with a length tolerance of ±1 mm.", "chips": ["St37", "±1 mm", "CNC"] },
+      { "title": "Welding",               "text": "Bushings and flanges are welded to the shell in a jig for precise alignment.", "chips": ["Jig", "Alignment"] },
+      { "title": "Turning",   "text": "Bearing seats are turned on lathes for a tight 2Z fit.", "chips": ["2Z Fit"] },
+      { "title": "Assembly",               "text": "Sealed bearings, shafts, and seals are assembled and packed with lifetime lubricant.", "chips": ["2Z Bearing", "Lifetime Lubrication"] },
+      { "title": "Quality Control",    "text": "Every roller is checked for runout, rotation, and load capacity before packing and shipment.", "chips": ["Runout Test", "Load Test"] }
+    ]
+  },
+  "viewer": {
+    "photo": "Photo",
+    "view3d": "3D",
+    "dragHint": "Drag to rotate"
+  },
+  "testimonials": {
+    "overline": "Reviews · Customers",
+    "headline": "What Our Customers Say",
+    "body": "See how our conveyor idlers and systems perform on sites across Uzbekistan.",
+    "addBtn": "Leave a Review",
+    "seed": [
+      { "text": "These conveyor idlers have run three seasons on our crushing line without a single bearing failure. Reliable equipment and honest lead times.", "role": "Production Manager" },
+      { "text": "NamRoller engineered a 1200 mm idler set for our quarry. Drawings were approved quickly, and build quality was excellent.", "role": "Plant Engineer" },
+      { "text": "The support team walked us through installation step by step. Spare parts arrived within days — exactly what an industrial site needs.", "role": "Maintenance Manager" },
+      { "text": "Switching to their rollers noticeably cut our downtime. Easy integration with our existing frames was the deciding factor.", "role": "General Director" },
+      { "text": "Durable components and fast technical support responses have transformed our material handling process. A very efficient supplier.", "role": "Project Manager" },
+      { "text": "The startup exceeded expectations. Tolerances were precise, and the system boosted overall line throughput.", "role": "Process Engineer" },
+      { "text": "Quality steel rollers, fair pricing, and a team that truly understands bulk materials. Our conveyors run quieter now.", "role": "Site Director" },
+      { "text": "They delivered a turnkey solution that matched our requirements exactly and increased throughput across two plants.", "role": "Procurement Manager" },
+      { "text": "From the quote to commissioning, everything went smoothly. We've already placed a repeat order for a second line.", "role": "Logistics Manager" },
+      { "text": "We ordered heavy-duty rollers for a cement plant. They handle high dust levels and load well, with minimal maintenance.", "role": "Chief Mechanic" },
+      { "text": "We've been working together for two years now. Consistent quality batch after batch and responsive technical support.", "role": "Site Supervisor" },
+      { "text": "Rollers were installed on an inclined conveyor — running quietly with no vibration. Recommended as a reliable manufacturer.", "role": "Chief Power Engineer" }
+    ],
+    "form": {
+      "title": "Leave a Review",
+      "name": "Name",
+      "namePh": "Your name",
+      "role": "Position / Company",
+      "rolePh": "e.g. Chief Engineer",
+      "rating": "Rating",
+      "text": "Your Review",
+      "textPh": "Tell us about your experience working with us…",
+      "submit": "Submit Review",
+      "sending": "Sending…",
+      "required": "Please provide your name and review text.",
+      "captcha": "Please confirm you are not a robot.",
+      "error": "Could not submit the review. Please try again.",
+      "successTitle": "Thank You!",
+      "successBody": "Your review has been received and will be published after moderation.",
+      "done": "Done",
+      "close": "Close"
+    }
+  }
+}
