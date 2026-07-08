@@ -1,11 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 import { Button } from '../../components/core/Button';
 import { Badge } from '../../components/core/Badge';
 import { Card } from '../../components/surfaces/Card';
 import { Input } from '../../components/forms/Input';
-import { Stagger, StaggerItem } from '../../components/motion/Stagger';
+import { StaggerItem } from '../../components/motion/Stagger';
+import { staggerContainer } from '../../components/motion/variants';
 import {
   quotesOverview, setQuoteStatus, bulkSetQuoteStatus, exportQuotesCsv, deleteQuote,
   QUOTE_STATUSES, nextQuoteAction,
@@ -272,7 +274,16 @@ export function QuotesPanel() {
           <p style={{ color: 'var(--text-muted)', fontSize: 'var(--fs-caption)', margin: 0 }}>
             {t('admin.quotes.showing', { n: rows.length })}
           </p>
-          <Stagger style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          {/* Mount-triggered (not scroll/whileInView) — this list re-renders on every
+              filter/search change while already on-screen, so a viewport-visibility
+              trigger would depend on scroll position and could fail to re-arm. */}
+          <motion.div
+            key={filter + '::' + query}
+            initial="hidden"
+            animate="visible"
+            variants={staggerContainer}
+            style={{ display: 'flex', flexDirection: 'column', gap: 12 }}
+          >
             {rows.map((r) => (
               <StaggerItem key={r.id}>
                 <Card variant="outline" padding={20}>
@@ -362,7 +373,7 @@ export function QuotesPanel() {
                 </Card>
               </StaggerItem>
             ))}
-          </Stagger>
+          </motion.div>
         </div>
       )}
 
