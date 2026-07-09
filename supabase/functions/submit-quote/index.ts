@@ -31,6 +31,11 @@ interface QuoteInput {
   note?: string | null;
   lang?: string | null;
   source?: string | null;
+  // Client-generated UUID grouping photos/videos already uploaded straight to
+  // the `quote-attachments` bucket (before this row exists — see
+  // handoff-quote-attachments.md). Optional: null/omitted when nothing was
+  // attached.
+  attachmentsDraftId?: string | null;
 }
 
 const str = (v: unknown): string => String(v ?? "").trim();
@@ -38,6 +43,8 @@ const nullable = (v: unknown): string | null => {
   const s = str(v);
   return s.length ? s : null;
 };
+
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 // Telegram HTML mode requires &, <, > to be escaped in text nodes.
 function esc(s: unknown): string {
@@ -58,6 +65,7 @@ function buildMessage(r: {
   lang: string | null;
   note: string | null;
   source: string | null;
+  attachments_draft_id: string | null;
 }): string {
   const lines = [
     `🛒 <b>New price request</b> — ${esc(r.product_name || r.product_id || "—")}`,
@@ -71,6 +79,7 @@ function buildMessage(r: {
   if (r.address) lines.push(`📮 ${esc(r.address)}`);
   if (r.note) lines.push(`📝 ${esc(r.note)}`);
   if (r.source) lines.push(`📍 ${esc(r.source)}`);
+  if (r.attachments_draft_id) lines.push(`📎 Photos/video attached — see admin panel`);
   return lines.join("\n");
 }
 
@@ -141,6 +150,10 @@ Deno.serve(async (req) => {
   ) {
     return jsonResponse({ ok: false, error: "Invalid input" }, 400);
   }
+  const attachmentsDraftId = nullable(input.attachmentsDraftId);
+  if (attachmentsDraftId && !UUID_RE.test(attachmentsDraftId)) {
+    return jsonResponse({ ok: false, error: "Invalid input" }, 400);
+  }
 
   const row = {
     product_id: nullable(input.productId),
@@ -153,6 +166,7 @@ Deno.serve(async (req) => {
     note,
     lang: nullable(input.lang),
     source: nullable(input.source),
+    attachments_draft_id: attachmentsDraftId,
   };
 
   // 3. Insert with the service role (bypasses RLS; anon has no insert path).

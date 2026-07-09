@@ -6,7 +6,7 @@ import { Badge } from '../../components/core/Badge';
 import { Input } from '../../components/forms/Input';
 import {
   quoteDetail, setQuoteStatus, addQuoteNote, assignQuote, listAdmins, deleteQuote,
-  QUOTE_TRANSITIONS,
+  quoteAttachmentUrls, QUOTE_TRANSITIONS,
 } from '../../lib/admin';
 import { STATUS_TONE } from './statusTones';
 import { PriceForm } from './PriceForm';
@@ -33,6 +33,12 @@ export function QuoteDetail({ id, onClose, onChanged }) {
   const [error, setError] = React.useState('');
   const [busy, setBusy] = React.useState(false);
   const [note, setNote] = React.useState('');
+  const [attachments, setAttachments] = React.useState([]);
+  // Starts true: the effect below only ever flips it to false (in the
+  // promise continuation, not synchronously in the effect body), and the
+  // loading text only renders while attachments_draft_id is set, so a row
+  // with none never shows it "stuck".
+  const [attachmentsLoading, setAttachmentsLoading] = React.useState(true);
 
   const load = React.useCallback(() => {
     quoteDetail(id)
@@ -44,6 +50,16 @@ export function QuoteDetail({ id, onClose, onChanged }) {
   React.useEffect(() => {
     listAdmins().then((r) => setAdmins(r.admins)).catch(() => {});
   }, []);
+
+  // Signed URLs expire (10 min) — fetched once the row confirms there's
+  // something to show, not eagerly for every inquiry.
+  React.useEffect(() => {
+    if (!data?.row?.attachments_draft_id) return;
+    quoteAttachmentUrls(id)
+      .then((r) => setAttachments(r.attachments))
+      .catch(() => {})
+      .finally(() => setAttachmentsLoading(false));
+  }, [id, data?.row?.attachments_draft_id]);
 
   const fmtDate = (iso) => {
     try { return new Date(iso).toLocaleString(i18n.language === 'uz' ? 'uz-UZ' : 'ru-RU'); }
@@ -137,6 +153,47 @@ export function QuoteDetail({ id, onClose, onChanged }) {
             {row.note && <Field label={t('admin.quotes.note')}>{row.note}</Field>}
             {row.source && <Field label={t('admin.quotes.source')}>{row.source}</Field>}
           </div>
+
+          {/* Client-submitted photos/videos — signed URLs into the private
+              quote-attachments bucket, fetched once (10 min expiry). */}
+          {row.attachments_draft_id && (
+            <Section title={t('admin.detail.attachments')}>
+              {attachmentsLoading ? (
+                <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: 'var(--fs-body-sm)' }}>
+                  {t('admin.loading')}
+                </p>
+              ) : attachments.length === 0 ? (
+                <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: 'var(--fs-body-sm)' }}>
+                  {t('admin.detail.attachmentsEmpty')}
+                </p>
+              ) : (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+                  {attachments.map((a) => {
+                    const isVideo = /\.(mp4|webm|mov)$/i.test(a.name);
+                    return (
+                      <a
+                        key={a.path}
+                        href={a.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          width: 96, height: 96, borderRadius: 'var(--radius-sm)', overflow: 'hidden',
+                          border: '1px solid var(--border-default)', background: 'var(--surface-sunken)',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        }}
+                      >
+                        {isVideo ? (
+                          <video src={a.url} muted style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        ) : (
+                          <img src={a.url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        )}
+                      </a>
+                    );
+                  })}
+                </div>
+              )}
+            </Section>
+          )}
 
           {/* Pipeline actions — only the transitions the server will accept.
               "completed" additionally needs a price set first (the 3rd stage

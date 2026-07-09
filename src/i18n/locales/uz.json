@@ -164,6 +164,16 @@
       "privacy":      "Ma'lumotlaringiz maxfiy saqlanadi va uchinchi shaxslarga berilmaydi."
     }
   },
+  "attachments": {
+    "label":        "Foto yoki video (ixtiyoriy)",
+    "add":           "Qo'shish",
+    "remove":        "Faylni o'chirish",
+    "hint":          "{{n}} tagacha fayl — obyektning foto yoki qisqa videosi.",
+    "tooMany":       "{{n}} tadan ortiq fayl biriktirib bo'lmaydi.",
+    "badType":       "Fayl turi qo'llab-quvvatlanmaydi.",
+    "imageTooBig":   "Rasm juda katta (maks. 8 MB).",
+    "videoTooBig":   "Video juda katta (maks. 60 MB)."
+  },
   "chat": {
     "telegram": "Telegram'da yozish",
     "call":     "Qo'ng'iroq qilish"
@@ -759,7 +769,9 @@
       "timelineEmpty": "Hozircha amallar yo'q.",
       "eventPrice": "Narx belgilandi: {{price}}",
       "eventAssign": "Mas'ul tayinlandi: {{email}}",
-      "eventUnassign": "Mas'ul olib tashlandi"
+      "eventUnassign": "Mas'ul olib tashlandi",
+      "attachments": "Mijoz yuborgan foto/video",
+      "attachmentsEmpty": "Hech narsa biriktirilmagan."
     },
     "analytics": {
       "loadError": "Tahlilni yuklab bo'lmadi.",

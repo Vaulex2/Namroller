@@ -95,6 +95,17 @@ begin
     alter table public.quote_requests add column phone_normalized text
       generated always as (regexp_replace(phone, '\D', '', 'g')) stored;
   end if;
+
+  -- Links to a client-generated draft UUID used to group photos/videos
+  -- uploaded to the `quote-attachments` storage bucket BEFORE this row
+  -- exists (see supabase/schema/storage_quote_attachments.sql). Null when the
+  -- submitter attached nothing.
+  if not exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public' and table_name = 'quote_requests' and column_name = 'attachments_draft_id'
+  ) then
+    alter table public.quote_requests add column attachments_draft_id uuid;
+  end if;
 end $$;
 
 -- RLS is mandatory on any table reachable through the Data API.

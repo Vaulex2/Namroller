@@ -41,6 +41,13 @@ export interface QuoteRow {
   assigned_to: string | null;
   assigned_email: string | null;
   created_at: string;
+  attachments_draft_id?: string | null;
+}
+
+export interface QuoteAttachment {
+  path: string;
+  url: string;
+  name: string;
 }
 
 /* The admin panel's 3-stage funnel (accept -> set price -> finish). Price
@@ -169,6 +176,12 @@ export function deleteQuote(id: string): Promise<{ ok: true }> {
 // inquiries from the same phone.
 export function quoteDetail(id: string): Promise<QuoteDetail> {
   return invokeAdminQuotes<QuoteDetail>({ action: "detail", id });
+}
+
+// Signed URLs (10 min expiry) for a quote's uploaded photos/videos. Only
+// worth calling when quoteDetail's row has an attachments_draft_id.
+export function quoteAttachmentUrls(id: string): Promise<{ attachments: QuoteAttachment[] }> {
+  return invokeAdminQuotes<{ attachments: QuoteAttachment[] }>({ action: "attachmentUrls", id });
 }
 
 // The guarded money action: settable any time once accepted (or completed);
