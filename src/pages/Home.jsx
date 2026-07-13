@@ -265,6 +265,136 @@ function StatsStrip() {
   );
 }
 
+/* ── Company History ────────────────────────────────────────── */
+function HistoryMilestone({ m, isLast }) {
+  return (
+    <div style={{ display: 'flex', gap: 16 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
+        <span style={{
+          display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+          width: 34, height: 34, borderRadius: '50%', flexShrink: 0,
+          background: 'var(--orange-50)', border: '1px solid var(--orange-100)',
+        }}>
+          <Icon name="clock" size={15} color="var(--nr-accent)" />
+        </span>
+        {!isLast && <span style={{ width: 1, flex: 1, background: 'var(--border-subtle)', marginTop: 4 }} />}
+      </div>
+      <div style={{ paddingBottom: 24 }}>
+        <div style={{
+          fontFamily: 'var(--font-mono)', fontWeight: 'var(--fw-semibold)',
+          fontSize: 'var(--fs-body-sm)', color: 'var(--nr-accent)', marginBottom: 2,
+        }}>
+          {m.year}
+        </div>
+        <div style={{ fontSize: 'var(--fs-body-sm)', lineHeight: 'var(--lh-body)', color: 'var(--text-body)' }}>
+          {m.text}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function HistoryProjectCard({ p }) {
+  return (
+    <Card variant="default" padding={24} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        <span style={{
+          display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+          width: 44, height: 44, flexShrink: 0,
+          background: 'var(--orange-50)', border: '1px solid var(--orange-100)',
+          borderRadius: 'var(--radius-sm)',
+        }}>
+          <Icon name={p.icon} size={22} color="var(--nr-accent)" />
+        </span>
+        <div>
+          <div style={{
+            fontFamily: 'var(--font-display)', fontWeight: 'var(--fw-bold)',
+            textTransform: 'uppercase', fontSize: 16, lineHeight: 'var(--lh-snug)',
+            color: 'var(--text-strong)',
+          }}>
+            {p.name}
+          </div>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>
+            {p.year} · {p.location}
+          </div>
+        </div>
+      </div>
+      <p style={{ fontSize: 'var(--fs-body-sm)', lineHeight: 'var(--lh-body)', color: 'var(--text-body)', margin: 0 }}>
+        {p.text}
+      </p>
+    </Card>
+  );
+}
+
+function History() {
+  const { t } = useTranslation();
+  const milestones = t('history.milestones', { returnObjects: true, defaultValue: [] });
+  const projects = t('history.projects', { returnObjects: true, defaultValue: [] });
+
+  return (
+    <section style={{ background: 'var(--surface-page)', borderTop: '1px solid var(--border-subtle)' }}>
+      <div className="nr-history-grid" style={{
+        maxWidth: 'var(--container)', margin: '0 auto', padding: '80px var(--space-6)',
+        display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: 56, alignItems: 'start',
+      }}>
+        {/* Left: narrative + timeline */}
+        <Reveal>
+          <div style={{
+            fontFamily: 'var(--font-body)', fontWeight: 'var(--fw-semibold)',
+            fontSize: 'var(--fs-overline)', letterSpacing: '0.14em', textTransform: 'uppercase',
+            color: 'var(--nr-accent)', marginBottom: 12,
+          }}>
+            {t('history.overline')}
+          </div>
+          <h2 style={{
+            fontFamily: 'var(--font-display)', fontWeight: 'var(--fw-bold)',
+            textTransform: 'uppercase', fontSize: 'var(--fs-display-md)',
+            lineHeight: 'var(--lh-tight)', margin: 0, color: 'var(--text-strong)',
+            whiteSpace: 'pre-line',
+          }}>
+            {t('history.headline')}
+          </h2>
+          <p style={{ fontSize: 'var(--fs-body-lg)', lineHeight: 'var(--lh-body)', color: 'var(--text-body)', margin: '16px 0 32px' }}>
+            {t('history.body')}
+          </p>
+
+          <div>
+            {milestones.map((m, i) => (
+              <HistoryMilestone key={i} m={m} isLast={i === milestones.length - 1} />
+            ))}
+          </div>
+        </Reveal>
+
+        {/* Right: featured past projects */}
+        <div>
+          <Reveal style={{ marginBottom: 20 }}>
+            <div style={{
+              fontFamily: 'var(--font-body)', fontWeight: 'var(--fw-semibold)',
+              fontSize: 'var(--fs-overline)', letterSpacing: '0.14em', textTransform: 'uppercase',
+              color: 'var(--text-muted)',
+            }}>
+              {t('history.projectsOverline')}
+            </div>
+          </Reveal>
+          <Stagger style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            {projects.map((p, i) => (
+              <StaggerItem key={i}>
+                <HistoryProjectCard p={p} />
+              </StaggerItem>
+            ))}
+          </Stagger>
+        </div>
+      </div>
+
+      <style>{`
+        @media (max-width: 900px) {
+          .nr-history-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+        }
+      `}</style>
+    </section>
+  );
+}
+
 /* ── Product Preview ─────────────────────────────────────────── */
 function SpecStat({ label, value }) {
   return (
@@ -588,6 +718,7 @@ export function Home({ go }) {
     <div>
       <Hero go={go} />
       <StatsStrip />
+      <History />
       <OurProducts go={go} />
       <ProcessVideos />
       <ProjectsMap />
