@@ -170,11 +170,11 @@
     "label":        "Photos or video (optional)",
     "add":           "Add",
     "remove":        "Remove file",
-    "hint":          "Up to {{n}} files — photos or a short video of the site/product.",
+    "hint":          "Up to {{n}} files. JPG, PNG, WEBP photos up to {{imageMb}} MB, or MP4, WEBM, MOV video up to {{videoMb}} MB.",
     "tooMany":       "You can attach up to {{n}} files.",
-    "badType":       "Unsupported file type.",
-    "imageTooBig":   "Image is too large (max 8 MB).",
-    "videoTooBig":   "Video is too large (max 60 MB)."
+    "badType":       "Unsupported file type. Allowed: JPG, PNG, WEBP, MP4, WEBM, MOV.",
+    "imageTooBig":   "Image is too large (max {{mb}} MB).",
+    "videoTooBig":   "Video is too large (max {{mb}} MB)."
   },
   "chat": {
     "telegram": "Message on Telegram",

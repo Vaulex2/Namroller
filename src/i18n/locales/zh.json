@@ -170,11 +170,11 @@
     "label":        "照片或视频(可选)",
     "add":           "添加",
     "remove":        "删除文件",
-    "hint":          "最多 {{n}} 个文件 —— 现场或产品的照片或短视频。",
+    "hint":          "最多 {{n}} 个文件。JPG、PNG、WEBP 图片(最大 {{imageMb}} MB)或 MP4、WEBM、MOV 视频(最大 {{videoMb}} MB)。",
     "tooMany":       "最多可添加 {{n}} 个文件。",
-    "badType":       "不支持的文件类型。",
-    "imageTooBig":   "图片过大(最大 8 MB)。",
-    "videoTooBig":   "视频过大(最大 60 MB)。"
+    "badType":       "不支持的文件类型。仅支持:JPG、PNG、WEBP、MP4、WEBM、MOV。",
+    "imageTooBig":   "图片过大(最大 {{mb}} MB)。",
+    "videoTooBig":   "视频过大(最大 {{mb}} MB)。"
   },
   "chat": {
     "telegram": "通过 Telegram 联系",

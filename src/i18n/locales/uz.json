@@ -170,11 +170,11 @@
     "label":        "Foto yoki video (ixtiyoriy)",
     "add":           "Qo'shish",
     "remove":        "Faylni o'chirish",
-    "hint":          "{{n}} tagacha fayl — obyektning foto yoki qisqa videosi.",
+    "hint":          "{{n}} tagacha fayl. JPG, PNG, WEBP rasm ({{imageMb}} MB gacha) yoki MP4, WEBM, MOV video ({{videoMb}} MB gacha).",
     "tooMany":       "{{n}} tadan ortiq fayl biriktirib bo'lmaydi.",
-    "badType":       "Fayl turi qo'llab-quvvatlanmaydi.",
-    "imageTooBig":   "Rasm juda katta (maks. 8 MB).",
-    "videoTooBig":   "Video juda katta (maks. 60 MB)."
+    "badType":       "Fayl turi qo'llab-quvvatlanmaydi. Ruxsat etilgan: JPG, PNG, WEBP, MP4, WEBM, MOV.",
+    "imageTooBig":   "Rasm juda katta (maks. {{mb}} MB).",
+    "videoTooBig":   "Video juda katta (maks. {{mb}} MB)."
   },
   "chat": {
     "telegram": "Telegram'da yozish",

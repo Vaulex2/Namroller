@@ -13,6 +13,11 @@ const fieldLabel = {
   color: 'var(--text-muted)',
 };
 
+// Derived from the byte limits (not hardcoded in the translation strings) so
+// the hint/error text can never drift out of sync with the actual caps.
+const MAX_IMAGE_MB = Math.round(MAX_IMAGE_BYTES / (1024 * 1024));
+const MAX_VIDEO_MB = Math.round(MAX_VIDEO_BYTES / (1024 * 1024));
+
 /* Queues photos/videos locally (no network) — nothing uploads until the form
    actually submits (see uploadQuoteAttachments in lib/quotes.ts), so removing
    a file here never needs a delete call against the write-only storage
@@ -70,7 +75,9 @@ export function AttachmentPicker({ files, onChange, disabled }) {
       }
       const max = isVideo ? MAX_VIDEO_BYTES : MAX_IMAGE_BYTES;
       if (file.size > max) {
-        lastFileError = t(isVideo ? 'attachments.videoTooBig' : 'attachments.imageTooBig');
+        lastFileError = isVideo
+          ? t('attachments.videoTooBig', { mb: MAX_VIDEO_MB })
+          : t('attachments.imageTooBig', { mb: MAX_IMAGE_MB });
         continue;
       }
       accepted.push(file);
@@ -157,7 +164,7 @@ export function AttachmentPicker({ files, onChange, disabled }) {
       />
 
       <p style={{ margin: '6px 0 0', fontSize: 'var(--fs-caption)', color: 'var(--text-muted)' }}>
-        {t('attachments.hint', { n: MAX_ATTACHMENTS })}
+        {t('attachments.hint', { n: MAX_ATTACHMENTS, imageMb: MAX_IMAGE_MB, videoMb: MAX_VIDEO_MB })}
       </p>
       {error && (
         <p style={{ margin: '4px 0 0', fontSize: 'var(--fs-caption)', color: 'var(--danger)' }}>
