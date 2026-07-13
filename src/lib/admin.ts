@@ -141,7 +141,23 @@ export interface QuoteAnalytics {
 async function invokeAdminQuotes<T>(body: Record<string, unknown>): Promise<T> {
   if (!supabase) throw new Error("Supabase is not configured");
   const { data, error } = await supabase.functions.invoke("admin-quotes", { body });
-  if (error) throw error;
+  if (error) {
+    // A 401 here means the gateway rejected the JWT before our function code
+    // even ran (confirmed by it never showing up in the function's own logs)
+    // — i.e. the locally cached session is stale (its access token expired
+    // without a successful silent refresh, e.g. after the tab sat backgrounded
+    // for a while). AdminGate still thinks we're signed in because it only
+    // checks the cached session, not whether the server still honors it, so
+    // every panel would otherwise fail forever with a generic "couldn't load"
+    // error. Signing out here fires AdminGate's onAuthChange listener, which
+    // drops back to the login screen instead of a silently broken dashboard.
+    const status = (error as { context?: { status?: number } }).context?.status;
+    if (status === 401) {
+      await supabase.auth.signOut();
+      throw new Error("Session expired. Please sign in again.");
+    }
+    throw error;
+  }
   if (!data?.ok) throw new Error(data?.error || "admin-quotes failed");
   return data as T;
 }
