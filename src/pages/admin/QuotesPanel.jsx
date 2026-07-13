@@ -211,7 +211,7 @@ export function QuotesPanel() {
       </div>
 
       {/* Search + refresh + export */}
-      <div style={{ display: 'flex', gap: 12, marginBottom: 16, flexWrap: 'wrap', alignItems: 'flex-end' }}>
+      <div className="nr-stack-sm" style={{ display: 'flex', gap: 12, marginBottom: 16, flexWrap: 'wrap', alignItems: 'flex-end' }}>
         <div style={{ flex: 1, minWidth: 220 }}>
           <Input
             value={query}
@@ -295,7 +295,7 @@ export function QuotesPanel() {
                   aria-label={t('admin.quotes.selectRow')}
                   style={{ marginTop: 4, accentColor: 'var(--nr-accent)' }}
                 />
-                <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap', flex: 1, minWidth: 0 }}>
+                <div className="nr-stack-sm" style={{ display: 'flex', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap', flex: 1, minWidth: 0 }}>
                   <div style={{ minWidth: 0, flex: 1 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
                       <strong style={{ color: 'var(--text-strong)', fontSize: 'var(--fs-body-lg)' }}>{r.name}</strong>

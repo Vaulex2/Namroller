@@ -146,7 +146,7 @@ export function ReviewsPanel() {
       </p>
 
       {/* Search + sort + refresh */}
-      <div style={{ display: 'flex', gap: 12, marginBottom: 16, flexWrap: 'wrap', alignItems: 'flex-end' }}>
+      <div className="nr-stack-sm" style={{ display: 'flex', gap: 12, marginBottom: 16, flexWrap: 'wrap', alignItems: 'flex-end' }}>
         <div style={{ flex: 1, minWidth: 220 }}>
           <Input
             value={query}

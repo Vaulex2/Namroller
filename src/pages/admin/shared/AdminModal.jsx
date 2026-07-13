@@ -23,7 +23,7 @@ export function AdminModal({ onClose, title, closeLabel, maxWidth = 760, childre
         background: 'rgba(15, 23, 42, 0.55)', padding: 'var(--space-6) 16px',
       }}
     >
-      <Card padding={24} style={{ maxWidth, margin: '0 auto', boxShadow: 'var(--shadow-lg)' }}>
+      <Card padding={24} className="nr-modal-card" style={{ maxWidth, margin: '0 auto', boxShadow: 'var(--shadow-lg)' }}>
         {(title || closeLabel) && (
           <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, alignItems: 'flex-start', marginBottom: 16 }}>
             {title && <strong style={{ color: 'var(--text-strong)', fontSize: 'var(--fs-h5)' }}>{title}</strong>}

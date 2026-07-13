@@ -63,7 +63,7 @@ export function AdminDashboard({ session, onSignOut }) {
       </div>
 
       {/* Tabs */}
-      <div style={{
+      <div className="nr-tabs-scroll" style={{
         display: 'flex', gap: 4, marginBottom: 24, flexWrap: 'wrap',
         borderBottom: '1px solid var(--border-subtle)',
       }}>

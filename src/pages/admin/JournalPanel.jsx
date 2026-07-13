@@ -98,7 +98,7 @@ export function JournalPanel() {
       </div>
 
       {/* Search + refresh */}
-      <div style={{ display: 'flex', gap: 12, marginBottom: 16, flexWrap: 'wrap', alignItems: 'flex-end' }}>
+      <div className="nr-stack-sm" style={{ display: 'flex', gap: 12, marginBottom: 16, flexWrap: 'wrap', alignItems: 'flex-end' }}>
         <div style={{ flex: 1, minWidth: 220 }}>
           <Input
             value={query}
@@ -150,7 +150,7 @@ export function JournalPanel() {
               return (
                 <StaggerItem key={r.id}>
                   <Card variant="outline" padding={20}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
+                    <div className="nr-stack-sm" style={{ display: 'flex', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
                       <div style={{ minWidth: 0, flex: 1 }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
                           <strong style={{ color: 'var(--text-strong)', fontSize: 'var(--fs-body-lg)' }}>{r.name}</strong>
@@ -163,7 +163,9 @@ export function JournalPanel() {
                         </div>
                         <div style={{ marginTop: 8, display: 'grid', gap: 4, fontSize: 'var(--fs-body-sm)', color: 'var(--text-body)' }}>
                           <Field label={t('admin.quotes.phone')}><a href={'tel:' + r.phone} style={linkStyle}>{r.phone}</a></Field>
+                          {r.email && <Field label={t('admin.quotes.email')}><a href={'mailto:' + r.email} style={linkStyle}>{r.email}</a></Field>}
                           {r.product_name && <Field label={t('admin.quotes.product')}>{r.product_name}</Field>}
+                          {r.quantity && <Field label={t('admin.quotes.quantity')}>{r.quantity}</Field>}
                           {r.preferred_deadline && (
                             <Field label={t('admin.quotes.preferredDeadline')}>{fmtDeadline(r.preferred_deadline)}</Field>
                           )}

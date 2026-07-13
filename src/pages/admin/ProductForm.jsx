@@ -339,14 +339,14 @@ export function ProductForm({ initial, onSaved, onCancel }) {
         {/* Specs */}
         <Section title={t('admin.products.specs')}>
           <div style={{ display: 'grid', gap: 8 }}>
-            <div style={{ display: 'grid', gap: 8, gridTemplateColumns: '1fr 1fr 80px auto', fontSize: 'var(--fs-caption)', color: 'var(--text-muted)' }}>
+            <div className="nr-grid-4" style={{ display: 'grid', gap: 8, gridTemplateColumns: '1fr 1fr 80px auto', fontSize: 'var(--fs-caption)', color: 'var(--text-muted)' }}>
               <span>{t('admin.products.specLabel')}</span>
               <span>{t('admin.products.specValue')}</span>
               <span>{t('admin.products.specUnit')}</span>
               <span />
             </div>
             {specs.map((s, i) => (
-              <div key={i} style={{ display: 'grid', gap: 8, gridTemplateColumns: '1fr 1fr 80px auto', alignItems: 'center' }}>
+              <div key={i} className="nr-grid-4" style={{ display: 'grid', gap: 8, gridTemplateColumns: '1fr 1fr 80px auto', alignItems: 'center' }}>
                 <Input value={s.label} onChange={(e) => updateSpec(i, { label: e.target.value })} placeholder={t('admin.products.specLabel')} />
                 <Input value={s.value} onChange={(e) => updateSpec(i, { value: e.target.value })} placeholder={t('admin.products.specValue')} />
                 <Input value={s.unit} onChange={(e) => updateSpec(i, { unit: e.target.value })} placeholder={t('admin.products.specUnit')} />

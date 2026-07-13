@@ -29,10 +29,11 @@ export function AdminTable({
     <div style={{
       border: '1px solid var(--border-default)',
       borderRadius: 'var(--radius-md)',
-      overflow: 'hidden',
+      overflowX: 'auto',
+      overflowY: 'hidden',
       background: 'var(--surface-card)',
     }}>
-      <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--font-body)' }}>
+      <table style={{ width: '100%', minWidth: 520, borderCollapse: 'collapse', fontFamily: 'var(--font-body)' }}>
         <thead>
           <tr style={{ background: 'var(--surface-inverse)' }}>
             {selectable && (

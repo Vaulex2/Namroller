@@ -24,4 +24,13 @@
   .nr-modal-grid { grid-template-columns: 1fr !important; }
   .nr-stack-sm   { flex-direction: column !important; gap: 16px !important; }
   .nr-modal-card { padding: 20px !important; }   /* beats Card's inline padding={32} */
+
+  /* Admin tab strip: swipe horizontally as one row instead of wrapping */
+  .nr-tabs-scroll {
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .nr-tabs-scroll::-webkit-scrollbar { display: none; }
 }
