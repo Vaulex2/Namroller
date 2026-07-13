@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Button } from '../components/core/Button';
@@ -250,7 +251,12 @@ export function Header({ route, go, theme, toggleTheme }) {
         </div>
       </div>
 
-      {/* Mobile drawer */}
+      {/* Mobile drawer — portaled to <body> so it isn't trapped inside the
+          header's backdrop-filter, which creates a new containing block for
+          position:fixed descendants and would otherwise collapse the
+          drawer's height down to the header's own ~72px instead of the
+          full viewport. */}
+      {createPortal(
       <AnimatePresence>
         {menuOpen && (
           <>
@@ -338,7 +344,9 @@ export function Header({ route, go, theme, toggleTheme }) {
             </motion.div>
           </>
         )}
-      </AnimatePresence>
+      </AnimatePresence>,
+      document.body,
+      )}
 
       <style>{`
         @media (max-width: 768px) {
