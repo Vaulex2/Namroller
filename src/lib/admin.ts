@@ -42,6 +42,10 @@ export interface QuoteRow {
   assigned_email: string | null;
   created_at: string;
   attachments_draft_id?: string | null;
+  // Client-stated date they'd like the product ready by ("YYYY-MM-DD"),
+  // entered on the Contact page. Distinct from the Journal project's own
+  // admin-set `deadline` (see QuoteProject.deadline below).
+  preferred_deadline: string | null;
 }
 
 export interface QuoteAttachment {
@@ -328,6 +332,10 @@ export interface JournalRow {
   status: ProjectStatus;
   completed_at: string | null;
   created_at: string; // the project's created_at (i.e. when it was accepted)
+  // Client-stated date they'd like the product ready by, entered on the
+  // Contact page — distinct from `deadline` above (the admin's own,
+  // separately-set Journal deadline).
+  preferred_deadline: string | null;
 }
 
 // Stats + first page of Journal rows in one round trip, same shape as

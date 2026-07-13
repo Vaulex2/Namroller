@@ -164,6 +164,9 @@ export function JournalPanel() {
                         <div style={{ marginTop: 8, display: 'grid', gap: 4, fontSize: 'var(--fs-body-sm)', color: 'var(--text-body)' }}>
                           <Field label={t('admin.quotes.phone')}><a href={'tel:' + r.phone} style={linkStyle}>{r.phone}</a></Field>
                           {r.product_name && <Field label={t('admin.quotes.product')}>{r.product_name}</Field>}
+                          {r.preferred_deadline && (
+                            <Field label={t('admin.quotes.preferredDeadline')}>{fmtDeadline(r.preferred_deadline)}</Field>
+                          )}
                           {r.price_amount != null && (
                             <Field label={t('admin.detail.price')}>{fmtMoney(r.price_amount, r.price_currency)}</Field>
                           )}

@@ -58,7 +58,7 @@ import { handlePreflight, jsonResponse } from "../_shared/cors.ts";
 import { requireAdmin, serviceClient, type AdminUser } from "../_shared/admin.ts";
 
 const LIST_COLUMNS =
-  "id, product_id, product_name, name, phone, email, quantity, address, note, lang, source, status, assigned_to, assigned_email, created_at";
+  "id, product_id, product_name, name, phone, email, quantity, address, note, lang, source, status, assigned_to, assigned_email, created_at, preferred_deadline";
 
 // Second, explicit query merged by quote_id — avoids relying on PostgREST's
 // ambiguous to-one vs to-many embed inference for the quote_requests<->projects
@@ -596,7 +596,7 @@ Deno.serve(async (req) => {
         db.from("projects")
           .select(
             "id, quote_id, price_amount, price_currency, deadline, status, completed_at, created_at, " +
-              "quote_requests!inner(id, name, phone, email, product_name, quantity, assigned_email, status, created_at)",
+              "quote_requests!inner(id, name, phone, email, product_name, quantity, assigned_email, status, created_at, preferred_deadline)",
             { count: "exact" },
           )
           .order("created_at", { ascending: false })

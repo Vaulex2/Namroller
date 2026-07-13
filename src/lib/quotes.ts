@@ -21,6 +21,11 @@ export type QuoteInput = {
   note?: string;
   lang?: string;
   source?: string;
+  // Client-stated date they'd like the product ready by ("YYYY-MM-DD"). Purely
+  // informational — distinct from the Journal project's own admin-set deadline
+  // (supabase/schema/projects_pipeline.sql), which the admin sets independently
+  // once the inquiry is accepted.
+  preferredDeadline?: string;
   // Cloudflare Turnstile token from the form's <Turnstile> widget. Omitted in
   // demo mode (no site key) — the edge function rejects real submissions without it.
   token?: string;

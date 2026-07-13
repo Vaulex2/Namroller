@@ -31,6 +31,8 @@ interface QuoteInput {
   note?: string | null;
   lang?: string | null;
   source?: string | null;
+  // Client-stated date they'd like the product ready by ("YYYY-MM-DD").
+  preferredDeadline?: string | null;
   // Client-generated UUID grouping photos/videos already uploaded straight to
   // the `quote-attachments` bucket (before this row exists — see
   // handoff-quote-attachments.md). Optional: null/omitted when nothing was
@@ -66,6 +68,7 @@ function buildMessage(r: {
   note: string | null;
   source: string | null;
   attachments_draft_id: string | null;
+  preferred_deadline: string | null;
 }): string {
   const lines = [
     `🛒 <b>New price request</b> — ${esc(r.product_name || r.product_id || "—")}`,
@@ -77,6 +80,7 @@ function buildMessage(r: {
   if (r.lang) meta.push(`🌐 ${esc(r.lang)}`);
   if (meta.length) lines.push(meta.join("   "));
   if (r.address) lines.push(`📮 ${esc(r.address)}`);
+  if (r.preferred_deadline) lines.push(`📅 Wants it by: ${esc(r.preferred_deadline)}`);
   if (r.note) lines.push(`📝 ${esc(r.note)}`);
   if (r.source) lines.push(`📍 ${esc(r.source)}`);
   if (r.attachments_draft_id) lines.push(`📎 Photos/video attached — see admin panel`);
@@ -155,6 +159,11 @@ Deno.serve(async (req) => {
     return jsonResponse({ ok: false, error: "Invalid input" }, 400);
   }
 
+  const preferredDeadline = nullable(input.preferredDeadline);
+  if (preferredDeadline && !/^\d{4}-\d{2}-\d{2}$/.test(preferredDeadline)) {
+    return jsonResponse({ ok: false, error: "Invalid input" }, 400);
+  }
+
   const row = {
     product_id: nullable(input.productId),
     product_name: nullable(input.productName),
@@ -167,6 +176,7 @@ Deno.serve(async (req) => {
     lang: nullable(input.lang),
     source: nullable(input.source),
     attachments_draft_id: attachmentsDraftId,
+    preferred_deadline: preferredDeadline,
   };
 
   // 3. Insert with the service role (bypasses RLS; anon has no insert path).

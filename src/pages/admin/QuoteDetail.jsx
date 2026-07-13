@@ -65,6 +65,10 @@ export function QuoteDetail({ id, onClose, onChanged }) {
     try { return new Date(iso).toLocaleString(i18n.language === 'uz' ? 'uz-UZ' : 'ru-RU'); }
     catch { return iso; }
   };
+  const fmtDeadline = (isoDate) => {
+    try { return new Date(isoDate + 'T00:00:00').toLocaleDateString(i18n.language === 'uz' ? 'uz-UZ' : 'ru-RU'); }
+    catch { return isoDate; }
+  };
   const fmtMoney = (value, cur) => {
     try {
       return new Intl.NumberFormat(i18n.language === 'uz' ? 'uz-UZ' : 'ru-RU', {
@@ -150,6 +154,9 @@ export function QuoteDetail({ id, onClose, onChanged }) {
             {row.product_name && <Field label={t('admin.quotes.product')}>{row.product_name}</Field>}
             {row.quantity && <Field label={t('admin.quotes.quantity')}>{row.quantity}</Field>}
             {row.address && <Field label={t('admin.quotes.address')}>{row.address}</Field>}
+            {row.preferred_deadline && (
+              <Field label={t('admin.quotes.preferredDeadline')}>{fmtDeadline(row.preferred_deadline)}</Field>
+            )}
             {row.note && <Field label={t('admin.quotes.note')}>{row.note}</Field>}
             {row.source && <Field label={t('admin.quotes.source')}>{row.source}</Field>}
           </div>

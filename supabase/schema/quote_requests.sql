@@ -106,6 +106,17 @@ begin
   ) then
     alter table public.quote_requests add column attachments_draft_id uuid;
   end if;
+
+  -- Client-stated date they'd like the product ready by, entered on the
+  -- Contact page. Purely informational (never validated against a real
+  -- production schedule) and distinct from the Journal project's own
+  -- admin-set deadline in projects_pipeline.sql.
+  if not exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public' and table_name = 'quote_requests' and column_name = 'preferred_deadline'
+  ) then
+    alter table public.quote_requests add column preferred_deadline date;
+  end if;
 end $$;
 
 -- RLS is mandatory on any table reachable through the Data API.

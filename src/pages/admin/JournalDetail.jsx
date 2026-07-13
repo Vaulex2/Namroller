@@ -115,6 +115,9 @@ export function JournalDetail({ id, onClose, onChanged }) {
             {row.product_name && <Field label={t('admin.quotes.product')}>{row.product_name}</Field>}
             {row.quantity && <Field label={t('admin.quotes.quantity')}>{row.quantity}</Field>}
             {row.address && <Field label={t('admin.quotes.address')}>{row.address}</Field>}
+            {row.preferred_deadline && (
+              <Field label={t('admin.quotes.preferredDeadline')}>{fmtDeadline(row.preferred_deadline)}</Field>
+            )}
             {row.assigned_email && <Field label={t('admin.quotes.assignee')}>{row.assigned_email}</Field>}
           </div>
 

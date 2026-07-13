@@ -27,7 +27,7 @@ export function Contact() {
   const [error, setError] = React.useState('');
   const [token, setToken] = React.useState('');
   const [form, setForm] = React.useState({
-    name: '', phone: '', email: '', address: '', msg: '',
+    name: '', phone: '', email: '', address: '', deadline: '', msg: '',
   });
   const [attachments, setAttachments] = React.useState([]);
 
@@ -62,6 +62,7 @@ export function Contact() {
         phone: form.phone.trim(),
         email: form.email.trim(),
         address: form.address.trim(),
+        preferredDeadline: form.deadline || undefined,
         note: form.msg.trim(),
         lang: i18n.language,
         source: 'Contact page',
@@ -192,6 +193,15 @@ export function Contact() {
                   label={t('contact.form.address')} value={form.address} onChange={set('address')}
                   placeholder={t('contact.form.addressPh')}
                   iconLeft={<Icon name="pin" size={16} />}
+                />
+              </div>
+
+              <div style={{ marginTop: 16 }}>
+                <Input
+                  label={t('contact.form.deadline')} type="date" lang="en-CA"
+                  value={form.deadline} onChange={set('deadline')}
+                  hint={t('contact.form.deadlineHint')}
+                  iconLeft={<Icon name="clock" size={16} />}
                 />
               </div>
 
