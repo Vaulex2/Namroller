@@ -92,26 +92,28 @@ export function ProductsPanel() {
               const imageUrl = productRowImageUrl(row);
               return (
                 <Card variant="outline" padding={16} style={{ opacity: row.published ? 1 : 0.6 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-                    <DragHandle {...dragHandleProps} />
-                    {imageUrl ? (
-                      <img src={imageUrl} alt="" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }} />
-                    ) : (
-                      <span style={{ width: 48, height: 48, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', borderRadius: 'var(--radius-sm)', background: 'var(--surface-sunken)' }}>
-                        <Icon name={row.icon} size={22} color="var(--text-muted)" />
-                      </span>
-                    )}
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-                        <strong style={{ color: 'var(--text-strong)' }}>{row.name}</strong>
-                        <Badge tone="neutral" soft>{t(`cat.${row.cat}`, row.cat)}</Badge>
-                        <Badge tone={row.published ? 'success' : 'warning'} soft>
-                          {row.published ? t('admin.products.published') : t('admin.products.hidden')}
-                        </Badge>
+                  <div className="nr-stack-sm" style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 14, flex: 1, minWidth: 0 }}>
+                      <DragHandle {...dragHandleProps} />
+                      {imageUrl ? (
+                        <img src={imageUrl} alt="" style={{ width: 48, height: 48, flexShrink: 0, objectFit: 'cover', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }} />
+                      ) : (
+                        <span style={{ width: 48, height: 48, flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', borderRadius: 'var(--radius-sm)', background: 'var(--surface-sunken)' }}>
+                          <Icon name={row.icon} size={22} color="var(--text-muted)" />
+                        </span>
+                      )}
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                          <strong style={{ color: 'var(--text-strong)' }}>{row.name}</strong>
+                          <Badge tone="neutral" soft>{t(`cat.${row.cat}`, row.cat)}</Badge>
+                          <Badge tone={row.published ? 'success' : 'warning'} soft>
+                            {row.published ? t('admin.products.published') : t('admin.products.hidden')}
+                          </Badge>
+                        </div>
+                        <p style={{ margin: '4px 0 0', color: 'var(--text-muted)', fontSize: 'var(--fs-body-sm)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          {row.blurb}
+                        </p>
                       </div>
-                      <p style={{ margin: '4px 0 0', color: 'var(--text-muted)', fontSize: 'var(--fs-body-sm)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                        {row.blurb}
-                      </p>
                     </div>
                     <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                       <Button variant="outline" size="sm" onClick={() => setFormOpen(row)}>

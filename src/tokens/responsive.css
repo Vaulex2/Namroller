@@ -33,4 +33,17 @@
     scrollbar-width: none;
   }
   .nr-tabs-scroll::-webkit-scrollbar { display: none; }
+  .nr-tabs-scroll button {
+    padding: 8px 10px !important;
+    font-size: 12px !important;
+    letter-spacing: 0.02em !important;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Admin header: title/email block and the theme/lang/sign-out controls
+     stack instead of the controls landing flush-left after wrapping
+     (a lone flex item on a wrapped line ignores space-between). */
+  .nr-admin-header { flex-direction: column !important; align-items: stretch !important; }
+  .nr-admin-header-controls { justify-content: space-between !important; }
 }

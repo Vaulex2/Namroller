@@ -33,7 +33,7 @@ export function AdminDashboard({ session, onSignOut }) {
   return (
     <div style={{ maxWidth: 1100, margin: '0 auto', padding: 'var(--space-6)' }}>
       {/* Header */}
-      <div style={{
+      <div className="nr-admin-header" style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         flexWrap: 'wrap', gap: 16, marginBottom: 24,
       }}>
@@ -44,11 +44,11 @@ export function AdminDashboard({ session, onSignOut }) {
           }}>
             {t('admin.title')}
           </h1>
-          <p style={{ color: 'var(--text-muted)', fontSize: 'var(--fs-body-sm)', margin: '4px 0 0' }}>
+          <p style={{ color: 'var(--text-muted)', fontSize: 'var(--fs-body-sm)', margin: '4px 0 0', wordBreak: 'break-word' }}>
             {session?.user?.email}
           </p>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div className="nr-admin-header-controls" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <Button
             variant="ghost"
             size="sm"
