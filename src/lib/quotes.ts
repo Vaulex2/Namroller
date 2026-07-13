@@ -56,10 +56,27 @@ export async function submitQuote(input: QuoteInput): Promise<void> {
 const ATTACHMENTS_BUCKET = "quote-attachments";
 export const MAX_ATTACHMENTS = 5;
 export const MAX_IMAGE_BYTES = 8 * 1024 * 1024; // 8 MB
-export const MAX_VIDEO_BYTES = 60 * 1024 * 1024; // 60 MB — matches the bucket's server-side cap
+export const MAX_VIDEO_BYTES = 25 * 1024 * 1024; // 25 MB — a "short clip", not a movie; keeps worst-case upload time bounded
 export const ATTACHMENT_IMAGE_MIME = ["image/jpeg", "image/png", "image/webp"];
 export const ATTACHMENT_VIDEO_MIME = ["video/mp4", "video/webm", "video/quicktime"];
 export const ATTACHMENT_ACCEPT = [...ATTACHMENT_IMAGE_MIME, ...ATTACHMENT_VIDEO_MIME].join(",");
+
+// Per-file upload deadline. supabase-js's storage upload doesn't expose an
+// abort/timeout option, so this races it against a timer instead — if the
+// underlying request is truly stuck (seen in the field: a browser/network
+// that silently black-holes the request instead of rejecting it), the form
+// still recovers with a clear error instead of "Sending..." forever.
+const UPLOAD_TIMEOUT_MS = 60_000;
+
+function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error("Upload timed out")), ms);
+    promise.then(
+      (v) => { clearTimeout(timer); resolve(v); },
+      (e) => { clearTimeout(timer); reject(e); },
+    );
+  });
+}
 
 export function newAttachmentsDraftId(): string {
   return crypto.randomUUID();
@@ -88,9 +105,10 @@ export async function uploadQuoteAttachment(file: File, draftId: string): Promis
   if (file.size > maxBytes) throw new Error("File is too large");
 
   const path = `${draftId}/${crypto.randomUUID()}.${extFromMime(file.type)}`;
-  const { error } = await supabase.storage
-    .from(ATTACHMENTS_BUCKET)
-    .upload(path, file, { contentType: file.type, upsert: false });
+  const { error } = await withTimeout(
+    supabase.storage.from(ATTACHMENTS_BUCKET).upload(path, file, { contentType: file.type, upsert: false }),
+    UPLOAD_TIMEOUT_MS,
+  );
   if (error) throw error;
 }
 

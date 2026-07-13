@@ -44,8 +44,18 @@ export function Contact() {
       return;
     }
     setBusy(true); setError('');
+    // Attachment upload is a separate failure mode from the submit itself
+    // (large/slow files, flaky networks) — distinguished so the error tells
+    // the buyer what actually failed rather than a generic "try again".
+    let attachmentsDraftId;
     try {
-      const attachmentsDraftId = await uploadQuoteAttachments(attachments);
+      attachmentsDraftId = await uploadQuoteAttachments(attachments);
+    } catch {
+      setError(t('contact.form.attachmentError'));
+      setBusy(false);
+      return;
+    }
+    try {
       await submitQuote({
         productName: 'General inquiry (Contact page)',
         name: form.name.trim(),

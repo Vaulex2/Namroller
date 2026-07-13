@@ -125,6 +125,7 @@
       "submit":    "So'rov yuborish",
       "sending":   "Yuborilmoqda…",
       "error":     "Yuborib bo'lmadi. Qayta urinib ko'ring.",
+      "attachmentError": "Fayllarni biriktirib bo'lmadi. Qayta urining yoki ilovasiz yuboring.",
       "captcha":   "Iltimos, robot emasligingizni tasdiqlang.",
       "privacy":   "Ma'lumotlaringiz maxfiy saqlanadi va uchinchi shaxslarga berilmaydi."
     },
@@ -157,6 +158,7 @@
       "required":     "Ism va telefon raqamini kiriting.",
       "captcha":      "Iltimos, robot emasligingizni tasdiqlang.",
       "error":        "Yuborib bo'lmadi. Qayta urinib ko'ring.",
+      "attachmentError": "Fayllarni biriktirib bo'lmadi. Qayta urining yoki ilovasiz yuboring.",
       "close":        "Yopish",
       "successTitle": "So'rov yuborildi",
       "successBody":  "Rahmat! Savdo bo'limimiz 48 soat ichida narx bilan bog'lanadi.",
