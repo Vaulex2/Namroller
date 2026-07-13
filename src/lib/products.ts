@@ -25,6 +25,16 @@ export interface ProductClip {
   poster: string | null;
 }
 
+// RU/UZ only — matches the admin panel's own language scope. EN/ZH/FA copy
+// for the same sections continues to live in src/i18n/locales/{en,zh,fa}.json.
+export type LocalizedText = { ru: string; uz: string };
+
+export interface ProductContentItem {
+  icon: string;
+  title: LocalizedText;
+  text: LocalizedText;
+}
+
 export interface ProductRow {
   id: string;
   name: string;
@@ -35,17 +45,21 @@ export interface ProductRow {
   diameter: string | null;
   load: string | null;
   specs: ProductSpec[];
-  process_icons: string[];
-  feature_icons: string[];
+  overview: Partial<LocalizedText>;
+  process: ProductContentItem[];
+  features: ProductContentItem[];
+  applications: Partial<{ ru: string[]; uz: string[] }>;
   videos: ProductClip[];
   sort_order: number;
   published: boolean;
   created_at: string;
 }
 
-// Shape consumed by Catalog.jsx / Home.jsx / CompareTray.jsx — matches the
-// NR_PRODUCTS entry shape exactly (content.process/content.features instead
-// of the row's process_icons/feature_icons column names).
+// Shape consumed by Catalog.jsx / Home.jsx / CompareTray.jsx. `content` stays
+// icon-only (matches the NR_PRODUCTS seed in data.js, which has no DB-backed
+// rich content) — ProductDetail is the only place that needs the full
+// overview/process/features/applications, so those pass through raw for it
+// to resolve per the active language.
 export interface Product {
   id: string;
   name: string;
@@ -58,10 +72,14 @@ export interface Product {
   load: string;
   content: { process: string[]; features: string[] };
   specs: ProductSpec[];
+  overview: Partial<LocalizedText>;
+  process: ProductContentItem[];
+  features: ProductContentItem[];
+  applications: Partial<{ ru: string[]; uz: string[] }>;
 }
 
 const PRODUCTS_SELECT =
-  "id, name, blurb, icon, image, cat, diameter, load, specs, process_icons, feature_icons, videos, sort_order, published, created_at";
+  "id, name, blurb, icon, image, cat, diameter, load, specs, overview, process, features, applications, videos, sort_order, published, created_at";
 
 // A storage object key is anything that isn't a root-relative/absolute path
 // (mirrors the same helper in src/lib/videos.ts).
@@ -87,8 +105,15 @@ function rowToProduct(row: ProductRow): Product {
     blurb: row.blurb,
     diameter: row.diameter ?? "—",
     load: row.load ?? "—",
-    content: { process: row.process_icons ?? [], features: row.feature_icons ?? [] },
+    content: {
+      process: (row.process ?? []).map((s) => s.icon),
+      features: (row.features ?? []).map((s) => s.icon),
+    },
     specs: row.specs ?? [],
+    overview: row.overview ?? {},
+    process: row.process ?? [],
+    features: row.features ?? [],
+    applications: row.applications ?? {},
   };
 }
 

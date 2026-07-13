@@ -701,6 +701,7 @@
     "tabs": {
       "overview": "Обзор",
       "quotes": "Заявки",
+      "journal": "Журнал",
       "products": "Каталог",
       "analytics": "Аналитика",
       "reviews": "Отзывы",
@@ -716,7 +717,9 @@
     "status": {
       "new": "На рассмотрении",
       "accepted": "Принята",
-      "completed": "Завершена"
+      "completed": "Завершена",
+      "in_progress": "В работе",
+      "cancelled": "Отменён"
     },
     "login": {
       "title": "Вход администратора",
@@ -787,8 +790,31 @@
       "eventPrice": "Назначена цена: {{price}}",
       "eventAssign": "Назначен ответственный: {{email}}",
       "eventUnassign": "Ответственный снят",
+      "eventDeadline": "Установлен срок: {{date}}",
+      "eventDeadlineCleared": "Срок снят",
       "attachments": "Фото и видео от клиента",
       "attachmentsEmpty": "Ничего не прикреплено."
+    },
+    "journal": {
+      "searchPh": "Поиск по имени, телефону или продукту…",
+      "showing": "Показано: {{n}}",
+      "empty": "Проектов нет.",
+      "loadError": "Не удалось загрузить журнал.",
+      "actionError": "Не удалось выполнить действие.",
+      "details": "Подробнее",
+      "filterAll": "Все",
+      "deadline": "Срок",
+      "deadlineSet": "Установить срок",
+      "deadlineCurrent": "Текущий срок: {{date}}",
+      "markCompleted": "Завершить проект",
+      "cancelProject": "Отменить проект",
+      "confirmCancel": "Отменить этот проект? Заявка останется в истории.",
+      "reactivate": "Возобновить",
+      "completedOn": "Завершён {{date}}",
+      "stage": "Статус проекта",
+      "stats": {
+        "total": "Всего проектов"
+      }
     },
     "analytics": {
       "loadError": "Не удалось загрузить аналитику.",
@@ -887,9 +913,18 @@
       "specValue": "Значение",
       "specUnit": "Ед. изм.",
       "addSpec": "Добавить строку",
-      "processIcons": "Иконки этапов производства",
-      "featureIcons": "Иконки характеристик",
-      "iconListHint": "Через запятую. Должно совпадать по количеству с pd.<id>.process / features в файлах переводов.",
+      "content": "Содержимое страницы товара (RU / UZ)",
+      "overview": "Обзор",
+      "overviewPh": "Общее описание товара для страницы товара…",
+      "process": "Этапы производства",
+      "addStep": "Добавить этап",
+      "stepTitlePh": "Заголовок этапа",
+      "stepTextPh": "Описание этапа",
+      "features": "Преимущества",
+      "addFeature": "Добавить преимущество",
+      "applications": "Применение",
+      "addApplication": "Добавить пункт",
+      "applicationPh": "Например, Карьеры и горнодобыча",
       "save": "Сохранить",
       "saving": "Сохранение…",
       "saved": "Изменения сохранены",

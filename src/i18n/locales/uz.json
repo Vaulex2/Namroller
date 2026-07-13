@@ -701,6 +701,7 @@
     "tabs": {
       "overview": "Umumiy",
       "quotes": "So'rovlar",
+      "journal": "Jurnal",
       "products": "Katalog",
       "analytics": "Tahlil",
       "reviews": "Sharhlar",
@@ -716,7 +717,9 @@
     "status": {
       "new": "Ko'rib chiqilishi kerak",
       "accepted": "Qabul qilingan",
-      "completed": "Yakunlangan"
+      "completed": "Yakunlangan",
+      "in_progress": "Jarayonda",
+      "cancelled": "Bekor qilingan"
     },
     "login": {
       "title": "Admin kirish",
@@ -787,8 +790,31 @@
       "eventPrice": "Narx belgilandi: {{price}}",
       "eventAssign": "Mas'ul tayinlandi: {{email}}",
       "eventUnassign": "Mas'ul olib tashlandi",
+      "eventDeadline": "Muddat belgilandi: {{date}}",
+      "eventDeadlineCleared": "Muddat olib tashlandi",
       "attachments": "Mijoz yuborgan foto/video",
       "attachmentsEmpty": "Hech narsa biriktirilmagan."
+    },
+    "journal": {
+      "searchPh": "Ism, telefon yoki mahsulot bo'yicha qidirish…",
+      "showing": "Ko'rsatilgan: {{n}}",
+      "empty": "Loyihalar yo'q.",
+      "loadError": "Jurnalni yuklab bo'lmadi.",
+      "actionError": "Amalni bajarib bo'lmadi.",
+      "details": "Batafsil",
+      "filterAll": "Hammasi",
+      "deadline": "Muddat",
+      "deadlineSet": "Muddatni belgilash",
+      "deadlineCurrent": "Joriy muddat: {{date}}",
+      "markCompleted": "Loyihani yakunlash",
+      "cancelProject": "Loyihani bekor qilish",
+      "confirmCancel": "Bu loyiha bekor qilinsinmi? So'rov tarixda qoladi.",
+      "reactivate": "Qayta faollashtirish",
+      "completedOn": "Yakunlangan: {{date}}",
+      "stage": "Loyiha holati",
+      "stats": {
+        "total": "Jami loyihalar"
+      }
     },
     "analytics": {
       "loadError": "Tahlilni yuklab bo'lmadi.",
@@ -887,9 +913,18 @@
       "specValue": "Qiymat",
       "specUnit": "O'lchov birligi",
       "addSpec": "Qator qo'shish",
-      "processIcons": "Ishlab chiqarish bosqichlari ikonkalari",
-      "featureIcons": "Xususiyat ikonkalari",
-      "iconListHint": "Vergul bilan ajrating. Tarjima fayllaridagi pd.<id>.process / features massivlari uzunligiga mos bo'lishi kerak.",
+      "content": "Mahsulot sahifasi kontenti (RU / UZ)",
+      "overview": "Umumiy ma'lumot",
+      "overviewPh": "Mahsulot sahifasi uchun umumiy tavsif…",
+      "process": "Ishlab chiqarish bosqichlari",
+      "addStep": "Bosqich qo'shish",
+      "stepTitlePh": "Bosqich sarlavhasi",
+      "stepTextPh": "Bosqich tavsifi",
+      "features": "Afzalliklar",
+      "addFeature": "Afzallik qo'shish",
+      "applications": "Qo'llanilishi",
+      "addApplication": "Band qo'shish",
+      "applicationPh": "Masalan, Karyerlar va kon qazish",
       "save": "Saqlash",
       "saving": "Saqlanmoqda…",
       "saved": "O'zgarishlar saqlandi",

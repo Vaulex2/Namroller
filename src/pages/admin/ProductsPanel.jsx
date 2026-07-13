@@ -137,7 +137,7 @@ export function ProductsPanel() {
           onClose={() => closeForm(false)}
           closeLabel={t('admin.detail.close')}
           title={formOpen === 'create' ? t('admin.products.add') : t('admin.products.edit')}
-          maxWidth={640}
+          maxWidth={880}
         >
           <ProductForm
             initial={formOpen === 'create' ? null : formOpen}

@@ -390,7 +390,7 @@ function SectionBand({ heading, sunken = false, children }) {
 }
 
 // "How it's made" — numbered steps. Zips icon names (from data) with {title,text} (from i18n).
-function ProcessSteps({ icons, steps }) {
+function ProcessSteps({ steps }) {
   return (
     <Stagger className="nr-grid-steps" style={{ display: 'grid', gridTemplateColumns: `repeat(${steps.length}, 1fr)`, gap: 20 }}>
       {steps.map((s, i) => (
@@ -405,7 +405,7 @@ function ProcessSteps({ icons, steps }) {
               }}>
                 {String(i + 1).padStart(2, '0')}
               </span>
-              <Icon name={icons[i] || 'cog'} size={22} color="var(--text-strong)" stroke={1.5} />
+              <Icon name={s.icon || 'cog'} size={22} color="var(--text-strong)" stroke={1.5} />
             </div>
             <h3 style={{
               fontFamily: 'var(--font-display)', fontWeight: 'var(--fw-bold)',
@@ -424,8 +424,8 @@ function ProcessSteps({ icons, steps }) {
   );
 }
 
-// "Characteristics" — grid of feature cards. Zips icon names (from data) with {title,text} (from i18n).
-function FeatureGrid({ icons, features }) {
+// "Characteristics" — grid of feature cards, each carrying its own icon.
+function FeatureGrid({ features }) {
   return (
     <Stagger className="nr-grid-2" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 20 }}>
       {features.map((f, i) => (
@@ -438,7 +438,7 @@ function FeatureGrid({ icons, features }) {
                 borderRadius: 'var(--radius-sm)', background: 'var(--surface-sunken)',
                 border: '1px solid var(--border-subtle)',
               }}>
-                <Icon name={icons[i] || 'check'} size={22} color="var(--nr-accent)" stroke={1.5} />
+                <Icon name={f.icon || 'check'} size={22} color="var(--nr-accent)" stroke={1.5} />
               </span>
               <div>
                 <h3 style={{
@@ -484,7 +484,7 @@ function ApplicationTags({ items }) {
 }
 
 export function ProductDetail({ id, go }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const translateSpecs = useSpecTranslation();
   const { products } = useProducts();
   const p = products.find((x) => x.id === id) || products[0];
@@ -495,13 +495,33 @@ export function ProductDetail({ id, go }) {
   const blurb = t(`pd.${p.id}.blurb`, p.blurb);
   const cat   = t(`cat.${p.cat}`,     p.cat);
 
-  // Editorial prose lives in i18n; icon arrays in data drive section lengths.
-  const overview     = t(`pd.${p.id}.overview`, '');
-  const process      = t(`pd.${p.id}.process`,      { returnObjects: true, defaultValue: [] });
-  const features     = t(`pd.${p.id}.features`,     { returnObjects: true, defaultValue: [] });
-  const applications = t(`pd.${p.id}.applications`, { returnObjects: true, defaultValue: [] });
-  const procIcons = p.content?.process  || [];
-  const featIcons = p.content?.features || [];
+  // Editorial prose: prefer this product's own ru/uz DB content (authored
+  // from the admin panel); fall back to the i18n JSON (any locale, or ru/uz
+  // rows that have nothing entered yet) — see supabase/schema/products.sql
+  // for why EN/ZH/FA never have a DB-backed source.
+  const lang = i18n.language;
+  const dbLocale = (lang === 'ru' || lang === 'uz') ? lang : null;
+
+  const overview = (dbLocale && p.overview?.[dbLocale])
+    || t(`pd.${p.id}.overview`, '');
+
+  const applications = (dbLocale && p.applications?.[dbLocale]?.length)
+    ? p.applications[dbLocale]
+    : t(`pd.${p.id}.applications`, { returnObjects: true, defaultValue: [] });
+
+  const resolveSteps = (dbItems, i18nKey, iconFallback) => {
+    if (dbLocale && dbItems?.length) {
+      return dbItems.map((item) => ({
+        icon: item.icon,
+        title: item.title?.[dbLocale] || '',
+        text: item.text?.[dbLocale] || '',
+      }));
+    }
+    const steps = t(i18nKey, { returnObjects: true, defaultValue: [] });
+    return steps.map((s, i) => ({ icon: iconFallback[i] || null, title: s.title, text: s.text }));
+  };
+  const process  = resolveSteps(p.process,  `pd.${p.id}.process`,  p.content?.process  || []);
+  const features = resolveSteps(p.features, `pd.${p.id}.features`, p.content?.features || []);
 
   // Lightbox gallery: the still image first, then any video clips.
   const media = [
@@ -684,14 +704,14 @@ export function ProductDetail({ id, go }) {
       {/* How it's made */}
       {process.length > 0 && (
         <SectionBand heading={t('catalog.sections.process')}>
-          <ProcessSteps icons={procIcons} steps={process} />
+          <ProcessSteps steps={process} />
         </SectionBand>
       )}
 
       {/* Characteristics */}
       {features.length > 0 && (
         <SectionBand heading={t('catalog.sections.features')} sunken>
-          <FeatureGrid icons={featIcons} features={features} />
+          <FeatureGrid features={features} />
         </SectionBand>
       )}
 

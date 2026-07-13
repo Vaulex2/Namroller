@@ -7,6 +7,7 @@ import { useTheme } from '../../hooks/useTheme';
 import { Icon } from '../Icon';
 import { OverviewPanel } from './OverviewPanel';
 import { QuotesPanel } from './QuotesPanel';
+import { JournalPanel } from './JournalPanel';
 import { ReviewsPanel } from './ReviewsPanel';
 import { VideosPanel } from './VideosPanel';
 import { AnalyticsPanel } from './AnalyticsPanel';
@@ -15,6 +16,7 @@ import { ProductsPanel } from './ProductsPanel';
 const TABS = [
   { id: 'overview', key: 'admin.tabs.overview' },
   { id: 'quotes', key: 'admin.tabs.quotes' },
+  { id: 'journal', key: 'admin.tabs.journal' },
   { id: 'products', key: 'admin.tabs.products' },
   { id: 'analytics', key: 'admin.tabs.analytics' },
   { id: 'reviews', key: 'admin.tabs.reviews' },
@@ -91,6 +93,7 @@ export function AdminDashboard({ session, onSignOut }) {
         <PageTransition key={tab}>
           {tab === 'overview' && <OverviewPanel goTab={setTab} />}
           {tab === 'quotes' && <QuotesPanel />}
+          {tab === 'journal' && <JournalPanel />}
           {tab === 'products' && <ProductsPanel />}
           {tab === 'analytics' && <AnalyticsPanel />}
           {tab === 'reviews' && <ReviewsPanel />}

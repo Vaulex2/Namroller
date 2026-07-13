@@ -30,6 +30,12 @@
 //     (signed URLs into the private `quote-attachments` bucket, 10 min expiry)
 //   { action: "setStatus", id, status }        -> { ok }   (transition-validated)
 //   { action: "setPrice", id, amount, currency: "UZS"|"USD" } -> { ok }
+//   { action: "journalOverview", limit?<=200 } -> { ok, stats, rows, total }
+//     (Journal: project-stage view of every inquiry that has been accepted at
+//     least once — one row per project, joined with its inquiry's contact data)
+//   { action: "setProjectDeadline", id, deadline: "YYYY-MM-DD"|null } -> { ok }
+//   { action: "setProjectStatus", id, status: "in_progress"|"cancelled" } -> { ok }
+//     (project stage; "completed" is only ever set via setStatus/bulkStatus)
 //   { action: "addNote", id, body }            -> { ok, event }
 //   { action: "assign", id, adminId|null }     -> { ok, assignedEmail }
 //   { action: "listAdmins" }                   -> { ok, admins: [{id,email}] }
@@ -82,6 +88,12 @@ const UUID_RE =
 const STATUSES = ["new", "accepted", "completed"] as const;
 type Status = (typeof STATUSES)[number];
 
+// The Journal's project stage — independent of the inquiry's own `status`
+// above. `completed` is only ever set by applyStatus() (mirroring the
+// inquiry's finish/undo); this action only ever toggles in_progress<->cancelled.
+const PROJECT_STATUSES = ["in_progress", "cancelled"] as const;
+type ProjectStatus = (typeof PROJECT_STATUSES)[number] | "completed";
+
 // The state machine: forward new -> accepted -> completed, and either step
 // back one (undo a mis-click). No direct new -> completed skip.
 const VALID_TRANSITIONS: Record<Status, Status[]> = {
@@ -98,7 +110,7 @@ async function logEvent(
   quoteId: string,
   user: AdminUser,
   fields: {
-    type: "status_change" | "price_set" | "note" | "assign";
+    type: "status_change" | "price_set" | "note" | "assign" | "deadline_set" | "project_status_change";
     from_status?: string;
     to_status?: string;
     amount?: number;
@@ -138,18 +150,22 @@ async function applyStatus(
     return `Invalid transition ${from} -> ${status}`;
   }
 
-  // The 3rd pipeline stage: finishing requires a price to already be set.
-  // This is the real enforcement — the UI just avoids showing "Finish"
-  // until this would pass, so hitting it normally means a race or a stale tab.
+  // The 3rd pipeline stage: finishing requires a price to already be set,
+  // and the linked Journal project (if any) must not have been cancelled —
+  // a cancelled project has to be reactivated first (mirrors the price gate:
+  // real enforcement, not just a UI nicety).
   if (status === "completed") {
     const { data: proj, error: projReadErr } = await db
       .from("projects")
-      .select("price_amount")
+      .select("price_amount, status")
       .eq("quote_id", id)
       .maybeSingle();
     if (projReadErr) throw projReadErr;
     if (proj?.price_amount == null) {
       return "Set a price before finishing this inquiry";
+    }
+    if (proj?.status === "cancelled") {
+      return "Reactivate the cancelled project before finishing this inquiry";
     }
   }
 
@@ -170,6 +186,25 @@ async function applyStatus(
     const { error: projErr } = await db
       .from("projects")
       .upsert({ quote_id: id }, { onConflict: "quote_id", ignoreDuplicates: true });
+    if (projErr) throw projErr;
+  }
+
+  // Keep the Journal's project stage in lockstep with the inquiry pipeline:
+  // finishing marks the project completed (finally writing completed_at,
+  // defined on the table since day one but never set until now); undoing a
+  // finish reopens it as in_progress. Cancellation is independent of this
+  // pipeline (see the "setProjectStatus" action) and is never touched here.
+  if (status === "completed") {
+    const { error: projErr } = await db
+      .from("projects")
+      .update({ status: "completed", completed_at: new Date().toISOString() })
+      .eq("quote_id", id);
+    if (projErr) throw projErr;
+  } else if (status === "accepted" && from === "completed") {
+    const { error: projErr } = await db
+      .from("projects")
+      .update({ status: "in_progress", completed_at: null })
+      .eq("quote_id", id);
     if (projErr) throw projErr;
   }
 
@@ -433,6 +468,115 @@ Deno.serve(async (req) => {
         amount: priced,
         currency,
       });
+      return jsonResponse({ ok: true });
+    }
+
+    // Journal: overview of every project (i.e. every inquiry that has been
+    // accepted at least once — a project only exists from that point on).
+    // Stats are grouped by the project's own stage, not the inquiry's status.
+    if (action === "journalOverview") {
+      const limit = clampLimit(body.limit, 100);
+      const PROJECT_STAGES = ["in_progress", "completed", "cancelled"] as const;
+
+      // Same head:true count-per-status pattern as computeStats() above.
+      const countByProjectStatus = (s: string) =>
+        db.from("projects").select("id", { count: "exact", head: true }).eq("status", s);
+
+      const [statsResults, listRes] = await Promise.all([
+        Promise.all(PROJECT_STAGES.map((s) => countByProjectStatus(s))),
+        db.from("projects")
+          .select(
+            "id, quote_id, price_amount, price_currency, deadline, status, completed_at, created_at, " +
+              "quote_requests!inner(id, name, phone, email, product_name, quantity, assigned_email, status, created_at)",
+            { count: "exact" },
+          )
+          .order("created_at", { ascending: false })
+          .range(0, limit - 1),
+      ]);
+      if (listRes.error) throw listRes.error;
+
+      const stats: Record<string, number> = { total: 0 };
+      statsResults.forEach((r, i) => {
+        if (r.error) throw r.error;
+        stats[PROJECT_STAGES[i]] = r.count ?? 0;
+        stats.total += r.count ?? 0;
+      });
+
+      // Flatten the embedded quote_requests row onto each project row so the
+      // client gets one flat object per card, same shape style as attachPrices.
+      const rows = (listRes.data ?? []).map((p: Record<string, unknown>) => {
+        const { quote_requests: q, ...proj } = p as { quote_requests: Record<string, unknown> } & Record<
+          string,
+          unknown
+        >;
+        return { ...proj, ...q, project_id: proj.id, id: q.id };
+      });
+
+      return jsonResponse({ ok: true, stats, rows, total: listRes.count ?? 0 });
+    }
+
+    // Deadline for the linked project — settable/clearable any time a project
+    // exists (i.e. once the inquiry has been accepted).
+    if (action === "setProjectDeadline") {
+      const id = String(body.id ?? "");
+      if (!UUID_RE.test(id)) return jsonResponse({ ok: false, error: "Invalid id" }, 400);
+      let deadline: string | null = null;
+      if (body.deadline != null) {
+        const raw = String(body.deadline);
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(raw)) {
+          return jsonResponse({ ok: false, error: "Invalid deadline" }, 400);
+        }
+        deadline = raw;
+      }
+
+      const { data: updated, error: updErr } = await db
+        .from("projects")
+        .update({ deadline })
+        .eq("quote_id", id)
+        .select("id");
+      if (updErr) throw updErr;
+      if (!updated || updated.length === 0) return jsonResponse({ ok: false, error: "Not found" }, 404);
+
+      await logEvent(db, id, user, { type: "deadline_set", body: deadline ?? "" });
+      return jsonResponse({ ok: true });
+    }
+
+    // Journal stage: in_progress <-> cancelled only. `completed` is exclusively
+    // driven by the inquiry pipeline's finish/undo (see applyStatus).
+    if (action === "setProjectStatus") {
+      const id = String(body.id ?? "");
+      const status = String(body.status ?? "") as ProjectStatus;
+      if (!UUID_RE.test(id)) return jsonResponse({ ok: false, error: "Invalid id" }, 400);
+      if (!(PROJECT_STATUSES as readonly string[]).includes(status)) {
+        return jsonResponse({ ok: false, error: "Invalid status" }, 400);
+      }
+
+      const { data: proj, error: readErr } = await db
+        .from("projects")
+        .select("status")
+        .eq("quote_id", id)
+        .maybeSingle();
+      if (readErr) throw readErr;
+      if (!proj) return jsonResponse({ ok: false, error: "Not found" }, 404);
+
+      const from = proj.status as ProjectStatus;
+      if (from === status) return jsonResponse({ ok: false, error: "Already in that status" }, 400);
+      if (from === "completed") {
+        return jsonResponse({ ok: false, error: "Undo completion before changing the project stage" }, 400);
+      }
+
+      const { data: updated, error: updErr } = await db
+        .from("projects")
+        .update({ status })
+        .eq("quote_id", id)
+        .eq("status", from)
+        .select("id");
+      if (updErr) throw updErr;
+      if (!updated || updated.length === 0) {
+        return jsonResponse({ ok: false, error: "Modified concurrently, refresh" }, 409);
+      }
+
+      await logEvent(db, id, user, { type: "project_status_change", from_status: from, to_status: status });
       return jsonResponse({ ok: true });
     }
 

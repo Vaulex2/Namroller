@@ -73,6 +73,14 @@ export function nextQuoteAction(row: {
 
 export type QuoteStats = { total: number } & Record<QuoteStatus, number>;
 
+// The Journal's project stage — independent of the inquiry's own QuoteStatus.
+// `completed` is only ever reached via setQuoteStatus(id, 'completed') (the
+// same "finish" action QuoteDetail already has); setProjectStatus only ever
+// toggles in_progress<->cancelled.
+export type ProjectStatus = "in_progress" | "completed" | "cancelled";
+
+export const PROJECT_STATUSES: ProjectStatus[] = ["in_progress", "completed", "cancelled"];
+
 export interface QuoteProject {
   id: string;
   quote_id: string;
@@ -83,12 +91,14 @@ export interface QuoteProject {
   priced_at: string | null;
   completed_at: string | null;
   created_at: string;
+  deadline: string | null;
+  status: ProjectStatus;
 }
 
 export interface QuoteEvent {
   id: string;
   actor_email: string | null;
-  type: "status_change" | "price_set" | "note" | "assign";
+  type: "status_change" | "price_set" | "note" | "assign" | "deadline_set" | "project_status_change";
   from_status: string | null;
   to_status: string | null;
   amount: number | null;
@@ -257,6 +267,56 @@ export interface RecentQuoteEvent {
 
 export function recentQuoteEvents(limit = 20): Promise<{ events: RecentQuoteEvent[] }> {
   return invokeAdminQuotes<{ events: RecentQuoteEvent[] }>({ action: "recentEvents", limit });
+}
+
+/* ---- Journal: project-stage view of accepted inquiries ---- */
+
+export type JournalStats = { total: number } & Record<ProjectStatus, number>;
+
+// One flat row per project, joined with its inquiry's contact data (the
+// journalOverview edge-function action flattens the embed server-side).
+export interface JournalRow {
+  id: string; // quote_id — same id setProjectDeadline/setProjectStatus/quoteDetail take
+  project_id: string;
+  name: string;
+  phone: string;
+  email: string | null;
+  product_name: string | null;
+  quantity: string | null;
+  assigned_email: string | null;
+  price_amount: number | null;
+  price_currency: "UZS" | "USD" | null;
+  deadline: string | null;
+  status: ProjectStatus;
+  completed_at: string | null;
+  created_at: string; // the project's created_at (i.e. when it was accepted)
+}
+
+// Stats + first page of Journal rows in one round trip, same shape as
+// quotesOverview but scoped to projects (inquiries accepted at least once)
+// and grouped by the project's own stage.
+export function journalOverview(
+  limit = 100,
+): Promise<{ stats: JournalStats; rows: JournalRow[]; total: number }> {
+  return invokeAdminQuotes<{ stats: JournalStats; rows: JournalRow[]; total: number }>({
+    action: "journalOverview",
+    limit,
+  });
+}
+
+// Settable/clearable any time a project exists. `deadline` is a
+// "YYYY-MM-DD" date string, or null to clear it.
+export function setProjectDeadline(id: string, deadline: string | null): Promise<{ ok: true }> {
+  return invokeAdminQuotes<{ ok: true }>({ action: "setProjectDeadline", id, deadline });
+}
+
+// in_progress <-> cancelled only; "completed" is exclusively reached via
+// setQuoteStatus(id, 'completed').
+export function setProjectStatus(
+  id: string,
+  status: "in_progress" | "cancelled",
+): Promise<{ ok: true }> {
+  return invokeAdminQuotes<{ ok: true }>({ action: "setProjectStatus", id, status });
 }
 
 /* ---- Reviews moderation (direct table access, RLS-gated by is_admin()) ---- */
