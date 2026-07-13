@@ -11,8 +11,10 @@ import { staggerContainer } from '../../components/motion/variants';
 import { journalOverview, PROJECT_STATUSES } from '../../lib/admin';
 import { useAdminResource } from '../../hooks/useAdminResource';
 import { JournalDetail } from './JournalDetail';
+import { AddProjectForm } from './AddProjectForm';
 import { STATUS_TONE } from './statusTones';
 import { StatCard } from './shared/StatCard';
+import { AdminModal } from './shared/AdminModal';
 
 const FILTERS = ['all', ...PROJECT_STATUSES];
 const EMPTY_ROWS = [];
@@ -29,6 +31,7 @@ export function JournalPanel() {
   const [filter, setFilter] = React.useState('all');
   const [query, setQuery] = React.useState('');
   const [detailId, setDetailId] = React.useState(null);
+  const [addOpen, setAddOpen] = React.useState(false);
 
   const fetcher = React.useCallback(() => journalOverview(200), []);
   const { data, setData, loading, error, reload } = useAdminResource(fetcher);
@@ -105,6 +108,9 @@ export function JournalPanel() {
         </div>
         <Button variant="outline" size="md" disabled={loading} onClick={reload}>
           {t('admin.refresh')}
+        </Button>
+        <Button variant="primary" size="md" onClick={() => setAddOpen(true)}>
+          {t('admin.journal.addProject')}
         </Button>
       </div>
 
@@ -184,6 +190,15 @@ export function JournalPanel() {
           onClose={() => setDetailId(null)}
           onChanged={onDetailChanged}
         />
+      )}
+
+      {addOpen && (
+        <AdminModal onClose={() => setAddOpen(false)} closeLabel={t('admin.detail.close')} title={t('admin.journal.addProject')}>
+          <AddProjectForm
+            onSaved={() => { setAddOpen(false); reload(); }}
+            onCancel={() => setAddOpen(false)}
+          />
+        </AdminModal>
       )}
     </div>
   );

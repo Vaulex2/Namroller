@@ -304,6 +304,28 @@ export function journalOverview(
   });
 }
 
+// A lead sourced from another platform (Instagram, Telegram, OLX, a phone
+// call, …), logged straight into the Journal — inserts the inquiry already
+// "accepted" plus its project row in one call, so it shows up alongside
+// website-originated projects instead of needing to be triaged first.
+export interface ManualProjectInput {
+  name: string;
+  phone: string;
+  email?: string;
+  productName?: string;
+  quantity?: string;
+  address?: string;
+  note?: string;
+  source?: string;
+  priceAmount?: number;
+  priceCurrency?: "UZS" | "USD";
+  deadline?: string; // "YYYY-MM-DD"
+}
+
+export function createManualProject(input: ManualProjectInput): Promise<{ ok: true; id: string }> {
+  return invokeAdminQuotes<{ ok: true; id: string }>({ action: "createManualProject", ...input });
+}
+
 // Settable/clearable any time a project exists. `deadline` is a
 // "YYYY-MM-DD" date string, or null to clear it.
 export function setProjectDeadline(id: string, deadline: string | null): Promise<{ ok: true }> {

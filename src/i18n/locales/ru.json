@@ -812,6 +812,14 @@
       "reactivate": "Возобновить",
       "completedOn": "Завершён {{date}}",
       "stage": "Статус проекта",
+      "addProject": "Добавить проект",
+      "addProjectIntro": "Добавьте сюда заявку, пришедшую с другой площадки (Instagram, Telegram, OLX, звонок и т.д.) — она сразу появится в журнале как проект в работе.",
+      "created": "Проект добавлен.",
+      "createError": "Не удалось добавить проект.",
+      "form": {
+        "name": "Имя",
+        "sourcePh": "Например: Instagram, Telegram, OLX"
+      },
       "stats": {
         "total": "Всего проектов"
       }

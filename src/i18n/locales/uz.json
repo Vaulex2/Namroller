@@ -812,6 +812,14 @@
       "reactivate": "Qayta faollashtirish",
       "completedOn": "Yakunlangan: {{date}}",
       "stage": "Loyiha holati",
+      "addProject": "Loyiha qo'shish",
+      "addProjectIntro": "Boshqa platformalardan (Instagram, Telegram, OLX, qo'ng'iroq va h.k.) kelgan buyurtmani shu yerda qo'shing — u darhol jarayondagi loyiha sifatida ro'yxatga tushadi.",
+      "created": "Loyiha qo'shildi.",
+      "createError": "Loyihani qo'shib bo'lmadi.",
+      "form": {
+        "name": "Ism",
+        "sourcePh": "Masalan: Instagram, Telegram, OLX"
+      },
       "stats": {
         "total": "Jami loyihalar"
       }

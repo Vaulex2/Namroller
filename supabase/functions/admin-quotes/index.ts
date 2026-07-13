@@ -33,6 +33,12 @@
 //   { action: "journalOverview", limit?<=200 } -> { ok, stats, rows, total }
 //     (Journal: project-stage view of every inquiry that has been accepted at
 //     least once — one row per project, joined with its inquiry's contact data)
+//   { action: "createManualProject", name, phone, email?, productName?, quantity?,
+//     address?, note?, source?, priceAmount?, priceCurrency?: "UZS"|"USD", deadline?: "YYYY-MM-DD" }
+//     -> { ok, id }
+//     (Journal: log a lead sourced from another platform straight into the
+//     project stage — inserts the inquiry as already "accepted" plus its
+//     project row, so it shows up in the Journal immediately, no intake step)
 //   { action: "setProjectDeadline", id, deadline: "YYYY-MM-DD"|null } -> { ok }
 //   { action: "setProjectStatus", id, status: "in_progress"|"cancelled" } -> { ok }
 //     (project stage; "completed" is only ever set via setStatus/bulkStatus)
@@ -469,6 +475,109 @@ Deno.serve(async (req) => {
         currency,
       });
       return jsonResponse({ ok: true });
+    }
+
+    // Manually log a lead that arrived through another platform (Instagram,
+    // Telegram, OLX, a phone call, …) straight into the Journal. Unlike the
+    // public submit-quote flow, this inserts the inquiry already "accepted"
+    // (with its project row created in the same breath) since the admin is
+    // recording a real, already-confirmed piece of work, not an intake to
+    // triage. Validation mirrors the quote_requests CHECK constraints and
+    // submit-quote's own rules so this can't produce a row the public form
+    // couldn't.
+    if (action === "createManualProject") {
+      const nullable = (v: unknown): string | null => {
+        const s = String(v ?? "").trim();
+        return s.length ? s : null;
+      };
+
+      const name = String(body.name ?? "").trim();
+      const phone = String(body.phone ?? "").trim();
+      if (name.length < 1 || name.length > 120) {
+        return jsonResponse({ ok: false, error: "Invalid name" }, 400);
+      }
+      if (phone.length < 3 || phone.length > 40) {
+        return jsonResponse({ ok: false, error: "Invalid phone" }, 400);
+      }
+
+      const email = nullable(body.email);
+      const productName = nullable(body.productName);
+      const quantity = nullable(body.quantity);
+      const address = nullable(body.address);
+      const note = nullable(body.note);
+      const source = nullable(body.source);
+      if (
+        (email && email.length > 160) ||
+        (quantity && quantity.length > 120) ||
+        (address && address.length > 300) ||
+        (note && note.length > 2000) ||
+        (source && source.length > 120)
+      ) {
+        return jsonResponse({ ok: false, error: "Invalid input" }, 400);
+      }
+
+      let deadline: string | null = null;
+      if (body.deadline != null && body.deadline !== "") {
+        const raw = String(body.deadline);
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(raw)) {
+          return jsonResponse({ ok: false, error: "Invalid deadline" }, 400);
+        }
+        deadline = raw;
+      }
+
+      let priceAmount: number | null = null;
+      let priceCurrency: "UZS" | "USD" | null = null;
+      if (body.priceAmount != null && body.priceAmount !== "") {
+        const amt = Number(body.priceAmount);
+        if (!Number.isFinite(amt) || amt <= 0 || amt > 1e12) {
+          return jsonResponse({ ok: false, error: "Invalid amount" }, 400);
+        }
+        const cur = String(body.priceCurrency ?? "");
+        if (cur !== "UZS" && cur !== "USD") {
+          return jsonResponse({ ok: false, error: "Invalid currency" }, 400);
+        }
+        priceAmount = Math.round(amt * 100) / 100;
+        priceCurrency = cur;
+      }
+
+      const { data: inserted, error: insErr } = await db
+        .from("quote_requests")
+        .insert({
+          name,
+          phone,
+          email,
+          product_name: productName,
+          quantity,
+          address,
+          note,
+          source,
+          status: "accepted",
+        })
+        .select("id")
+        .single();
+      if (insErr) throw insErr;
+      const id = inserted.id as string;
+
+      const { error: projErr } = await db.from("projects").insert({
+        quote_id: id,
+        deadline,
+        price_amount: priceAmount,
+        price_currency: priceCurrency,
+        priced_by: priceAmount != null ? user.id : null,
+        priced_by_email: priceAmount != null ? (user.email ?? null) : null,
+        priced_at: priceAmount != null ? new Date().toISOString() : null,
+      });
+      if (projErr) throw projErr;
+
+      await logEvent(db, id, user, { type: "status_change", to_status: "accepted" });
+      if (priceAmount != null && priceCurrency != null) {
+        await logEvent(db, id, user, { type: "price_set", amount: priceAmount, currency: priceCurrency });
+      }
+      if (deadline) {
+        await logEvent(db, id, user, { type: "deadline_set", body: deadline });
+      }
+
+      return jsonResponse({ ok: true, id });
     }
 
     // Journal: overview of every project (i.e. every inquiry that has been

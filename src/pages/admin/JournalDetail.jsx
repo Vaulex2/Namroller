@@ -124,6 +124,7 @@ export function JournalDetail({ id, onClose, onChanged }) {
               <div style={{ width: 180 }}>
                 <Input
                   type="date"
+                  lang="en-CA"
                   value={deadline}
                   disabled={busy}
                   onChange={(e) => setDeadline(e.target.value)}
