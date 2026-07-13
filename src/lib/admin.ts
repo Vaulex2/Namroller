@@ -138,22 +138,44 @@ export interface QuoteAnalytics {
   completedRate: number;
 }
 
-async function invokeAdminQuotes<T>(body: Record<string, unknown>): Promise<T> {
+// Shared across every in-flight call so a page load that fires several panel
+// fetches at once (Overview/Quotes/Journal/etc. all mount together) triggers
+// at most one refresh attempt and one sign-out, instead of one per caller.
+let refreshInFlight: Promise<boolean> | null = null;
+let signingOut = false;
+
+// True if the session's refresh token was still good (so the caller can
+// safely retry), false if the session is genuinely dead.
+function refreshSessionOnce(): Promise<boolean> {
+  if (!refreshInFlight) {
+    refreshInFlight = supabase!.auth.refreshSession()
+      .then(({ data, error }) => !error && !!data.session)
+      .finally(() => { refreshInFlight = null; });
+  }
+  return refreshInFlight;
+}
+
+async function invokeAdminQuotes<T>(body: Record<string, unknown>, retried = false): Promise<T> {
   if (!supabase) throw new Error("Supabase is not configured");
   const { data, error } = await supabase.functions.invoke("admin-quotes", { body });
   if (error) {
     // A 401 here means the gateway rejected the JWT before our function code
-    // even ran (confirmed by it never showing up in the function's own logs)
-    // — i.e. the locally cached session is stale (its access token expired
-    // without a successful silent refresh, e.g. after the tab sat backgrounded
-    // for a while). AdminGate still thinks we're signed in because it only
-    // checks the cached session, not whether the server still honors it, so
-    // every panel would otherwise fail forever with a generic "couldn't load"
-    // error. Signing out here fires AdminGate's onAuthChange listener, which
-    // drops back to the login screen instead of a silently broken dashboard.
+    // even ran (confirmed by it never showing up in the function's own logs).
+    // Most of the time this is just the short-lived access token expiring
+    // while the tab sat backgrounded, and a silent refresh fixes it — so try
+    // that and retry the same call once before giving up. Only if the
+    // refresh token itself is dead do we sign out; AdminGate is subscribed
+    // to auth changes, so that drops back to the login screen instead of
+    // leaving every panel stuck on a generic "couldn't load" error forever.
     const status = (error as { context?: { status?: number } }).context?.status;
     if (status === 401) {
-      await supabase.auth.signOut();
+      if (!retried && (await refreshSessionOnce())) {
+        return invokeAdminQuotes<T>(body, true);
+      }
+      if (!signingOut) {
+        signingOut = true;
+        supabase.auth.signOut().catch(() => {}).finally(() => { signingOut = false; });
+      }
       throw new Error("Session expired. Please sign in again.");
     }
     throw error;
