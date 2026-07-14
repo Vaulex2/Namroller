@@ -1,6 +1,7 @@
-import { useState, useRef, useEffect, lazy, Suspense } from 'react';
+import { useRef, useState, useEffect, lazy, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnimatePresence } from 'framer-motion';
+import { BrowserRouter, useLocation, useNavigate } from 'react-router-dom';
 import { Header, Footer } from './pages/Header';
 import { Home } from './pages/Home';
 import { Products, ProductDetail } from './pages/Catalog';
@@ -29,15 +30,27 @@ const TITLES = {
   fa: 'Nam Roller — غلتک‌ها و سیستم‌های نوار نقاله',
 };
 
-export default function App() {
-  const [route, setRoute] = useState('home');
-  const [productId, setProductId] = useState(null);
-  const [isAdminRoute, setIsAdminRoute] = useState(
-    typeof window !== 'undefined' && window.location.hash === ADMIN_HASH,
-  );
+// Maps a real URL path to the route name the page tree below switches on,
+// and pulls the product id out of /products/:id. Unknown paths fall back to
+// Home rather than a dedicated 404 (there's no 404 page to route to).
+function routeFromPath(pathname) {
+  const path = pathname.replace(/\/+$/, '') || '/';
+  const productMatch = path.match(/^\/products\/([^/]+)$/);
+  if (productMatch) return { route: 'product', productId: decodeURIComponent(productMatch[1]) };
+  const known = ['products', 'contact', 'about', 'privacy', 'terms', 'cookies'];
+  const name = path.slice(1);
+  if (path === '/') return { route: 'home', productId: null };
+  if (known.includes(name)) return { route: name, productId: null };
+  return { route: 'home', productId: null };
+}
+
+function AppShell() {
   const scrollRef = useRef(null);
   const { i18n } = useTranslation();
   const { theme, toggle: toggleTheme } = useTheme();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { route, productId } = routeFromPath(location.pathname);
 
   useEffect(() => {
     const lang = i18n.language;
@@ -45,26 +58,13 @@ export default function App() {
     document.title = TITLES[lang] || TITLES.ru;
   }, [i18n.language]);
 
-  // Toggle the admin route off the URL hash (mount + on change).
   useEffect(() => {
-    const sync = () => setIsAdminRoute(window.location.hash === ADMIN_HASH);
-    window.addEventListener('hashchange', sync);
-    return () => window.removeEventListener('hashchange', sync);
-  }, []);
-
-  // Admin panel renders full-screen, outside the marketing chrome.
-  if (isAdminRoute) {
-    return (
-      <Suspense fallback={null}>
-        <AdminApp />
-      </Suspense>
-    );
-  }
+    if (scrollRef.current) scrollRef.current.scrollTop = 0;
+  }, [location.pathname]);
 
   const go = (r, id = null) => {
-    setRoute(r);
-    if (id) setProductId(id);
-    if (scrollRef.current) scrollRef.current.scrollTop = 0;
+    const path = r === 'home' ? '/' : r === 'product' ? `/products/${id}` : `/${r}`;
+    navigate(path);
   };
 
   return (
@@ -76,7 +76,7 @@ export default function App() {
         >
           <Header route={route} go={go} theme={theme} toggleTheme={toggleTheme} />
           <AnimatePresence mode="wait" initial={false}>
-            <PageTransition key={route}>
+            <PageTransition key={location.pathname}>
               {route === 'home'     && <Home go={go} />}
               {route === 'products' && <Products go={go} />}
               {route === 'product'  && <ProductDetail id={productId} go={go} />}
@@ -94,5 +94,33 @@ export default function App() {
         </div>
       </CompareProvider>
     </ScrollContext.Provider>
+  );
+}
+
+export default function App() {
+  const [isAdminRoute, setIsAdminRoute] = useState(
+    typeof window !== 'undefined' && window.location.hash === ADMIN_HASH,
+  );
+
+  // Toggle the admin route off the URL hash (mount + on change).
+  useEffect(() => {
+    const sync = () => setIsAdminRoute(window.location.hash === ADMIN_HASH);
+    window.addEventListener('hashchange', sync);
+    return () => window.removeEventListener('hashchange', sync);
+  }, []);
+
+  // Admin panel renders full-screen, outside the marketing chrome and router.
+  if (isAdminRoute) {
+    return (
+      <Suspense fallback={null}>
+        <AdminApp />
+      </Suspense>
+    );
+  }
+
+  return (
+    <BrowserRouter>
+      <AppShell />
+    </BrowserRouter>
   );
 }
