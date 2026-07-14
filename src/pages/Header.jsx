@@ -60,6 +60,44 @@ const LANGUAGES = [
   { code: 'fa', label: 'FA' },
 ];
 
+/* Flat, always-visible row of language pills — no floating overlay. Used
+   inside the mobile drawer: that panel is a Framer Motion element with an
+   animated `transform`, and Chromium fails to paint text inside a
+   `position: absolute` dropdown nested under a transformed ancestor (the box
+   renders, the glyphs don't — reproduces on real phones, not just headless).
+   A dropdown never even attempts that layout, so it can't hit the bug. */
+function InlineLanguageSwitcher() {
+  const { i18n } = useTranslation();
+  const lang = i18n.language;
+  return (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+      {LANGUAGES.map((l) => (
+        <button
+          key={l.code}
+          type="button"
+          aria-pressed={lang === l.code}
+          onClick={() => i18n.changeLanguage(l.code)}
+          style={{
+            padding: '7px 11px',
+            background: lang === l.code ? 'var(--nr-accent)' : 'transparent',
+            color: lang === l.code ? 'var(--white)' : 'var(--slate-400)',
+            border: `1px solid ${lang === l.code ? 'var(--nr-accent)' : 'var(--border-on-inverse)'}`,
+            borderRadius: 'var(--radius-sm)',
+            cursor: 'pointer',
+            fontFamily: 'var(--font-body)',
+            fontWeight: 'var(--fw-semibold)',
+            fontSize: 11,
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
+          }}
+        >
+          {l.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 function LanguageSwitcher() {
   const { i18n } = useTranslation();
   const lang = i18n.language;
@@ -331,7 +369,7 @@ export function Header({ route, go, theme, toggleTheme }) {
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 gap: 12, marginTop: 'var(--space-5)',
               }}>
-                <LanguageSwitcher />
+                <InlineLanguageSwitcher />
                 <ThemeToggle theme={theme} toggle={toggleTheme} />
               </div>
 
