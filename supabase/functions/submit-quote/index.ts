@@ -18,6 +18,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { corsHeaders, handlePreflight, jsonResponse } from "../_shared/cors.ts";
 import { clientIp, verifyTurnstile } from "../_shared/turnstile.ts";
+import { checkRateLimit } from "../_shared/rateLimit.ts";
 
 interface QuoteInput {
   token?: string;
@@ -126,13 +127,26 @@ Deno.serve(async (req) => {
     return jsonResponse({ ok: false, error: "Invalid request" }, 400);
   }
 
-  // 1. Captcha — fail closed.
-  const human = await verifyTurnstile(input.token, clientIp(req));
+  const supabase = createClient(
+    Deno.env.get("SUPABASE_URL")!,
+    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+  );
+  const ip = clientIp(req);
+
+  // 1. Rate limit — 5 submissions per 10 minutes per IP. Checked before
+  //    Turnstile so a burst doesn't also burn the siteverify quota.
+  const withinBudget = await checkRateLimit(supabase, "submit-quote", ip, 5, 600);
+  if (!withinBudget) {
+    return jsonResponse({ ok: false, error: "Too many requests. Please try again later." }, 429);
+  }
+
+  // 2. Captcha — fail closed.
+  const human = await verifyTurnstile(input.token, ip);
   if (!human) {
     return jsonResponse({ ok: false, error: "Verification failed" }, 403);
   }
 
-  // 2. Validate + normalize. Mirrors the table CHECK constraints so the client
+  // 3. Validate + normalize. Mirrors the table CHECK constraints so the client
   //    gets a clean rejection before the DB round-trip.
   const name = str(input.name);
   const phone = str(input.phone);
@@ -179,12 +193,8 @@ Deno.serve(async (req) => {
     preferred_deadline: preferredDeadline,
   };
 
-  // 3. Insert with the service role (bypasses RLS; anon has no insert path).
+  // 4. Insert with the service role (bypasses RLS; anon has no insert path).
   try {
-    const supabase = createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
-    );
     const { error } = await supabase.from("quote_requests").insert(row);
     if (error) {
       console.error("quote insert failed", error);
@@ -195,7 +205,7 @@ Deno.serve(async (req) => {
     return jsonResponse({ ok: false, error: "Could not submit request" }, 500);
   }
 
-  // 4. Notify Telegram (best-effort; never blocks success).
+  // 5. Notify Telegram (best-effort; never blocks success).
   await notifyTelegram(buildMessage(row));
 
   return new Response(JSON.stringify({ ok: true }), {

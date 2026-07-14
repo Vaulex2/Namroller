@@ -15,6 +15,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { corsHeaders, handlePreflight, jsonResponse } from "../_shared/cors.ts";
 import { clientIp, verifyTurnstile } from "../_shared/turnstile.ts";
+import { checkRateLimit } from "../_shared/rateLimit.ts";
 
 interface ReviewInput {
   token?: string;
@@ -45,13 +46,26 @@ Deno.serve(async (req) => {
     return jsonResponse({ ok: false, error: "Invalid request" }, 400);
   }
 
-  // 1. Captcha — fail closed.
-  const human = await verifyTurnstile(input.token, clientIp(req));
+  const supabase = createClient(
+    Deno.env.get("SUPABASE_URL")!,
+    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+  );
+  const ip = clientIp(req);
+
+  // 1. Rate limit — 5 submissions per 10 minutes per IP. Checked before
+  //    Turnstile so a burst doesn't also burn the siteverify quota.
+  const withinBudget = await checkRateLimit(supabase, "submit-review", ip, 5, 600);
+  if (!withinBudget) {
+    return jsonResponse({ ok: false, error: "Too many requests. Please try again later." }, 429);
+  }
+
+  // 2. Captcha — fail closed.
+  const human = await verifyTurnstile(input.token, ip);
   if (!human) {
     return jsonResponse({ ok: false, error: "Verification failed" }, 403);
   }
 
-  // 2. Validate + normalize (mirrors the table CHECK constraints).
+  // 3. Validate + normalize (mirrors the table CHECK constraints).
   const name = str(input.name);
   const text = str(input.text);
   const role = nullable(input.role);
@@ -69,12 +83,8 @@ Deno.serve(async (req) => {
     return jsonResponse({ ok: false, error: "Invalid input" }, 400);
   }
 
-  // 3. Insert with the service role, unapproved. `image` is intentionally omitted.
+  // 4. Insert with the service role, unapproved. `image` is intentionally omitted.
   try {
-    const supabase = createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
-    );
     const { error } = await supabase.from("reviews").insert({
       name,
       role,
