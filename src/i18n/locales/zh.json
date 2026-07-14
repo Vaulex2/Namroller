@@ -240,7 +240,7 @@
     "contactTitle":"还有疑问?欢迎联系我们。",
     "contactBtn":  "联系我们",
     "phone":       "+998 97 374 77 55",
-    "email":       "info@namroller.uz",
+    "email":       "info@namroller.com",
     "address":     "乌兹别克斯坦纳曼干市",
     "cols": {
       "products": {
@@ -289,7 +289,7 @@
     "docId":     "NR-LEGAL-PP-01",
     "version":   "1.0",
     "effective": "2026年1月1日",
-    "intro":     "本政策说明 Nam Roller 通过 namroller.uz 网站收集哪些数据,以及我们如何使用和保护这些数据。使用本网站即表示您同意以下条款。",
+    "intro":     "本政策说明 Nam Roller 通过 namroller.com 网站收集哪些数据,以及我们如何使用和保护这些数据。使用本网站即表示您同意以下条款。",
     "updated":   "最近更新:2026年1月1日",
     "contactNote": "如对您的数据有任何疑问,请发送邮件至",
     "sections": [
@@ -346,14 +346,14 @@
     "docId":     "NR-LEGAL-TOS-01",
     "version":   "1.0",
     "effective": "2026年1月1日",
-    "intro":     "本条款规范 namroller.uz 网站的使用。请在使用本网站及提交任何咨询前仔细阅读以下内容。",
+    "intro":     "本条款规范 namroller.com 网站的使用。请在使用本网站及提交任何咨询前仔细阅读以下内容。",
     "updated":   "最近更新:2026年1月1日",
     "contactNote": "如对条款有任何疑问,请发送邮件至",
     "sections": [
       {
         "title": "条款的接受",
         "body": [
-          "使用 namroller.uz 网站即表示您确认同意本条款。如果您不同意,请不要使用本网站。"
+          "使用 namroller.com 网站即表示您确认同意本条款。如果您不同意,请不要使用本网站。"
         ]
       },
       {
@@ -399,7 +399,7 @@
   },
   "cookies": {
     "title":     "Cookie 使用政策",
-    "intro":     "本页面说明 namroller.uz 网站使用哪些 Cookie 及其用途。我们仅使用网站运行所必需的 Cookie。",
+    "intro":     "本页面说明 namroller.com 网站使用哪些 Cookie 及其用途。我们仅使用网站运行所必需的 Cookie。",
     "updated":   "最近更新:2026年1月1日",
     "contactNote": "如对 Cookie 有任何疑问,请发送邮件至",
     "sections": [

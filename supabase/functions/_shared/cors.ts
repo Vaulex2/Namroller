@@ -2,7 +2,7 @@
 //
 // The browser calls these functions cross-origin, so they must answer the
 // preflight OPTIONS request and echo CORS headers on every response. Set the
-// ALLOWED_ORIGIN secret to the production site origin (e.g. https://namroller.uz)
+// ALLOWED_ORIGIN secret to the production site origin (e.g. https://namroller.com)
 // to lock this down; it falls back to "*" when unset (fine for local dev).
 
 const ALLOWED_ORIGIN = Deno.env.get("ALLOWED_ORIGIN") ?? "*";

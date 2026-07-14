@@ -242,7 +242,7 @@
     "contactTitle":"Savollaringiz bormi? Biz bilan bog'laning.",
     "contactBtn":  "Biz bilan bog'lanish",
     "phone":       "+998 97 374 77 55",
-    "email":       "info@namroller.uz",
+    "email":       "info@namroller.com",
     "address":     "Namangan shahri, O'zbekiston",
     "cols": {
       "products": {
@@ -291,7 +291,7 @@
     "docId":     "NR-LEGAL-PP-01",
     "version":   "1.0",
     "effective": "2026-yil 1-yanvar",
-    "intro":     "Ushbu Siyosat Nam Roller namroller.uz sayti orqali qanday ma'lumotlarni to'plashi, ulardan qanday foydalanishi va ularni qanday himoya qilishini tavsiflaydi. Saytdan foydalanib, siz quyidagi shartlarga rozilik bildirasiz.",
+    "intro":     "Ushbu Siyosat Nam Roller namroller.com sayti orqali qanday ma'lumotlarni to'plashi, ulardan qanday foydalanishi va ularni qanday himoya qilishini tavsiflaydi. Saytdan foydalanib, siz quyidagi shartlarga rozilik bildirasiz.",
     "updated":   "So'nggi yangilanish: 2026-yil 1-yanvar",
     "contactNote": "Ma'lumotlaringiz bo'yicha savollar uchun yozing:",
     "sections": [
@@ -348,14 +348,14 @@
     "docId":     "NR-LEGAL-TOS-01",
     "version":   "1.0",
     "effective": "2026-yil 1-yanvar",
-    "intro":     "Ushbu Shartlar namroller.uz saytidan foydalanishni tartibga soladi. Iltimos, saytdan foydalanish va murojaat yuborishdan oldin ular bilan tanishing.",
+    "intro":     "Ushbu Shartlar namroller.com saytidan foydalanishni tartibga soladi. Iltimos, saytdan foydalanish va murojaat yuborishdan oldin ular bilan tanishing.",
     "updated":   "So'nggi yangilanish: 2026-yil 1-yanvar",
     "contactNote": "Shartlar bo'yicha savollar uchun yozing:",
     "sections": [
       {
         "title": "Shartlarni qabul qilish",
         "body": [
-          "namroller.uz saytidan foydalanib, siz ushbu Shartlarga rozilik bildirasiz. Agar siz ularga rozi bo'lmasangiz, iltimos, saytdan foydalanmang."
+          "namroller.com saytidan foydalanib, siz ushbu Shartlarga rozilik bildirasiz. Agar siz ularga rozi bo'lmasangiz, iltimos, saytdan foydalanmang."
         ]
       },
       {
@@ -401,7 +401,7 @@
   },
   "cookies": {
     "title":     "Cookie fayllaridan foydalanish siyosati",
-    "intro":     "Ushbu sahifa namroller.uz sayti qanday cookie fayllaridan va nima uchun foydalanishini tushuntiradi. Biz faqat saytning ishlashi uchun zarur bo'lganlarni qo'llaymiz.",
+    "intro":     "Ushbu sahifa namroller.com sayti qanday cookie fayllaridan va nima uchun foydalanishini tushuntiradi. Biz faqat saytning ishlashi uchun zarur bo'lganlarni qo'llaymiz.",
     "updated":   "So'nggi yangilanish: 2026-yil 1-yanvar",
     "contactNote": "Cookie bo'yicha savollar uchun yozing:",
     "sections": [

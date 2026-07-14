@@ -17,7 +17,7 @@ import { TELEGRAM_HREF } from '../lib/contact';
 
 const PHONE = '+998 97 374 77 55';
 const PHONE_HREF = 'tel:+998973747755';
-const EMAIL = 'sales@namroller.uz';
+const EMAIL = 'sales@namroller.com';
 
 export function Contact() {
   const { t, i18n } = useTranslation();

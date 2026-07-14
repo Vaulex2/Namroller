@@ -9,7 +9,7 @@ site (`TURNSTILE_SECRET_KEY` is set; the frontend is deployed with a matching
 `VITE_TURNSTILE_SITE_KEY`).
 
 _Project ref:_ `ruymetqteqiqimyjatkr` · _Repo:_ https://github.com/Vaulex2/Namroller ·
-_Hosting:_ Vercel (`namroller.vercel.app`, GitHub-integrated, auto-deploys on push to `main`)
+_Hosting:_ Vercel (`namroller.com`, GitHub-integrated, auto-deploys on push to `main`)
 
 ---
 
@@ -41,7 +41,7 @@ See `docs/admin-roadmap.md` for further (non-blocking) hardening ideas.
 ## 🟡 Optional cleanup / hardening
 
 - **Delete `notify-quote`**: Dashboard → Edge Functions → `notify-quote` → Delete (it's an inert stub now). Or `supabase functions delete notify-quote`.
-- **Lock CORS** to the production origin: `supabase secrets set ALLOWED_ORIGIN=https://namroller.uz` (defaults to `*`, which is acceptable but looser).
+- **Lock CORS** to the production origin: `supabase secrets set ALLOWED_ORIGIN=https://namroller.com` (defaults to `*`, which is acceptable but looser).
 
 ---
 

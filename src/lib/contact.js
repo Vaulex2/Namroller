@@ -5,7 +5,7 @@
 export const PHONE = '+998 97 374 77 55';
 export const PHONE_HREF = 'tel:+998973747755';
 
-export const EMAIL = 'sales@namroller.uz';
+export const EMAIL = 'sales@namroller.com';
 export const EMAIL_HREF = `mailto:${EMAIL}`;
 
 // Telegram sales contact (a human account or public channel — NOT the

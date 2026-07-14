@@ -240,7 +240,7 @@
     "contactTitle":"Have questions? Get in touch with us.",
     "contactBtn":  "Contact Us",
     "phone":       "+998 97 374 77 55",
-    "email":       "info@namroller.uz",
+    "email":       "info@namroller.com",
     "address":     "Namangan, Uzbekistan",
     "cols": {
       "products": {
@@ -289,7 +289,7 @@
     "docId":     "NR-LEGAL-PP-01",
     "version":   "1.0",
     "effective": "January 1, 2026",
-    "intro":     "This Policy describes what data Nam Roller collects through the namroller.uz website, how we use it, and how we protect it. By using the site, you agree to the terms below.",
+    "intro":     "This Policy describes what data Nam Roller collects through the namroller.com website, how we use it, and how we protect it. By using the site, you agree to the terms below.",
     "updated":   "Last updated: January 1, 2026",
     "contactNote": "For questions about your data, write to",
     "sections": [
@@ -346,14 +346,14 @@
     "docId":     "NR-LEGAL-TOS-01",
     "version":   "1.0",
     "effective": "January 1, 2026",
-    "intro":     "These Terms govern the use of the namroller.uz website. Please review them before using the site or submitting an inquiry.",
+    "intro":     "These Terms govern the use of the namroller.com website. Please review them before using the site or submitting an inquiry.",
     "updated":   "Last updated: January 1, 2026",
     "contactNote": "For questions about these Terms, write to",
     "sections": [
       {
         "title": "Acceptance of Terms",
         "body": [
-          "By using the namroller.uz website, you confirm your agreement with these Terms. If you do not agree with them, please do not use the site."
+          "By using the namroller.com website, you confirm your agreement with these Terms. If you do not agree with them, please do not use the site."
         ]
       },
       {
@@ -399,7 +399,7 @@
   },
   "cookies": {
     "title":     "Cookie Policy",
-    "intro":     "This page explains which cookies the namroller.uz website uses and why. We use only what is necessary for the site to function.",
+    "intro":     "This page explains which cookies the namroller.com website uses and why. We use only what is necessary for the site to function.",
     "updated":   "Last updated: January 1, 2026",
     "contactNote": "For questions about cookies, write to",
     "sections": [

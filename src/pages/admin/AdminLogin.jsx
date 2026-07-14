@@ -56,7 +56,7 @@ export function AdminLogin({ onSignedIn }) {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="admin@namroller.uz"
+            placeholder="admin@namroller.com"
             autoComplete="username"
             required
           />
