@@ -5,8 +5,7 @@ import { Button } from '../components/core/Button';
 import { Input } from '../components/forms/Input';
 import { Card } from '../components/surfaces/Card';
 import { Icon } from './Icon';
-import { submitQuote, uploadQuoteAttachments } from '../lib/quotes';
-import { AttachmentPicker } from '../components/forms/AttachmentPicker';
+import { submitQuote } from '../lib/quotes';
 import { Turnstile } from '../components/forms/Turnstile';
 import { isTurnstileEnabled } from '../lib/turnstile';
 
@@ -38,7 +37,6 @@ function QuoteDialog({ onClose, product, products }) {
     note: isBundle ? `${t('compare.quoteNote')}\n${names.map((n) => `• ${n}`).join('\n')}` : '',
   });
   const [token, setToken] = React.useState('');
-  const [attachments, setAttachments] = React.useState([]);
   const [busy, setBusy] = React.useState(false);
   const [done, setDone] = React.useState(false);
   const [error, setError] = React.useState('');
@@ -65,17 +63,6 @@ function QuoteDialog({ onClose, product, products }) {
       return;
     }
     setBusy(true); setError('');
-    // Attachment upload is a separate failure mode from the submit itself
-    // (large/slow files, flaky networks) — distinguished so the error tells
-    // the buyer what actually failed rather than a generic "try again".
-    let attachmentsDraftId;
-    try {
-      attachmentsDraftId = await uploadQuoteAttachments(attachments);
-    } catch {
-      setError(t('quote.form.attachmentError'));
-      setBusy(false);
-      return;
-    }
     try {
       await submitQuote({
         productId: list.length === 1 ? list[0].id : undefined,
@@ -90,10 +77,8 @@ function QuoteDialog({ onClose, product, products }) {
           ? `Compare tray · ${list.length} products`
           : `Product page · ${list[0]?.name || list[0]?.id || '—'}`,
         token,
-        attachmentsDraftId,
       });
       setDone(true);
-      setAttachments([]);
     } catch {
       setError(t('quote.form.error'));
     } finally {
@@ -255,10 +240,6 @@ function QuoteDialog({ onClose, product, products }) {
                   onFocus={(e) => (e.target.style.borderColor = 'var(--nr-accent)')}
                   onBlur={(e) => (e.target.style.borderColor = 'var(--border-default)')}
                 />
-              </div>
-
-              <div style={{ marginTop: 16 }}>
-                <AttachmentPicker files={attachments} onChange={setAttachments} disabled={busy} />
               </div>
 
               {isTurnstileEnabled && (

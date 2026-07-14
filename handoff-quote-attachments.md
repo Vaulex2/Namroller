@@ -1,6 +1,16 @@
 # Quote Attachments (photo/video upload) — Handoff
 
-> Deferred feature — not started. Companion to [handoff-security.md](handoff-security.md) and
+> **Removed (2026-07-14):** the picker didn't work in production testing (never reached the
+> upload/submit endpoints — no request landed in the edge-function or storage logs). Rather than
+> debug a feature nobody had confirmed working, it was pulled from the UI, `src/lib/quotes.ts`,
+> `src/lib/admin.ts`, and both edge functions (`submit-quote`, `admin-quotes`). Left in place and
+> harmless: the `quote_requests.attachments_draft_id` column and the `quote-attachments` storage
+> bucket + policies (`supabase/schema/storage_quote_attachments.sql`) — dormant, no longer written
+> to, safe to drop later if desired. `admin-quotes`'s `deleteQuote` still purges any legacy
+> draft files on delete as a defensive no-op. This doc is kept for history; the rest describes the
+> original (removed) design.
+>
+> Companion to [handoff-security.md](handoff-security.md) and
 > [docs/admin-roadmap.md](docs/admin-roadmap.md). Follows the same security posture as the rest
 > of the quote pipeline: PII/private tables get **zero** Data API policies, all access goes
 > through edge functions or narrowly-scoped storage policies. Schema changes go live via the

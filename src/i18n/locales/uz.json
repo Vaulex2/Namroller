@@ -142,7 +142,6 @@
       "submit":    "So'rov yuborish",
       "sending":   "Yuborilmoqda…",
       "error":     "Yuborib bo'lmadi. Qayta urinib ko'ring.",
-      "attachmentError": "Fayllarni biriktirib bo'lmadi. Qayta urining yoki ilovasiz yuboring.",
       "captcha":   "Iltimos, robot emasligingizni tasdiqlang.",
       "privacy":   "Ma'lumotlaringiz maxfiy saqlanadi va uchinchi shaxslarga berilmaydi."
     },
@@ -175,23 +174,12 @@
       "required":     "Ism va telefon raqamini kiriting.",
       "captcha":      "Iltimos, robot emasligingizni tasdiqlang.",
       "error":        "Yuborib bo'lmadi. Qayta urinib ko'ring.",
-      "attachmentError": "Fayllarni biriktirib bo'lmadi. Qayta urining yoki ilovasiz yuboring.",
       "close":        "Yopish",
       "successTitle": "So'rov yuborildi",
       "successBody":  "Rahmat! Savdo bo'limimiz 48 soat ichida narx bilan bog'lanadi.",
       "done":         "Tayyor",
       "privacy":      "Ma'lumotlaringiz maxfiy saqlanadi va uchinchi shaxslarga berilmaydi."
     }
-  },
-  "attachments": {
-    "label":        "Foto yoki video (ixtiyoriy)",
-    "add":           "Qo'shish",
-    "remove":        "Faylni o'chirish",
-    "hint":          "{{n}} tagacha fayl. JPG, PNG, WEBP rasm ({{imageMb}} MB gacha) yoki MP4, WEBM, MOV video ({{videoMb}} MB gacha).",
-    "tooMany":       "{{n}} tadan ortiq fayl biriktirib bo'lmaydi.",
-    "badType":       "Fayl turi qo'llab-quvvatlanmaydi. Ruxsat etilgan: JPG, PNG, WEBP, MP4, WEBM, MOV.",
-    "imageTooBig":   "Rasm juda katta (maks. {{mb}} MB).",
-    "videoTooBig":   "Video juda katta (maks. {{mb}} MB)."
   },
   "chat": {
     "telegram": "Telegram'da yozish",
@@ -794,9 +782,7 @@
       "eventAssign": "Mas'ul tayinlandi: {{email}}",
       "eventUnassign": "Mas'ul olib tashlandi",
       "eventDeadline": "Muddat belgilandi: {{date}}",
-      "eventDeadlineCleared": "Muddat olib tashlandi",
-      "attachments": "Mijoz yuborgan foto/video",
-      "attachmentsEmpty": "Hech narsa biriktirilmagan."
+      "eventDeadlineCleared": "Muddat olib tashlandi"
     },
     "journal": {
       "searchPh": "Ism, telefon yoki mahsulot bo'yicha qidirish…",

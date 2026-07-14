@@ -140,7 +140,6 @@
       "submit":         "提交申请",
       "sending":        "正在提交…",
       "error":          "提交失败,请重试。",
-      "attachmentError": "文件上传失败,请重试或不带附件提交。",
       "captcha":        "请完成人机验证。",
       "privacy":        "您的信息将被严格保密,不会向第三方披露。"
     },
@@ -173,23 +172,12 @@
       "required":     "请填写姓名和联系电话。",
       "captcha":      "请完成人机验证。",
       "error":        "提交失败,请重试。",
-      "attachmentError": "文件上传失败,请重试或不带附件提交。",
       "close":        "关闭",
       "successTitle": "询价已提交",
       "successBody":  "感谢您的询价!我们的销售团队将在48小时内为您回复报价。",
       "done":         "完成",
       "privacy":      "您的信息将被严格保密,不会向第三方披露。"
     }
-  },
-  "attachments": {
-    "label":        "照片或视频(可选)",
-    "add":           "添加",
-    "remove":        "删除文件",
-    "hint":          "最多 {{n}} 个文件。JPG、PNG、WEBP 图片(最大 {{imageMb}} MB)或 MP4、WEBM、MOV 视频(最大 {{videoMb}} MB)。",
-    "tooMany":       "最多可添加 {{n}} 个文件。",
-    "badType":       "不支持的文件类型。仅支持:JPG、PNG、WEBP、MP4、WEBM、MOV。",
-    "imageTooBig":   "图片过大(最大 {{mb}} MB)。",
-    "videoTooBig":   "视频过大(最大 {{mb}} MB)。"
   },
   "chat": {
     "telegram": "通过 Telegram 联系",

@@ -34,11 +34,6 @@ interface QuoteInput {
   source?: string | null;
   // Client-stated date they'd like the product ready by ("YYYY-MM-DD").
   preferredDeadline?: string | null;
-  // Client-generated UUID grouping photos/videos already uploaded straight to
-  // the `quote-attachments` bucket (before this row exists — see
-  // handoff-quote-attachments.md). Optional: null/omitted when nothing was
-  // attached.
-  attachmentsDraftId?: string | null;
 }
 
 const str = (v: unknown): string => String(v ?? "").trim();
@@ -46,8 +41,6 @@ const nullable = (v: unknown): string | null => {
   const s = str(v);
   return s.length ? s : null;
 };
-
-const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 // Telegram HTML mode requires &, <, > to be escaped in text nodes.
 function esc(s: unknown): string {
@@ -68,7 +61,6 @@ function buildMessage(r: {
   lang: string | null;
   note: string | null;
   source: string | null;
-  attachments_draft_id: string | null;
   preferred_deadline: string | null;
 }): string {
   const lines = [
@@ -84,7 +76,6 @@ function buildMessage(r: {
   if (r.preferred_deadline) lines.push(`📅 Wants it by: ${esc(r.preferred_deadline)}`);
   if (r.note) lines.push(`📝 ${esc(r.note)}`);
   if (r.source) lines.push(`📍 ${esc(r.source)}`);
-  if (r.attachments_draft_id) lines.push(`📎 Photos/video attached — see admin panel`);
   return lines.join("\n");
 }
 
@@ -168,10 +159,6 @@ Deno.serve(async (req) => {
   ) {
     return jsonResponse({ ok: false, error: "Invalid input" }, 400);
   }
-  const attachmentsDraftId = nullable(input.attachmentsDraftId);
-  if (attachmentsDraftId && !UUID_RE.test(attachmentsDraftId)) {
-    return jsonResponse({ ok: false, error: "Invalid input" }, 400);
-  }
 
   const preferredDeadline = nullable(input.preferredDeadline);
   if (preferredDeadline && !/^\d{4}-\d{2}-\d{2}$/.test(preferredDeadline)) {
@@ -189,7 +176,6 @@ Deno.serve(async (req) => {
     note,
     lang: nullable(input.lang),
     source: nullable(input.source),
-    attachments_draft_id: attachmentsDraftId,
     preferred_deadline: preferredDeadline,
   };
 

@@ -10,8 +10,7 @@ import { HeroBackdrop } from './HeroBackdrop';
 import { Reveal } from '../components/motion/Reveal';
 import { Stagger, StaggerItem } from '../components/motion/Stagger';
 import { Accordion } from '../components/surfaces/Accordion';
-import { submitQuote, uploadQuoteAttachments } from '../lib/quotes';
-import { AttachmentPicker } from '../components/forms/AttachmentPicker';
+import { submitQuote } from '../lib/quotes';
 import { Turnstile } from '../components/forms/Turnstile';
 import { isTurnstileEnabled } from '../lib/turnstile';
 import { TELEGRAM_HREF } from '../lib/contact';
@@ -29,7 +28,6 @@ export function Contact() {
   const [form, setForm] = React.useState({
     name: '', phone: '', email: '', address: '', deadline: '', msg: '',
   });
-  const [attachments, setAttachments] = React.useState([]);
 
   const set = (k) => (e) =>
     setForm({ ...form, [k]: e.target.type === 'checkbox' ? e.target.checked : e.target.value });
@@ -44,17 +42,6 @@ export function Contact() {
       return;
     }
     setBusy(true); setError('');
-    // Attachment upload is a separate failure mode from the submit itself
-    // (large/slow files, flaky networks) — distinguished so the error tells
-    // the buyer what actually failed rather than a generic "try again".
-    let attachmentsDraftId;
-    try {
-      attachmentsDraftId = await uploadQuoteAttachments(attachments);
-    } catch {
-      setError(t('contact.form.attachmentError'));
-      setBusy(false);
-      return;
-    }
     try {
       await submitQuote({
         productName: 'General inquiry (Contact page)',
@@ -67,10 +54,8 @@ export function Contact() {
         lang: i18n.language,
         source: 'Contact page',
         token,
-        attachmentsDraftId,
       });
       setSent(true);
-      setAttachments([]);
     } catch {
       setError(t('contact.form.error'));
     } finally {
@@ -229,10 +214,6 @@ export function Contact() {
                     color: 'var(--text-strong)', resize: 'vertical', outline: 'none',
                   }}
                 />
-              </div>
-
-              <div style={{ marginTop: 16 }}>
-                <AttachmentPicker files={attachments} onChange={setAttachments} disabled={busy} />
               </div>
 
               {isTurnstileEnabled && (

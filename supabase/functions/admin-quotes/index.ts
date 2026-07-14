@@ -26,8 +26,6 @@
 //   { action: "stats" }                        -> { ok, total, <status counts> }
 //   { action: "list", status?, q?, limit?<=200, offset? } -> { ok, rows, total }  (rows include price_amount)
 //   { action: "detail", id }                   -> { ok, row, project, events, related }
-//   { action: "attachmentUrls", id }           -> { ok, attachments: [{path, url, name}] }
-//     (signed URLs into the private `quote-attachments` bucket, 10 min expiry)
 //   { action: "setStatus", id, status }        -> { ok }   (transition-validated)
 //   { action: "setPrice", id, amount, currency: "UZS"|"USD" } -> { ok }
 //   { action: "journalOverview", limit?<=200 } -> { ok, stats, rows, total }
@@ -337,7 +335,7 @@ Deno.serve(async (req) => {
 
       const { data: row, error: rowErr } = await db
         .from("quote_requests")
-        .select(LIST_COLUMNS + ", phone_normalized, attachments_draft_id")
+        .select(LIST_COLUMNS + ", phone_normalized")
         .eq("id", id)
         .maybeSingle();
       if (rowErr) throw rowErr;
@@ -371,43 +369,6 @@ Deno.serve(async (req) => {
         events: eventsRes.data ?? [],
         related: relatedRes.data ?? [],
       });
-    }
-
-    // Signed URLs for a quote's uploaded photos/videos. The `quote-attachments`
-    // bucket is private (no anon or public read), so viewing them requires the
-    // service role to list the draft's folder and mint short-lived signed URLs.
-    if (action === "attachmentUrls") {
-      const id = String(body.id ?? "");
-      if (!UUID_RE.test(id)) return jsonResponse({ ok: false, error: "Invalid id" }, 400);
-
-      const { data: row, error: rowErr } = await db
-        .from("quote_requests")
-        .select("attachments_draft_id")
-        .eq("id", id)
-        .maybeSingle();
-      if (rowErr) throw rowErr;
-      if (!row) return jsonResponse({ ok: false, error: "Not found" }, 404);
-
-      const draftId = row.attachments_draft_id as string | null;
-      if (!draftId) return jsonResponse({ ok: true, attachments: [] });
-
-      const { data: files, error: listErr } = await db.storage
-        .from("quote-attachments")
-        .list(draftId, { limit: 20, sortBy: { column: "name", order: "asc" } });
-      if (listErr) throw listErr;
-
-      const paths = (files ?? []).map((f) => `${draftId}/${f.name}`);
-      if (paths.length === 0) return jsonResponse({ ok: true, attachments: [] });
-
-      const { data: signed, error: signErr } = await db.storage
-        .from("quote-attachments")
-        .createSignedUrls(paths, 600); // 10 min — viewed once per detail-modal open
-      if (signErr) throw signErr;
-
-      const attachments = (signed ?? [])
-        .filter((s) => !s.error && s.signedUrl)
-        .map((s, i) => ({ path: paths[i], url: s.signedUrl, name: (files ?? [])[i]?.name ?? "" }));
-      return jsonResponse({ ok: true, attachments });
     }
 
     if (action === "setStatus") {

@@ -140,7 +140,6 @@
       "submit":         "Submit Request",
       "sending":        "Sending…",
       "error":          "Could not send. Please try again.",
-      "attachmentError": "Could not attach the files. Please try again or send without attachments.",
       "captcha":        "Please confirm you are not a robot.",
       "privacy":        "Your data is kept confidential and is never shared with third parties."
     },
@@ -173,23 +172,12 @@
       "required":     "Please provide your name and phone number.",
       "captcha":      "Please confirm you are not a robot.",
       "error":        "Could not send. Please try again.",
-      "attachmentError": "Could not attach the files. Please try again or send without attachments.",
       "close":        "Close",
       "successTitle": "Request Sent",
       "successBody":  "Thank you! Our sales team will contact you with a price within 48 hours.",
       "done":         "Done",
       "privacy":      "Your data is kept confidential and is never shared with third parties."
     }
-  },
-  "attachments": {
-    "label":        "Photos or video (optional)",
-    "add":           "Add",
-    "remove":        "Remove file",
-    "hint":          "Up to {{n}} files. JPG, PNG, WEBP photos up to {{imageMb}} MB, or MP4, WEBM, MOV video up to {{videoMb}} MB.",
-    "tooMany":       "You can attach up to {{n}} files.",
-    "badType":       "Unsupported file type. Allowed: JPG, PNG, WEBP, MP4, WEBM, MOV.",
-    "imageTooBig":   "Image is too large (max {{mb}} MB).",
-    "videoTooBig":   "Video is too large (max {{mb}} MB)."
   },
   "chat": {
     "telegram": "Message on Telegram",
