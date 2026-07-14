@@ -62,6 +62,18 @@ function AppShell() {
     if (scrollRef.current) scrollRef.current.scrollTop = 0;
   }, [location.pathname]);
 
+  // Keep the canonical/OG url tags honest per-route — they start out hardcoded
+  // to "/" in index.html for pre-render/social-share purposes, but must match
+  // the actual page once the SPA takes over, or every page tells crawlers
+  // its "real" URL is the homepage.
+  useEffect(() => {
+    const url = `https://namroller.com${location.pathname === '/' ? '' : location.pathname}`;
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.setAttribute('href', url);
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+    if (ogUrl) ogUrl.setAttribute('content', url);
+  }, [location.pathname]);
+
   const go = (r, id = null) => {
     const path = r === 'home' ? '/' : r === 'product' ? `/products/${id}` : `/${r}`;
     navigate(path);
